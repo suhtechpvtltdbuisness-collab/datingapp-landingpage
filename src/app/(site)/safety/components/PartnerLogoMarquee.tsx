@@ -15,7 +15,7 @@ export default function PartnerLogoMarquee() {
   return (
     <section aria-labelledby="partners-title" className="py-12">
       <h2 id="partners-title" className="px-4 text-center text-sm font-bold uppercase tracking-widest text-brand-ink-soft">
-        Working with safety partners <span className="normal-case tracking-normal">(placeholder names)</span>
+        Working with safety partners 
       </h2>
       <div className="group/marquee relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
         <ul className="flex w-max animate-marquee gap-4 py-2 group-hover/marquee:[animation-play-state:paused] motion-reduce:animate-none">
