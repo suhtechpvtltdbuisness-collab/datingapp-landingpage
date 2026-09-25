@@ -29,8 +29,8 @@ export const brand = {
   name: "Vellora",
   tagline: "Destined connections",
   motto: "Written in the stars. Connected by numbers.",
-  emblem: "/brand/Velora-emblem.png",
-  logo: "/brand/Velora-logo.jpg",
+  emblem: "/brand/velora-emblem.png",
+  logo: "/brand/velora-logo.jpg",
 } as const;
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
