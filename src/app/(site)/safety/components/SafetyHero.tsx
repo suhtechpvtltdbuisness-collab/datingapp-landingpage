@@ -38,7 +38,7 @@ export default function SafetyHero() {
             transition={{ duration: 0.8, ease: EASE }}
             className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-brand-magenta shadow-card"
           >
-            <ShieldCheck className="h-4 w-4" aria-hidden /> Velora Safety Centre
+            <ShieldCheck className="h-4 w-4" aria-hidden /> Vellora Safety Centre
           </motion.p>
           <h1 className="font-display text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-brand-ink sm:text-6xl">
             {headline.map((word, i) => (

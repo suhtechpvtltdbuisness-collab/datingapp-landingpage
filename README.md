@@ -1,4 +1,4 @@
-# Velora Safety Centre (Next.js)
+# Vellora Safety Centre (Next.js)
 
 The standalone Trust & Safety landing page for the dating app. It is a separate
 Next.js app (React + Tailwind). It includes the admin panel at `/admin` (see below).
@@ -26,7 +26,7 @@ to classes such as `bg-brand-gradient`, `shadow-card` and `rounded-card`. To
 change content, edit `data/*` only.
 
 ## Before launch
-- **Brand**: the Velora name, tagline and logo paths live in `theme.ts` (`brand`), and the logo files are in `public/brand/`.
+- **Brand**: the Vellora name, tagline and logo paths live in `theme.ts` (`brand`), and the logo files are in `public/brand/`.
 - **Plans**: prices and perks are in `data/plans.ts`. Keep them in sync with the store listings. The savings % is calculated from the prices.
 - **Partners**: the names in `data/partners.ts` are made up. Replace them with real organisations once you have signed partnerships.
 - **Links**: the store buttons and footer links point to `#`. The emergency button dials 112; change it for your markets.

@@ -26,11 +26,11 @@ export const tokens = {
 
 /** Apple-ish easeOutExpo curve used for every entrance. */
 export const brand = {
-  name: "Velora",
+  name: "Vellora",
   tagline: "Destined connections",
   motto: "Written in the stars. Connected by numbers.",
-  emblem: "/brand/velora-emblem.png",
-  logo: "/brand/velora-logo.jpg",
+  emblem: "/brand/Velora-emblem.png",
+  logo: "/brand/Velora-logo.jpg",
 } as const;
 
 export const EASE = [0.16, 1, 0.3, 1] as const;

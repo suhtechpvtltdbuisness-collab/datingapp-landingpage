@@ -8,7 +8,7 @@ const body = Inter({ subsets: ["latin"], variable: "--font-body" });
 const brand = Cormorant_Garamond({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-brand" });
 
 export const metadata: Metadata = {
-  title: "Velora Safety Centre",
+  title: "Vellora Safety Centre",
   description: "How we help you date with confidence: verification, reporting, and tools that put you in control.",
 };
 
