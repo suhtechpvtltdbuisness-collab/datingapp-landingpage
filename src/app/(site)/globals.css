@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-pink: #ff3d77;
+  --brand-magenta: #e0299b;
+  --brand-purple: #8b2fc9;
+  --brand-bg: #fff3f7;
+  --brand-ink: #1e1033;
+  --brand-ink-soft: #5b4a6b;
+  --brand-accent: #d9620f; /* darkened orange: 4.5:1 on white for "NEW"-style labels */
+  --brand-accent-soft: #ffe3cc;
+  --brand-gold: #9a5f24; /* deep logo gold, readable on blush */
+  --brand-night: #1a0f2e; /* logo background */
+  --brand-wordmark: linear-gradient(90deg, #a8652a 0%, #c9803f 45%, #d6337f 100%);
+  --brand-gradient: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-magenta) 50%, var(--brand-purple) 100%);
+  --brand-gradient-soft: linear-gradient(135deg, #ffe0ea 0%, #fbd9f0 50%, #ecdcfb 100%);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(224, 41, 155, 0.14), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(139, 47, 201, 0.10), transparent 60%),
+    var(--brand-bg);
+  color: var(--brand-ink);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
