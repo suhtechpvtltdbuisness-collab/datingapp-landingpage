@@ -55,8 +55,8 @@ export const features: Feature[] = [
   {
     id: "review-nudge",
     icon: "messageCheck",
-    title: "Kindness Check",
-    description: "If a message looks hurtful, we gently ask “Are you sure?” before it sends. Being kind works better anyway.",
+    title: "Kindness reminder",
+    description: "Before sending a potentially hurtful message, we'll give you a quick reminder to review it.",
     href: "#faq",
   },
   {
