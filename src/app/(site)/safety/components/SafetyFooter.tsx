@@ -16,7 +16,7 @@ const groups: { title: string; links: FooterLink[] }[] = [
       { label: "Safety tools", href: "#features" },
       { label: "Premium plans", href: "#plans" },
       { label: "Handbook", href: "#handbook" },
-      { label: "Report a problem", href: "#faq" },
+      { label: "Report a problem", href: "/report-problem" },
       { label: "Community guidelines", href: "#community" },
     ],
   },
@@ -38,7 +38,7 @@ const groups: { title: string; links: FooterLink[] }[] = [
   {
     title: "Socials",
     links: [
-      { label: "Instagram", href: "https://www.instagram.com/vellora.app", external: true },
+      { label: "Instagram", href: "https://www.instagram.com/", external: true },
       { label: "YouTube", href: "https://www.youtube.com/@velloraapp", external: true },
       { label: "X", href: "https://x.com/velloraapp", external: true },
     ],

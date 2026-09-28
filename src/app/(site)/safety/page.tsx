@@ -9,7 +9,7 @@ import PlansSection from "./components/PlansSection";
 import FaqSection from "./components/FaqSection";
 import SafetyFooter from "./components/SafetyFooter";
 
-export const metadata: Metadata = { title: "Vellora Safety Centre" };
+export const metadata: Metadata = { title: "Find Your Connection" };
 
 export default function SafetyPage() {
   return (

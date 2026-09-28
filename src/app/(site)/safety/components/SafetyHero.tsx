@@ -6,7 +6,7 @@ import MagneticButton from "./MagneticButton";
 import { useParallax } from "../hooks/useParallax";
 import { EASE } from "../theme";
 
-const headline = ["Date", "boldly.", "We've", "got", "your", "back."];
+const headline = ["Meet someone.", "Feel something.", "Make it meaningful."];
 
 function PhotoCard({ name, tag, image, className }: { name: string; tag: string; image: string; className: string }) {
   return (
@@ -59,7 +59,7 @@ export default function SafetyHero() {
             transition={{ duration: 0.8, ease: EASE }}
             className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-brand-magenta shadow-card"
           >
-            <ShieldCheck className="h-4 w-4" aria-hidden /> Vellora Safety Centre
+            <ShieldCheck className="h-4 w-4" aria-hidden /> Find Your Connection
           </motion.p>
           <h1 className="font-display text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-brand-ink sm:text-6xl">
             {headline.map((word, i) => (
@@ -82,7 +82,7 @@ export default function SafetyHero() {
             transition={{ duration: 0.9, ease: EASE, delay: 0.6 }}
             className="mt-6 max-w-md text-lg text-brand-ink-soft"
           >
-            Verification, one-tap reporting, and a team reviewing what you flag, so you can focus on the good part.
+            Discover genuine people who share your interests, values, and vibe — and start a connection that feels real.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
