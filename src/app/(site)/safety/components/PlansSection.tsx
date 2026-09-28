@@ -69,8 +69,8 @@ export default function PlansSection() {
           </MagneticButton>
           <p className="mt-4 text-center text-sm leading-relaxed text-brand-ink-soft">
             Subscribe inside the {brand.name} app. Prices in INR, shown per week. Recurring billing, cancel anytime. By subscribing, you agree to our{" "}
-            <a href="#" className="font-semibold text-brand-magenta underline-offset-2 hover:underline">Terms of Service</a> and{" "}
-            <a href="#" className="font-semibold text-brand-magenta underline-offset-2 hover:underline">Privacy Policy</a>.
+            <a href="/terms" className="font-semibold text-brand-magenta underline-offset-2 hover:underline">Terms of Service</a> and{" "}
+            <a href="/privacy" className="font-semibold text-brand-magenta underline-offset-2 hover:underline">Privacy Policy</a>.
           </p>
         </motion.div>
       </div>

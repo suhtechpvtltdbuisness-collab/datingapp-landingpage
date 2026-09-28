@@ -14,7 +14,8 @@ export default function EmergencyNotice() {
         href="tel:112"
         className="mt-6 inline-flex items-center gap-2 self-start rounded-full bg-white px-5 py-3 font-semibold text-brand-ink shadow-card focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-accent/40"
       >
-        <Phone className="h-4 w-4 text-brand-accent" aria-hidden /> Call 112 (India / EU)
+        <Phone className="h-4 w-4 text-brand-accent" aria-hidden /> Call 112 - Emergency services 
+        <span className="arrow">→</span>
       </a>
     </aside>
   );
