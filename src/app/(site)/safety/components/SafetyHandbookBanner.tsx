@@ -26,7 +26,7 @@ export default function SafetyHandbookBanner() {
           <p className="mt-3 max-w-md text-white/90 sm:max-w-[55%]">
             A short, friendly guide to meeting someone new: public places, your own ride home, trusting your gut, and what to do when something feels off.
           </p>
-          <MagneticButton href="#faq" variant="white" className="mt-7">
+          <MagneticButton href="#community" variant="white" className="mt-7">
             Read the handbook <ArrowRight className="h-4 w-4" aria-hidden />
           </MagneticButton>
         </motion.div>

@@ -32,7 +32,7 @@ export default function CampaignCard({ campaign, scale, opacity }: Props) {
       <div className="flex flex-1 flex-col p-6">
         <h3 className="font-display text-xl font-bold text-brand-ink">{campaign.title}</h3>
         <p className="mt-2 flex-1 leading-relaxed text-brand-ink-soft">{campaign.description}</p>
-        <a href="#faq" className="mt-5 inline-flex items-center gap-1.5 self-start rounded text-sm font-semibold text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40">
+        <a href={campaign.href ?? "#faq"} className="mt-5 inline-flex items-center gap-1.5 self-start rounded text-sm font-semibold text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40">
           {campaign.cta}
           <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
         </a>
