@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
-    "build": "NEXT_DIST_DIR=.next-build next build",
-    "start": "NEXT_DIST_DIR=.next-build next start"
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "framer-motion": "^11.11.0",
