@@ -1,6 +1,7 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
 import BrandLogo from "./BrandLogo";
+import { brand } from "../theme";
 import MagneticButton from "./MagneticButton";
 
 const links = [
@@ -23,7 +24,7 @@ export default function SafetyNav() {
       className="fixed inset-x-0 top-0 z-50"
     >
       <nav aria-label="Main" className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" aria-label="Find Your Connection back to top" className="rounded-full focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-purple/40">
+        <a href="#top" aria-label={`${brand.name} — back to top`} className="rounded-full focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-purple/40">
           <BrandLogo />
         </a>
         <ul className="hidden items-center gap-8 md:flex">

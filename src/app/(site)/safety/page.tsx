@@ -8,8 +8,9 @@ import PartnerLogoMarquee from "./components/PartnerLogoMarquee";
 import PlansSection from "./components/PlansSection";
 import FaqSection from "./components/FaqSection";
 import SafetyFooter from "./components/SafetyFooter";
+import { brand } from "./theme";
 
-export const metadata: Metadata = { title: "Find Your Connection" };
+export const metadata: Metadata = { title: brand.name };
 
 export default function SafetyPage() {
   return (
