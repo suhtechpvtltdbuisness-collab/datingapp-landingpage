@@ -31,7 +31,7 @@ const sections: Section[] = [
     title: "Eligibility",
     body: (
       <>
-        <p>You must meet {brand.name}&apos;s minimum age requirement to create an account and use its dating features.</p>
+        {/* <p>You must meet {brand.name}&apos;s minimum age requirement to create an account and use its dating features.</p> */}
         <p>You must be 18 or older to use {brand.name}.</p>
         <p>You must not create an account using someone else&apos;s identity or information.</p>
       </>
