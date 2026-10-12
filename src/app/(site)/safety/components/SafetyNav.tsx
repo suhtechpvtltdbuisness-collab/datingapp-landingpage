@@ -36,7 +36,12 @@ export default function SafetyNav() {
             </li>
           ))}
         </ul>
-        <MagneticButton href="#download" size="sm">Get the App</MagneticButton>
+        <div className="flex items-center gap-3 sm:gap-5">
+          <a href="/admin" className="rounded font-medium text-brand-ink-soft transition-colors hover:text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40">
+            Login
+          </a>
+          <MagneticButton href="#download" size="sm">Get the App</MagneticButton>
+        </div>
       </nav>
     </motion.header>
   );

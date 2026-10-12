@@ -1,67 +1,50 @@
-import crypto from "node:crypto";
-import fs from "node:fs";
-import path from "node:path";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-/** Signed-cookie admin session holding the signed-in admin's id and username. */
+/**
+ * The admin session is the backend's admin access token, kept in an httpOnly cookie.
+ * The backend verifies it on every call; here we only read the username and expiry from it.
+ */
 export const SESSION_COOKIE = "admin_session";
 
 export interface AdminSession {
-  id: number;
+  id: string;
   username: string;
 }
 
-let cachedSecret: string | undefined;
-
-/** Stable signing key: ADMIN_SECRET_KEY, else the Vercel deployment, else a key saved in data/secret_key. */
-function secret(): string {
-  if (cachedSecret) return cachedSecret;
-  if (process.env.ADMIN_SECRET_KEY) return (cachedSecret = process.env.ADMIN_SECRET_KEY);
-  const deployment = process.env.VERCEL_DEPLOYMENT_ID || process.env.VERCEL_URL;
-  if (deployment) return (cachedSecret = crypto.createHash("sha256").update(deployment).digest("hex"));
-
-  const file = path.join(process.cwd(), "data", "secret_key");
+function decode(token: string): { sub: string; username: string; exp: number } | null {
   try {
-    cachedSecret = fs.readFileSync(file, "utf8").trim();
-  } catch {
-    /* first run */
-  }
-  if (!cachedSecret) {
-    cachedSecret = crypto.randomBytes(32).toString("hex");
-    fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file, cachedSecret, { mode: 0o600 });
-  }
-  return cachedSecret;
-}
-
-const sign = (payload: string) => crypto.createHmac("sha256", secret()).update(payload).digest("base64url");
-
-export async function getSession(): Promise<AdminSession | null> {
-  const raw = (await cookies()).get(SESSION_COOKIE)?.value;
-  if (!raw) return null;
-  const [payload, signature] = raw.split(".");
-  if (!payload || !signature) return null;
-  const expected = sign(payload);
-  if (signature.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
-    return null;
-  }
-  try {
-    const data = JSON.parse(Buffer.from(payload, "base64url").toString("utf8"));
-    if (typeof data.id === "number" && typeof data.username === "string") return { id: data.id, username: data.username };
+    const data = JSON.parse(Buffer.from(token.split(".")[1] ?? "", "base64url").toString("utf8"));
+    if (typeof data.sub === "string" && typeof data.username === "string" && typeof data.exp === "number") {
+      return data;
+    }
   } catch {
     /* malformed */
   }
   return null;
 }
 
-export async function setSession(session: AdminSession) {
-  const payload = Buffer.from(JSON.stringify(session)).toString("base64url");
-  (await cookies()).set(SESSION_COOKIE, `${payload}.${sign(payload)}`, {
+export async function getToken(): Promise<string | null> {
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
+  if (!token) return null;
+  const claims = decode(token);
+  return claims && claims.exp * 1000 > Date.now() ? token : null;
+}
+
+export async function getSession(): Promise<AdminSession | null> {
+  const token = await getToken();
+  const claims = token ? decode(token) : null;
+  return claims ? { id: claims.sub, username: claims.username } : null;
+}
+
+export async function setSession(token: string) {
+  const claims = decode(token);
+  (await cookies()).set(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
     path: "/admin",
     secure: process.env.NODE_ENV === "production",
+    expires: claims ? new Date(claims.exp * 1000) : undefined,
   });
 }
 

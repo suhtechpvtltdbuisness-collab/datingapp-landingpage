@@ -46,8 +46,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           </form>
 
           <div className="mt-5 text-center text-[12px] leading-normal opacity-75">
-            First run? The default login was printed in your terminal when the server started (username{" "}
-            <strong>admin</strong>). Change it from Settings right after signing in.
+            Sign in with the admin account from the dating backend. Set <strong>ADMIN_INITIAL_PASSWORD</strong> there to
+            create the first admin.
           </div>
         </div>
       </div>

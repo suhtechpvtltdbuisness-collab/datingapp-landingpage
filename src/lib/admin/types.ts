@@ -1,52 +1,79 @@
-/** Row shapes of the admin SQLite database. */
-export interface AdminRow {
-  id: number;
-  username: string;
-  password_hash: string;
-  role: string;
-  created_at: string;
+/** Shapes returned by the backend's /admin API (new_dating_app_backend). */
+export interface Pagination {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
 }
 
-export interface UserRow {
-  id: number;
-  full_name: string;
+export interface Paged<T> {
+  items: T[];
+  pagination: Pagination;
+}
+
+export interface UserSummary {
+  id: string;
+  name: string;
   email: string;
-  gender: string | null;
+  photoUrl: string | null;
+  isBanned: boolean;
+}
+
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string;
+  gender: string;
   age: number | null;
-  city: string | null;
-  country: string | null;
-  bio: string | null;
-  photo_url: string | null;
-  is_verified: number;
-  is_banned: number;
-  is_online: number;
+  city?: string;
+  country?: string;
+  bio: string;
+  photoUrl: string | null;
+  isVerified: boolean;
+  isBanned: boolean;
+  isOnline: boolean;
   plan: string;
-  created_at: string;
+  createdAt: string;
 }
 
-export interface MatchRow {
-  id: number;
-  user_a_id: number;
-  user_b_id: number;
-  status: string;
-  created_at: string;
+export interface AdminStats {
+  totalUsers: number;
+  verifiedUsers: number;
+  bannedUsers: number;
+  premiumUsers: number;
+  totalMatches: number;
+  pendingReports: number;
 }
 
-export interface ReportRow {
-  id: number;
-  reporter_id: number | null;
-  reported_id: number;
+export interface AdminReport {
+  id: string;
   reason: string;
-  details: string | null;
-  status: string;
-  created_at: string;
-  resolved_at: string | null;
+  details: string;
+  status: "pending" | "resolved" | "dismissed";
+  reporter: UserSummary | null;
+  reportedUser: UserSummary | null;
+  createdAt: string;
+  resolvedAt: string | null;
 }
 
-export interface ActivityRow {
-  id: number;
-  admin_username: string;
+export interface AdminMatch {
+  id: string;
+  userA: UserSummary | null;
+  userB: UserSummary | null;
+  status: string;
+  matchedAt: string;
+}
+
+export interface UserDetail {
+  user: AdminUser;
+  matches: { id: string; matchedUser: UserSummary | null; matchedAt: string }[];
+  reports: AdminReport[];
+}
+
+export interface ActivityEntry {
+  id: string;
+  adminUsername: string;
   action: string;
   target: string | null;
-  created_at: string;
+  createdAt: string;
 }

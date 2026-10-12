@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { cx } from "./ui";
 
 const items = [
@@ -13,6 +14,9 @@ const items = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  // Highlight the clicked tab right away instead of waiting for the new page's data to load.
+  const [pending, setPending] = useState<string | null>(null);
+  useEffect(() => setPending(null), [pathname]);
   return (
     <aside
       className={cx(
@@ -26,11 +30,12 @@ export default function Sidebar() {
       </div>
       <nav className="max-[860px]:order-3 max-[860px]:-mx-4 max-[860px]:flex max-[860px]:flex-[1_1_100%] max-[860px]:snap-x max-[860px]:snap-proximity max-[860px]:gap-1.5 max-[860px]:overflow-x-auto max-[860px]:px-4 max-[860px]:pb-1 max-[860px]:pt-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {items.map((item) => {
-          const active = item.match(pathname);
+          const active = pending ? pending === item.href : item.match(pathname);
           return (
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setPending(item.href)}
               className={cx(
                 "mb-1 flex items-center gap-3 rounded-[14px] px-3.5 py-3 text-[14px] font-semibold",
                 "max-[860px]:mb-0 max-[860px]:shrink-0 max-[860px]:snap-start max-[860px]:whitespace-nowrap max-[860px]:py-2 max-[860px]:text-[13px]",

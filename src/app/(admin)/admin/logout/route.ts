@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
-import { logActivity } from "@/lib/admin/db";
-import { clearSession, getSession } from "@/lib/admin/session";
+import { api } from "@/lib/admin/api";
+import { clearSession, getToken } from "@/lib/admin/session";
 
+/** Also the landing spot when the backend rejects the session token: clear the cookie and sign in again. */
 export async function GET() {
-  const session = await getSession();
-  if (session) logActivity(session.username, "logout");
+  if (await getToken()) await api("/auth/logout", { method: "POST" }).catch(() => undefined);
   await clearSession();
   redirect("/admin/login");
 }

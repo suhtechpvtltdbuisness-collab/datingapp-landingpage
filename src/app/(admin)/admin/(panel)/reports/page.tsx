@@ -4,14 +4,12 @@ import AdminPage from "../../_components/AdminPage";
 import { ReportStatusBadge } from "../../_components/Badges";
 import { Badge, EmptyState, SectionCard, Table, Td, buttonClass, cx, nameLink } from "../../_components/ui";
 import { dismissReport, resolveReport } from "../../actions";
-import { all } from "@/lib/admin/db";
+import { apiList } from "@/lib/admin/api";
 import { requireAdmin } from "@/lib/admin/session";
-import type { ReportRow } from "@/lib/admin/types";
+import type { AdminReport } from "@/lib/admin/types";
 
 export const metadata: Metadata = { title: "Reports" };
 export const dynamic = "force-dynamic";
-
-type Row = ReportRow & { reported_name: string; reported_banned: number; reporter_name: string | null };
 
 const tabs = [
   { status: "pending", label: "Pending" },
@@ -20,19 +18,10 @@ const tabs = [
   { status: "all", label: "All" },
 ];
 
-const BASE = `SELECT r.*, u.full_name AS reported_name, u.is_banned AS reported_banned,
-                     rep.full_name AS reporter_name
-              FROM reports r
-              JOIN users u ON u.id = r.reported_id
-              LEFT JOIN users rep ON rep.id = r.reporter_id`;
-
 export default async function ReportsPage({ searchParams }: { searchParams: Promise<{ status?: string }> }) {
   const admin = await requireAdmin();
   const status = (await searchParams).status ?? "pending";
-  const reports =
-    status === "all"
-      ? all<Row>(`${BASE} ORDER BY r.created_at DESC`)
-      : all<Row>(`${BASE} WHERE r.status = ? ORDER BY r.created_at DESC`, status);
+  const { items: reports } = await apiList<AdminReport>("/reports", { status, limit: 200 });
 
   return (
     <AdminPage admin={admin} heading="Moderation queue" subheading="Reports submitted by users from inside the app">
@@ -57,12 +46,16 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
             {reports.map((r) => (
               <tr key={r.id}>
                 <Td>
-                  <Link href={`/admin/users/${r.reported_id}`} className={nameLink}>{r.reported_name}</Link>
-                  {r.reported_banned ? <Badge tone="danger" className="ml-1.5">Banned</Badge> : null}
+                  {r.reportedUser ? (
+                    <Link href={`/admin/users/${r.reportedUser.id}`} className={nameLink}>{r.reportedUser.name}</Link>
+                  ) : (
+                    <span className="text-admin-ink-3">Deleted user</span>
+                  )}
+                  {r.reportedUser?.isBanned ? <Badge tone="danger" className="ml-1.5">Banned</Badge> : null}
                 </Td>
-                <Td>{r.reporter_name || "Anonymous"}</Td>
+                <Td>{r.reporter?.name || "Anonymous"}</Td>
                 <Td>{r.reason}</Td>
-                <Td>{r.created_at.slice(0, 10)}</Td>
+                <Td>{r.createdAt.slice(0, 10)}</Td>
                 <Td><ReportStatusBadge status={r.status} /></Td>
                 <Td className="whitespace-nowrap text-right">
                   {r.status === "pending" ? (
@@ -75,7 +68,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
                       </form>
                     </>
                   ) : (
-                    <span className="text-[12px] text-admin-ink-3">{r.resolved_at ? r.resolved_at.slice(0, 10) : ""}</span>
+                    <span className="text-[12px] text-admin-ink-3">{r.resolvedAt ? r.resolvedAt.slice(0, 10) : ""}</span>
                   )}
                 </Td>
               </tr>

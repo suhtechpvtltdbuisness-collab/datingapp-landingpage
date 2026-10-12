@@ -43,17 +43,15 @@ src/app/(admin)/            admin root layout (Poppins, page background) + Tailw
   admin/_components/        ui.tsx (cards, tables, badges, buttons), Sidebar, AdminPage, FlashStack, form helpers
   admin/actions.ts          server actions: login, ban/unban/verify/delete, resolve/dismiss, change password
   admin/logout, admin/api/stats   route handlers
-src/lib/admin/              SQLite (node:sqlite), password hashing, session cookie, flash messages, seed data
+src/lib/admin/              backend API client, session cookie, flash messages, response types
 src/middleware.ts           sends signed-out visitors to /admin/login?next=...
 ```
 
-- **Data**: `data/dating_admin.db` holds the SQLite database for users, matches, reports, admins and the activity log.
-  If it's missing, it's created and filled with demo data. The default login is `admin` / `ChangeMe!123`
-  (printed in the terminal); change it in Settings.
-- **Settings**: `ADMIN_DB_PATH` (database file), `ADMIN_SECRET_KEY` (session signing key; locally one is
-  saved in `data/secret_key`). On Vercel the database lives in `/tmp` and is reset on each cold start,
-  so use a hosted database for real data.
-- Needs Node 22.13 or newer (for the built-in `node:sqlite`).
+- **Data**: live, from the dating backend's `/admin` API (`new_dating_app_backend`). Every page fetches on each
+  request; nothing is stored in this app. Set `NEXT_PUBLIC_BACKEND_URL` (or `BACKEND_URL`) to the backend, default
+  `http://localhost:5000`.
+- **Login**: the backend's admin account. The backend creates the first admin from `ADMIN_INITIAL_USERNAME` /
+  `ADMIN_INITIAL_PASSWORD` on the first sign-in attempt. The session is the backend's admin token in an httpOnly cookie.
 
 ## Images
 All illustrations are custom SVGs in `public/illustrations/`: the hero profile cards, the three

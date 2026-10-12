@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import AdminPage from "../../_components/AdminPage";
 import { EmptyState, KvRow, SectionCard, SectionTitle, TwoCol, buttonClass, cx, field, fieldLabel, nativeControl } from "../../_components/ui";
 import { changePassword } from "../../actions";
-import { all } from "@/lib/admin/db";
+import { apiList } from "@/lib/admin/api";
 import { requireAdmin } from "@/lib/admin/session";
-import type { ActivityRow } from "@/lib/admin/types";
+import type { ActivityEntry } from "@/lib/admin/types";
 
 export const metadata: Metadata = { title: "Settings" };
 export const dynamic = "force-dynamic";
@@ -16,7 +16,7 @@ const passwordInput = cx(
 
 export default async function SettingsPage() {
   const admin = await requireAdmin();
-  const activity = all<ActivityRow>("SELECT * FROM activity_log ORDER BY created_at DESC LIMIT 20");
+  const { items: activity } = await apiList<ActivityEntry>("/activity", { limit: 20 });
 
   return (
     <AdminPage admin={admin} heading="Settings" subheading="Manage your admin login & view recent activity">
@@ -46,10 +46,10 @@ export default async function SettingsPage() {
             activity.map((a) => (
               <KvRow
                 key={a.id}
-                label={<>{a.admin_username} — {a.action.replaceAll("_", " ")}{a.target ? ` (${a.target})` : ""}</>}
+                label={<>{a.adminUsername} — {a.action.replaceAll("_", " ")}{a.target ? ` (${a.target})` : ""}</>}
                 valueClassName="font-medium text-admin-ink-3"
               >
-                {a.created_at.slice(0, 16).replace("T", " ")}
+                {a.createdAt.slice(0, 16).replace("T", " ")}
               </KvRow>
             ))
           ) : (

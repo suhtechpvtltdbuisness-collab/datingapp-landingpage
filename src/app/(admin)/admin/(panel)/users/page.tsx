@@ -6,9 +6,9 @@ import { AccountStatusBadge, location } from "../../_components/Badges";
 import {
   Avatar, Badge, EmptyState, SectionCard, Table, Td, buttonClass, cx, emailText, nameLink, nativeControl, nativeControlColors, userCell,
 } from "../../_components/ui";
-import { all } from "@/lib/admin/db";
+import { apiList } from "@/lib/admin/api";
 import { requireAdmin } from "@/lib/admin/session";
-import type { UserRow } from "@/lib/admin/types";
+import type { AdminUser } from "@/lib/admin/types";
 
 export const metadata: Metadata = { title: "Users" };
 export const dynamic = "force-dynamic";
@@ -21,23 +21,10 @@ export default async function UsersPage({ searchParams }: { searchParams: Search
   const q = (params.q ?? "").trim();
   const status = params.status ?? "all";
 
-  const conditions: string[] = [];
-  const values: string[] = [];
-  if (q) {
-    conditions.push("(full_name LIKE ? OR email LIKE ?)");
-    values.push(`%${q}%`, `%${q}%`);
-  }
-  if (status === "verified") conditions.push("is_verified = 1");
-  else if (status === "banned") conditions.push("is_banned = 1");
-  else if (status === "premium") conditions.push("plan = 'premium'");
-
-  let query = "SELECT * FROM users";
-  if (conditions.length) query += " WHERE " + conditions.join(" AND ");
-  query += " ORDER BY created_at DESC";
-  const users = all<UserRow>(query, ...values);
+  const { items: users, pagination } = await apiList<AdminUser>("/users", { q, status, limit: 200 });
 
   return (
-    <AdminPage admin={admin} heading="Users" subheading={`${users.length} account${users.length !== 1 ? "s" : ""}`}>
+    <AdminPage admin={admin} heading="Users" subheading={`${pagination.total} account${pagination.total !== 1 ? "s" : ""}`}>
       <form className="mb-[18px] flex gap-2.5 max-[860px]:flex-wrap" method="get">
         <input
           type="text"
@@ -57,9 +44,9 @@ export default async function UsersPage({ searchParams }: { searchParams: Search
               <tr key={u.id}>
                 <Td>
                   <Link className={userCell} href={`/admin/users/${u.id}`}>
-                    <Avatar src={u.photo_url || "https://i.pravatar.cc/100"} />
+                    <Avatar src={u.photoUrl || "https://i.pravatar.cc/100"} />
                     <div>
-                      <div className={nameLink}>{u.full_name}</div>
+                      <div className={nameLink}>{u.name}</div>
                       <div className={emailText}>{u.email}</div>
                     </div>
                   </Link>
@@ -68,7 +55,7 @@ export default async function UsersPage({ searchParams }: { searchParams: Search
                 <Td>{u.age || "—"}</Td>
                 <Td>
                   <AccountStatusBadge user={u} />{" "}
-                  {u.is_online ? <Badge tone="info">Online</Badge> : null}
+                  {u.isOnline ? <Badge tone="info">Online</Badge> : null}
                 </Td>
                 <Td>{u.plan === "premium" ? <Badge tone="warning">Premium</Badge> : "Free"}</Td>
                 <Td className="whitespace-nowrap text-right">
