@@ -7,7 +7,10 @@ import { NextResponse, type NextRequest } from "next/server";
  */
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
-  if (pathname !== "/admin/login" && !req.cookies.has("admin_session")) {
+  // /admin/logout stays open: without it, signing out with no session would bounce through
+  // login?next=/admin/logout and sign the admin straight back out after the next login.
+  const open = pathname === "/admin/login" || pathname === "/admin/logout";
+  if (!open && !req.cookies.has("admin_session")) {
     const url = req.nextUrl.clone();
     url.pathname = "/admin/login";
     url.search = `?next=${encodeURIComponent(pathname)}`;
