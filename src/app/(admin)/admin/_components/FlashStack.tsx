@@ -13,8 +13,9 @@ export default function FlashStack({ messages, autoHide = false }: Props) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    // Each message is shown once.
-    document.cookie = "admin_flash=; Path=/admin; Max-Age=0; SameSite=Lax";
+    // Backup clear if the cookie was set before server-side consume existed.
+    const secure = window.location.protocol === "https:" ? "; Secure" : "";
+    document.cookie = `admin_flash=; Path=/admin; Max-Age=0; SameSite=Lax${secure}`;
     if (!autoHide) return;
     const timer = setTimeout(() => setVisible(false), 4000);
     return () => clearTimeout(timer);

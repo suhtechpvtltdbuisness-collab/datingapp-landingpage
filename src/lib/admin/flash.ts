@@ -29,13 +29,27 @@ function parse(raw: string | undefined): FlashBatch | null {
   return null;
 }
 
+function flashCookieOptions() {
+  return {
+    path: "/admin" as const,
+    sameSite: "lax" as const,
+    secure: process.env.NODE_ENV === "production",
+  };
+}
+
 export async function flash(message: string, category: FlashCategory) {
   const jar = await cookies();
   const existing = parse(jar.get(FLASH_COOKIE)?.value)?.messages ?? [];
   const batch: FlashBatch = { id: Date.now(), messages: [...existing, { category, message }] };
-  jar.set(FLASH_COOKIE, JSON.stringify(batch), { path: "/admin", sameSite: "lax", maxAge: 60 });
+  jar.set(FLASH_COOKIE, JSON.stringify(batch), { ...flashCookieOptions(), maxAge: 60 });
 }
 
+/** Read pending flashes once, then clear the cookie so a refresh does not show them again. */
 export async function getFlashes(): Promise<FlashBatch | null> {
-  return parse((await cookies()).get(FLASH_COOKIE)?.value);
+  const jar = await cookies();
+  const batch = parse(jar.get(FLASH_COOKIE)?.value);
+  if (batch) {
+    jar.delete({ name: FLASH_COOKIE, ...flashCookieOptions() });
+  }
+  return batch;
 }
