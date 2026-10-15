@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import FlashStack from "../_components/FlashStack";
+import PasswordInput from "../_components/PasswordInput";
 import { cx, field, fieldLabel, nativeControl } from "../_components/ui";
 import { login } from "../actions";
 import { getFlashes } from "@/lib/admin/flash";
@@ -35,7 +36,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             </div>
             <div className={field}>
               <label htmlFor="password" className={fieldLabel}>Password</label>
-              <input id="password" name="password" type="password" placeholder="••••••••" required className={input} />
+              <PasswordInput id="password" name="password" placeholder="••••••••" className={input} />
             </div>
             <button
               className="w-full cursor-pointer rounded-full bg-white p-3.5 [font-family:revert] [line-height:revert] text-[15px] font-bold text-admin-primary transition-[transform,box-shadow] duration-150 ease-in-out hover:-translate-y-px hover:shadow-admin-lift"

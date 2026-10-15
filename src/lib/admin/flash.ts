@@ -44,12 +44,11 @@ export async function flash(message: string, category: FlashCategory) {
   jar.set(FLASH_COOKIE, JSON.stringify(batch), { ...flashCookieOptions(), maxAge: 60 });
 }
 
-/** Read pending flashes once, then clear the cookie so a refresh does not show them again. */
+/**
+ * Read pending flashes. Cookies cannot be modified while rendering a page, so the
+ * cookie is cleared client-side by FlashStack once the messages are shown.
+ */
 export async function getFlashes(): Promise<FlashBatch | null> {
   const jar = await cookies();
-  const batch = parse(jar.get(FLASH_COOKIE)?.value);
-  if (batch) {
-    jar.delete({ name: FLASH_COOKIE, ...flashCookieOptions() });
-  }
-  return batch;
+  return parse(jar.get(FLASH_COOKIE)?.value);
 }

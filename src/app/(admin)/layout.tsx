@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} m-0 min-h-screen bg-admin-page bg-fixed leading-[normal] text-admin-ink`}>{children}</body>
+      <body suppressHydrationWarning className={`${poppins.className} m-0 min-h-screen bg-admin-page bg-fixed leading-[normal] text-admin-ink`}>{children}</body>
     </html>
   );
 }
