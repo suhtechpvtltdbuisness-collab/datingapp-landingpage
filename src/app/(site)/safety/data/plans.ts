@@ -1,4 +1,4 @@
-/** Mirrors the Subscription screen in the Velora app. Keep prices in sync with the store listings. */
+/** Mirrors the Subscription screen in the Vellora app. Keep prices in sync with the store listings. */
 export interface Plan {
   id: string;
   label: string;

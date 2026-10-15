@@ -26,7 +26,7 @@ export const tokens = {
 
 /** Apple-ish easeOutExpo curve used for every entrance. */
 export const brand = {
-  name: "Velora",
+  name: "Vellora",
   tagline: "Destined connections",
   motto: "Written in the stars. Connected by numbers.",
   emblem: "/brand/velora-emblem.png",

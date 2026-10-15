@@ -6,7 +6,7 @@ interface Props {
   withTagline?: boolean;
 }
 
-/** Round Velora emblem + serif wordmark, matching the app logo. */
+/** Round Vellora emblem + serif wordmark, matching the app logo. */
 export default function BrandLogo({ size = "sm", withTagline = false }: Props) {
   const px = size === "sm" ? 38 : 60;
   return (
