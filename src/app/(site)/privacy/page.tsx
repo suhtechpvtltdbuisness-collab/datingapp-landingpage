@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { brand } from "../safety/theme";
+import { company } from "@/lib/company";
+import LegalFooter from "../safety/components/LegalFooter";
 
 export const metadata: Metadata = { title: `Privacy Policy | ${brand.name}` };
 
@@ -124,12 +126,13 @@ const sections: Section[] = [
   },
   {
     title: "Contact Us",
-    body: <p>If you have questions about this Privacy Policy, your account, or your personal information, contact {brand.name} through the support/contact option provided within the app or website.</p>,
+    body: <p>If you have questions about this Privacy Policy, your account, or your personal information, contact {company.legalName} at <a href={`mailto:${company.supportEmail}`} className="font-semibold text-brand-magenta underline-offset-2 hover:underline">{company.supportEmail}</a>.</p>,
   },
 ];
 
 export default function PrivacyPage() {
   return (
+    <>
     <main className="min-h-screen bg-brand-bg px-4 py-16 text-brand-ink sm:px-6">
       <article className="mx-auto max-w-3xl rounded-card bg-white p-8 shadow-card sm:p-10">
         <Link
@@ -142,7 +145,7 @@ export default function PrivacyPage() {
         <h1 className="mt-6 font-display text-4xl font-extrabold">Privacy Policy</h1>
         <p className="mt-2 text-sm font-semibold text-brand-ink-soft">Last updated: September 2026</p>
         <p className="mt-6 leading-relaxed text-brand-ink-soft">
-          {brand.name} respects your privacy. This Privacy Policy explains what information we collect, how we use it, and the choices available to you when you use {brand.name}.
+          {brand.name} is operated by {company.legalName}, which is the data controller for the personal information described here. {brand.name} respects your privacy. This Privacy Policy explains what information we collect, how we use it, and the choices available to you when you use {brand.name}.
         </p>
 
         {sections.map((section, i) => (
@@ -157,5 +160,7 @@ export default function PrivacyPage() {
         ))}
       </article>
     </main>
+    <LegalFooter />
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { brand } from "../safety/theme";
 import KinderTogetherGuide from "./KinderTogetherGuide";
+import LegalFooter from "../safety/components/LegalFooter";
 
 export const metadata: Metadata = {
   title: `Kinder Together | ${brand.name}`,
@@ -8,5 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function KinderTogetherPage() {
-  return <KinderTogetherGuide />;
+  return (
+    <>
+      <KinderTogetherGuide />
+      <LegalFooter />
+    </>
+  );
 }

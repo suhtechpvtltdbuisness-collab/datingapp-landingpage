@@ -2,6 +2,7 @@ import { Heart, Users, MessageSquare, User } from "lucide-react";
 import DownloadCtaBar from "./DownloadCtaBar";
 import BrandLogo from "./BrandLogo";
 import { brand } from "../theme";
+import { company, copyrightLine, socialLinks } from "@/lib/company";
 
 type FooterLink = {
   label: string;
@@ -23,8 +24,8 @@ const groups: { title: string; links: FooterLink[] }[] = [
   {
     title: "Company",
     links: [
-      { label: "About", href: "#top" },
-      { label: "Contact", href: "mailto:support@velora.app" },
+      { label: "About", href: "/about" },
+      { label: "Contact", href: `mailto:${company.supportEmail}` },
     ],
   },
   {
@@ -37,11 +38,13 @@ const groups: { title: string; links: FooterLink[] }[] = [
   },
   {
     title: "Socials",
-    links: [
-      { label: "Instagram", href: "https://www.instagram.com/", external: true },
-      { label: "YouTube", href: "https://www.youtube.com/@veloraapp", external: true },
-      { label: "X", href: "https://x.com/veloraapp", external: true },
-    ],
+    links: (
+      [
+        { label: "Instagram", href: socialLinks.instagram },
+        { label: "YouTube", href: socialLinks.youtube },
+        { label: "X", href: socialLinks.x },
+      ] as const
+    ).flatMap((l) => (l.href ? [{ label: l.label, href: l.href, external: true }] : [])),
   },
 ];
 
@@ -72,7 +75,7 @@ export default function SafetyFooter() {
             <p className="mt-5 max-w-xs text-sm text-brand-ink-soft">Dating should feel exciting, not risky. We're building it that way.</p>
           </div>
           <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-            {groups.map((g) => (
+            {groups.filter((g) => g.links.length > 0).map((g) => (
               <div key={g.title}>
                 <h2 className="font-display text-sm font-bold text-brand-ink">{g.title}</h2>
                 <ul className="mt-3 space-y-2">
@@ -93,7 +96,7 @@ export default function SafetyFooter() {
             ))}
           </nav>
         </div>
-        <p className="mt-12 border-t border-brand-magenta/10 pt-6 text-xs text-brand-ink-soft">© {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
+        <p className="mt-12 border-t border-brand-magenta/10 pt-6 text-xs text-brand-ink-soft">{copyrightLine}</p>
       </div>
     </footer>
   );

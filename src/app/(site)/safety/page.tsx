@@ -4,7 +4,6 @@ import SafetyHero from "./components/SafetyHero";
 import SafetyFeatureGrid from "./components/SafetyFeatureGrid";
 import SafetyHandbookBanner from "./components/SafetyHandbookBanner";
 import CampaignCarousel from "./components/CampaignCarousel";
-import PartnerLogoMarquee from "./components/PartnerLogoMarquee";
 import PlansSection from "./components/PlansSection";
 import FaqSection from "./components/FaqSection";
 import SafetyFooter from "./components/SafetyFooter";
@@ -21,7 +20,6 @@ export default function SafetyPage() {
         <SafetyFeatureGrid />
         <SafetyHandbookBanner />
         <CampaignCarousel />
-        <PartnerLogoMarquee />
         <PlansSection />
         <FaqSection />
       </main>

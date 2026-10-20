@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { brand } from "../safety/theme";
+import { company } from "@/lib/company";
+import LegalFooter from "../safety/components/LegalFooter";
 
 export const metadata: Metadata = { title: `Terms of Service | ${brand.name}` };
 
@@ -133,12 +135,13 @@ const sections: Section[] = [
   },
   {
     title: "Contact Us",
-    body: <p>If you have questions about these Terms or your {brand.name} account, contact us through the support/contact option provided within {brand.name}.</p>,
+    body: <p>If you have questions about these Terms or your {brand.name} account, contact us at <a href={`mailto:${company.supportEmail}`} className={linkClass}>{company.supportEmail}</a> or through the support option within {brand.name}.</p>,
   },
 ];
 
 export default function TermsPage() {
   return (
+    <>
     <main className="min-h-screen bg-brand-bg px-4 py-16 text-brand-ink sm:px-6">
       <article className="mx-auto max-w-3xl rounded-card bg-white p-8 shadow-card sm:p-10">
         <Link
@@ -151,7 +154,7 @@ export default function TermsPage() {
         <h1 className="mt-6 font-display text-4xl font-extrabold">Terms of Service</h1>
         <p className="mt-2 text-sm font-semibold text-brand-ink-soft">Last updated: September 2026</p>
         <p className="mt-6 leading-relaxed text-brand-ink-soft">
-          Welcome to <strong className="text-brand-ink">{brand.name}</strong>. By creating an account or using {brand.name}, you agree to these Terms of Service. Please read them carefully before using the platform.
+          Welcome to <strong className="text-brand-ink">{brand.name}</strong>. These Terms are an agreement between you and <strong className="text-brand-ink">{company.legalName}</strong> (&quot;we&quot;, &quot;us&quot;), the company that operates {brand.name}. By creating an account or using {brand.name}, you agree to these Terms of Service. Please read them carefully before using the platform.
         </p>
 
         {sections.map((section, i) => (
@@ -170,5 +173,7 @@ export default function TermsPage() {
         </p>
       </article>
     </main>
+    <LegalFooter />
+    </>
   );
 }

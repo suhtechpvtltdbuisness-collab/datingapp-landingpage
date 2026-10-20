@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { brand } from "../safety/theme";
 import SafetyTipsGuide from "./SafetyTipsGuide";
+import LegalFooter from "../safety/components/LegalFooter";
 
 export const metadata: Metadata = {
   title: `Safety Tips | ${brand.name}`,
@@ -8,5 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default function SafetyTipsPage() {
-  return <SafetyTipsGuide />;
+  return (
+    <>
+      <SafetyTipsGuide />
+      <LegalFooter />
+    </>
+  );
 }
