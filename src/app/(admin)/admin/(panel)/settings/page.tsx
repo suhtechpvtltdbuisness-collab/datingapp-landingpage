@@ -1,6 +1,7 @@
+import { formatDate, formatDateTime } from "@/lib/admin/time";
 import type { Metadata } from "next";
 import AdminPage from "../../_components/AdminPage";
-import { EmptyState, KvRow, SectionCard, SectionTitle, TwoCol, buttonClass, cx, field, fieldLabel, nativeControl } from "../../_components/ui";
+import { EmptyState, SectionCard, SectionTitle, TwoCol, buttonClass, cx, field, fieldLabel, nativeControl } from "../../_components/ui";
 import { changePassword } from "../../actions";
 import { apiList } from "@/lib/admin/api";
 import { requireAdmin } from "@/lib/admin/session";
@@ -44,13 +45,15 @@ export default async function SettingsPage() {
           <SectionTitle>Recent admin activity</SectionTitle>
           {activity.length ? (
             activity.map((a) => (
-              <KvRow
+              <div
                 key={a.id}
-                label={<>{a.adminUsername} — {a.action.replaceAll("_", " ")}{a.target ? ` (${a.target})` : ""}</>}
-                valueClassName="font-medium text-admin-ink-3"
+                className="flex items-baseline justify-between gap-4 border-b border-dashed border-black/[0.08] py-2.5 text-[13.5px] last:border-b-0 max-[560px]:flex-col max-[560px]:gap-1"
               >
-                {a.createdAt.slice(0, 16).replace("T", " ")}
-              </KvRow>
+                <span className="min-w-0 text-admin-ink-2 [overflow-wrap:anywhere]">
+                  {a.adminUsername} — {a.action.replaceAll("_", " ")}{a.target ? ` (${a.target})` : ""}
+                </span>
+                <span className="shrink-0 whitespace-nowrap font-medium text-admin-ink-3">{formatDateTime(a.createdAt)}</span>
+              </div>
             ))
           ) : (
             <EmptyState compact>No activity logged yet.</EmptyState>

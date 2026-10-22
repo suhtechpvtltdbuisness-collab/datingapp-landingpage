@@ -1,3 +1,4 @@
+import { formatDate, formatDateTime } from "@/lib/admin/time";
 /* eslint-disable @next/next/no-img-element */
 import { photoSrc } from "@/lib/admin/photo";
 import type { Metadata } from "next";
@@ -61,7 +62,7 @@ export default async function UserDetailPage({ params }: { params: Params }) {
             <KvRow label="Gender">{user.gender || "—"}</KvRow>
             <KvRow label="Location">{location(user)}</KvRow>
             <KvRow label="Bio">{user.bio || "—"}</KvRow>
-            <KvRow label="Joined">{user.createdAt.slice(0, 10)}</KvRow>
+            <KvRow label="Joined">{formatDate(user.createdAt)}</KvRow>
           </div>
 
           <div className="mt-5 flex gap-2.5 max-[560px]:flex-wrap">

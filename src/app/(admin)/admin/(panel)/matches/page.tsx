@@ -1,3 +1,4 @@
+import { formatDate, formatDateTime } from "@/lib/admin/time";
 import type { Metadata } from "next";
 import Link from "next/link";
 import AdminPage from "../../_components/AdminPage";
@@ -29,7 +30,7 @@ export default async function MatchesPage() {
                 <Td><UserLink user={m.userA} /></Td>
                 <Td><UserLink user={m.userB} /></Td>
                 <Td><MatchStatusBadge status={m.status} /></Td>
-                <Td>{m.matchedAt.slice(0, 10)}</Td>
+                <Td>{formatDate(m.matchedAt)}</Td>
               </tr>
             ))}
           </Table>

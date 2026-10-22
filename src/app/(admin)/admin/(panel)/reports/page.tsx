@@ -1,3 +1,4 @@
+import { formatDate, formatDateTime } from "@/lib/admin/time";
 import type { Metadata } from "next";
 import Link from "next/link";
 import AdminPage from "../../_components/AdminPage";
@@ -55,7 +56,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
                 </Td>
                 <Td>{r.reporter?.name || "Anonymous"}</Td>
                 <Td>{r.reason}</Td>
-                <Td>{r.createdAt.slice(0, 10)}</Td>
+                <Td>{formatDate(r.createdAt)}</Td>
                 <Td><ReportStatusBadge status={r.status} /></Td>
                 <Td className="whitespace-nowrap text-right">
                   {r.status === "pending" ? (
@@ -68,7 +69,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
                       </form>
                     </>
                   ) : (
-                    <span className="text-[12px] text-admin-ink-3">{r.resolvedAt ? r.resolvedAt.slice(0, 10) : ""}</span>
+                    <span className="text-[12px] text-admin-ink-3">{r.resolvedAt ? formatDate(r.resolvedAt) : ""}</span>
                   )}
                 </Td>
               </tr>

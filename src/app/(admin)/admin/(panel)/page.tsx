@@ -1,3 +1,4 @@
+import { formatDate, formatDateTime } from "@/lib/admin/time";
 import { photoSrc } from "@/lib/admin/photo";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -51,7 +52,7 @@ export default async function DashboardPage() {
                   </Td>
                   <Td>{location(u)}</Td>
                   <Td>{u.plan === "premium" ? <Badge tone="warning">Premium</Badge> : <Badge tone="neutral">Free</Badge>}</Td>
-                  <Td>{u.createdAt.slice(0, 10)}</Td>
+                  <Td>{formatDate(u.createdAt)}</Td>
                 </tr>
               ))}
             </Table>
