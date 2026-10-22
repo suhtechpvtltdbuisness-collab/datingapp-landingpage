@@ -1,3 +1,4 @@
+import { photoSrc } from "@/lib/admin/photo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import AdminPage from "../../_components/AdminPage";
@@ -44,7 +45,7 @@ export default async function UsersPage({ searchParams }: { searchParams: Search
               <tr key={u.id}>
                 <Td>
                   <Link className={userCell} href={`/admin/users/${u.id}`}>
-                    <Avatar src={u.photoUrl || "https://i.pravatar.cc/100"} />
+                    <Avatar src={photoSrc(u.photoUrl)} />
                     <div>
                       <div className={nameLink}>{u.name}</div>
                       <div className={emailText}>{u.email}</div>

@@ -1,3 +1,4 @@
+import { photoSrc } from "@/lib/admin/photo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import AdminPage from "../_components/AdminPage";
@@ -41,7 +42,7 @@ export default async function DashboardPage() {
                 <tr key={u.id}>
                   <Td>
                     <div className={userCell}>
-                      <Avatar src={u.photoUrl || "https://i.pravatar.cc/100"} />
+                      <Avatar src={photoSrc(u.photoUrl)} />
                       <div>
                         <div className={nameText}>{u.name}</div>
                         <div className={emailText}>{u.email}</div>

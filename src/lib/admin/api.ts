@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getToken } from "./session";
 
 /** Where the dating backend (new_dating_app_backend) is running. */
-function backendUrl(): string {
+export function backendUrl(): string {
   const raw = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
   return raw.replace(/\/+$/, "");
 }

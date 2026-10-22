@@ -63,9 +63,9 @@ export default function SafetyHero() {
           </motion.p>
           <h1 className="font-display text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-brand-ink sm:text-6xl">
             {headline.map((word, i) => (
-              <span key={i} className="inline-block overflow-hidden pb-1 align-bottom">
+              <span key={i} className="-mb-[0.2em] inline-block overflow-hidden pb-[0.2em] align-bottom">
                 <motion.span
-                  className={`inline-block ${i === 1 ? "bg-brand-gradient bg-clip-text text-transparent" : ""}`}
+                  className={`inline-block ${i === 1 ? "-mb-[0.2em] bg-brand-gradient bg-clip-text pb-[0.2em] text-transparent" : ""}`}
                   initial={{ y: "110%", opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.9, ease: EASE, delay: 0.15 + i * 0.06 }}

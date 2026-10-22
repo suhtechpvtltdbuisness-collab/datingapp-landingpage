@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { photoSrc } from "@/lib/admin/photo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -42,7 +43,7 @@ export default async function UserDetailPage({ params }: { params: Params }) {
           <div className="mb-2 flex items-center gap-5 max-[560px]:flex-wrap max-[560px]:gap-3.5">
             <img
               className="h-[84px] w-[84px] max-w-none rounded-[24px] object-cover align-baseline max-[560px]:h-[72px] max-[560px]:w-[72px]"
-              src={user.photoUrl || "https://i.pravatar.cc/200"}
+              src={photoSrc(user.photoUrl)}
               alt=""
             />
             <div>
