@@ -50,7 +50,9 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
                   {r.reportedUser ? (
                     <Link href={`/admin/users/${r.reportedUser.id}`} className={nameLink}>{r.reportedUser.name}</Link>
                   ) : (
-                    <span className="text-admin-ink-3">Deleted user</span>
+                    <span className="text-admin-ink-3">
+                      {r.reportedUserName ? `${r.reportedUserName} (account deleted)` : "Deleted user"}
+                    </span>
                   )}
                   {r.reportedUser?.isBanned ? <Badge tone="danger" className="ml-1.5">Banned</Badge> : null}
                 </Td>

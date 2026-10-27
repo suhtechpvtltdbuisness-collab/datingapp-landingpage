@@ -52,6 +52,8 @@ export interface AdminReport {
   status: "pending" | "resolved" | "dismissed";
   reporter: UserSummary | null;
   reportedUser: UserSummary | null;
+  /** Name saved on the report when it was filed; lets the panel still name a user whose account was deleted. */
+  reportedUserName?: string | null;
   createdAt: string;
   resolvedAt: string | null;
 }

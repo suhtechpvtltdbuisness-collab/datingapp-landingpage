@@ -6,6 +6,7 @@ const links = [
   { label: "Terms", href: "/terms" },
   { label: "Privacy", href: "/privacy" },
   { label: "Cookies", href: "/cookies" },
+  { label: "Delete account", href: "/delete" },
 ];
 
 /** Compact footer for pages that don't carry the full SafetyFooter. */
