@@ -49,14 +49,24 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
                 <Td>
                   {r.reportedUser ? (
                     <Link href={`/admin/users/${r.reportedUser.id}`} className={nameLink}>{r.reportedUser.name}</Link>
+                  ) : r.reportedUserId ? (
+                    <Link href={`/admin/users/${r.reportedUserId}`} className={nameLink}>
+                      {r.reportedUserName || "Unknown user"}
+                    </Link>
+                  ) : r.reportedUserName ? (
+                    <span className="text-admin-ink-3">{r.reportedUserName} (account deleted)</span>
                   ) : (
-                    <span className="text-admin-ink-3">
-                      {r.reportedUserName ? `${r.reportedUserName} (account deleted)` : "Deleted user"}
-                    </span>
+                    <span className="text-admin-ink-3">Unknown user</span>
                   )}
                   {r.reportedUser?.isBanned ? <Badge tone="danger" className="ml-1.5">Banned</Badge> : null}
                 </Td>
-                <Td>{r.reporter?.name || "Anonymous"}</Td>
+                <Td>
+                  {r.reporter ? (
+                    <Link href={`/admin/users/${r.reporter.id}`} className={nameLink}>{r.reporter.name}</Link>
+                  ) : (
+                    <span className="text-admin-ink-3">Anonymous</span>
+                  )}
+                </Td>
                 <Td>{r.reason}</Td>
                 <Td>{formatDate(r.createdAt)}</Td>
                 <Td><ReportStatusBadge status={r.status} /></Td>

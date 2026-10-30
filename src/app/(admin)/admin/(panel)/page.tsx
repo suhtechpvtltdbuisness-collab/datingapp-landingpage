@@ -70,7 +70,9 @@ export default async function DashboardPage() {
             <Table head={["Reported", "Reason", "Status"]}>
               {recentReports.map((r) => (
                 <tr key={r.id}>
-                  <Td className="font-semibold">{r.reportedUser?.name ?? (r.reportedUserName ? `${r.reportedUserName} (deleted)` : "Deleted user")}</Td>
+                  <Td className="font-semibold">
+                    {r.reportedUser?.name ?? r.reportedUserName ?? "Unknown user"}
+                  </Td>
                   <Td>{r.reason}</Td>
                   <Td><ReportStatusBadge status={r.status} /></Td>
                 </tr>
