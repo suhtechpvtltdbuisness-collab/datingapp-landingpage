@@ -11,6 +11,11 @@ export const company = {
   supportEmail: "suhtechpvtltdbuisness@gmail.com",
   supportPhone: "+91 75968 18126",
   domain: "vellora.my",
+  // Grievance Officer named in the Privacy Policy (required under India's IT Rules and DPDP Act).
+  grievanceOfficer: {
+    name: null as string | null, // TODO: full name of the person responsible
+    email: "suhtechpvtltdbuisness@gmail.com",
+  },
 } as const;
 
 export const storeLinks = {
