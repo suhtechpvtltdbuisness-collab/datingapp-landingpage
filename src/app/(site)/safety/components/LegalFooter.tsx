@@ -6,6 +6,7 @@ const links = [
   { label: "Terms", href: "/terms" },
   { label: "Privacy", href: "/privacy" },
   { label: "Cookies", href: "/cookies" },
+  { label: "Child safety", href: "/child-safety" },
   { label: "Delete account", href: "/delete" },
 ];
 
