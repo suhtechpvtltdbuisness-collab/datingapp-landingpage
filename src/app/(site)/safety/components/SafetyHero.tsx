@@ -10,15 +10,15 @@ const headline = ["Meet someone.", "Feel something.", "Make it meaningful."];
 
 function PhotoCard({ name, tag, image, className }: { name: string; tag: string; image: string; className: string }) {
   return (
-    <div className={`absolute w-44 overflow-hidden rounded-card bg-white p-2 shadow-card-hover sm:w-52 ${className}`}>
+    <div className={`absolute w-36 overflow-hidden rounded-card bg-white p-2 shadow-card-hover sm:w-52 ${className}`}>
       <div className="relative aspect-[3/4] overflow-hidden rounded-photo bg-brand-gradient-soft">
         <Image src={image} alt="" fill unoptimized priority sizes="208px" className="object-cover" />
-        <div className="absolute inset-x-0 bottom-0 rounded-b-photo bg-gradient-to-t from-black/60 to-transparent p-3 text-white">
-          <p className="flex items-center gap-1 font-display font-semibold">
+        <div className="absolute inset-x-0 bottom-0 rounded-b-photo bg-gradient-to-t from-black/60 to-transparent p-2.5 sm:p-3 text-white">
+          <p className="flex items-center gap-1 font-display text-sm font-semibold sm:text-base">
             {name}
-            <BadgeCheck className="h-4 w-4 text-white" aria-label="Verified" />
+            <BadgeCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" aria-label="Verified" />
           </p>
-          <p className="text-xs font-bold uppercase tracking-wide text-brand-accent-soft">{tag}</p>
+          <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-brand-accent-soft">{tag}</p>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@ export default function SafetyHero() {
           >
             <ShieldCheck className="h-4 w-4" aria-hidden /> Find Your Connection
           </motion.p>
-          <h1 className="font-display text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-brand-ink sm:text-6xl">
+          <h1 className="font-display text-[2.1rem] sm:text-5xl md:text-6xl font-extrabold leading-[1.08] tracking-tight text-brand-ink">
             {headline.map((word, i) => (
               <span key={i} className="-mb-[0.2em] inline-block overflow-hidden pb-[0.2em] align-bottom">
                 <motion.span

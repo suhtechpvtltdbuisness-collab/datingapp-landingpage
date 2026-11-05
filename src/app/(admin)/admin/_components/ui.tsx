@@ -32,8 +32,8 @@ export function StatCard({ tone, icon, value, label }: { tone: keyof typeof stat
   return (
     <div className={cx(glass, statBackgrounds[tone], "relative overflow-hidden p-5 text-white max-[560px]:p-4")}>
       <div className="absolute right-3.5 top-3.5 text-[26px] opacity-[0.45] max-[560px]:right-2.5 max-[560px]:top-2.5 max-[560px]:text-[22px]">{icon}</div>
-      <div className="text-[28px] font-extrabold max-[560px]:text-[24px]">{value}</div>
-      <div className="mt-0.5 text-[12.5px] font-semibold opacity-90">{label}</div>
+      <div className="text-[26px] font-bold tracking-tight max-[560px]:text-[22px]">{value}</div>
+      <div className="mt-0.5 text-[12px] font-medium opacity-90">{label}</div>
     </div>
   );
 }
@@ -59,14 +59,20 @@ export function Table({ head, children }: { head: string[]; children: React.Reac
       <table className="w-full border-collapse text-[13.5px]">
         <thead>
           <tr>
-            {head.map((h, i) => (
-              <th
-                key={i}
-                className="border-b border-black/[0.06] px-3 py-2.5 text-left text-[12px] font-semibold uppercase tracking-[0.4px] text-admin-ink-3 max-[860px]:whitespace-nowrap"
-              >
-                {h}
-              </th>
-            ))}
+            {head.map((h, i) => {
+              const isAction = h.toLowerCase().includes("action") || h === "";
+              return (
+                <th
+                  key={i}
+                  className={cx(
+                    "border-b border-black/[0.06] px-3 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.4px] text-admin-ink-3 max-[860px]:whitespace-nowrap",
+                    isAction ? "text-right" : "text-left",
+                  )}
+                >
+                  {h}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody className="[&>tr:last-child>td]:border-b-0">{children}</tbody>

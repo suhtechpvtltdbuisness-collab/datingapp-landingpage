@@ -4,17 +4,39 @@ import { Apple, Play } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 
 export default function DownloadCtaBar() {
-  if (!storeLinks.appStore && !storeLinks.googlePlay) return null;
   return (
     <div id="download" className="scroll-mt-20 px-4 sm:px-6">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-card bg-brand-gradient p-8 text-white shadow-glow sm:flex-row sm:items-center sm:justify-between sm:p-10">
         <div>
-          <h2 className="font-display text-2xl font-extrabold sm:text-3xl">Ready when you are</h2>
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">Ready when you are</h2>
           <p className="mt-2 text-white/90">Download Vellora and turn on photo verification. It takes under a minute.</p>
         </div>
-        <div className="flex flex-wrap gap-3">
-          {storeLinks.appStore && <MagneticButton href={storeLinks.appStore} variant="white" size="sm"><Apple className="h-4 w-4" aria-hidden /> App Store</MagneticButton>}
-          {storeLinks.googlePlay && <MagneticButton href={storeLinks.googlePlay} variant="white" size="sm"><Play className="h-4 w-4" aria-hidden /> Google Play</MagneticButton>}
+        <div className="flex flex-wrap items-center gap-3">
+          {storeLinks.appStore ? (
+            <MagneticButton href={storeLinks.appStore} variant="white" size="sm">
+              <Apple className="h-4 w-4" aria-hidden /> App Store
+            </MagneticButton>
+          ) : (
+            <a
+              href="#top"
+              className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm hover:bg-white/30 transition"
+            >
+              <Apple className="h-4 w-4" /> App Store (Coming Soon)
+            </a>
+          )}
+
+          {storeLinks.googlePlay ? (
+            <MagneticButton href={storeLinks.googlePlay} variant="white" size="sm">
+              <Play className="h-4 w-4" aria-hidden /> Google Play
+            </MagneticButton>
+          ) : (
+            <a
+              href="#top"
+              className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm hover:bg-white/30 transition"
+            >
+              <Play className="h-4 w-4" /> Google Play (Coming Soon)
+            </a>
+          )}
         </div>
       </div>
     </div>

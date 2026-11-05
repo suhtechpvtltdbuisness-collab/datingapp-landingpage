@@ -3,8 +3,8 @@ import { getToken } from "./session";
 
 /** Where the dating backend (new_dating_app_backend) is running. */
 export function backendUrl(): string {
-  const raw = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
-  return raw.replace(/\/+$/, "");
+  const raw = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:5001";
+  return raw.split("#")[0].trim().replace(/\/+$/, "");
 }
 
 export class ApiError extends Error {
@@ -48,8 +48,11 @@ export async function api<T>(
       body: body === undefined ? undefined : JSON.stringify(body),
       cache: "no-store",
     });
-  } catch {
-    throw new ApiError(0, `Cannot reach the backend at ${backendUrl()}. Is it running?`);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    const cause = (err as { cause?: Error })?.cause?.message;
+    console.error(`[Admin API Connection Error] Target: ${url.toString()} | Error: ${message}${cause ? ` | Cause: ${cause}` : ""}`);
+    throw new ApiError(0, `Cannot reach the backend at ${backendUrl()}. Is it running? (${message}${cause ? `: ${cause}` : ""})`);
   }
 
   const json = (await res.json().catch(() => ({}))) as Partial<Envelope<T>>;
@@ -62,9 +65,35 @@ export async function api<T>(
 
 /** Fetches a paginated list and returns it as { items, pagination }. */
 export async function apiList<T>(path: string, query?: Query) {
-  const res = await api<T[]>(path, { query });
-  return {
-    items: res.data,
-    pagination: res.pagination as { page: number; limit: number; total: number; pages: number },
-  };
+  try {
+    const res = await api<T[]>(path, { query });
+    const rawData = res?.data;
+    const items: T[] = Array.isArray(rawData)
+      ? rawData
+      : Array.isArray((rawData as any)?.items)
+      ? (rawData as any).items
+      : Array.isArray((rawData as any)?.data)
+      ? (rawData as any).data
+      : [];
+
+    const pagination = (res?.pagination ?? (rawData as any)?.pagination ?? {
+      page: 1,
+      limit: items.length,
+      total: items.length,
+      pages: 1,
+    }) as { page: number; limit: number; total: number; pages: number };
+
+    return { items, pagination };
+  } catch (err: unknown) {
+    const digest = String((err as any)?.digest ?? "");
+    const message = String((err as any)?.message ?? "");
+    if (digest.includes("NEXT_REDIRECT") || message.includes("NEXT_REDIRECT")) {
+      throw err;
+    }
+    console.error(`[Admin API] Failed to fetch list from ${path}:`, err);
+    return {
+      items: [] as T[],
+      pagination: { page: 1, limit: 0, total: 0, pages: 1 },
+    };
+  }
 }

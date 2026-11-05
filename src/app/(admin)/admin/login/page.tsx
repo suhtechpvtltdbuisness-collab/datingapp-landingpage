@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import FlashStack from "../_components/FlashStack";
 import PasswordInput from "../_components/PasswordInput";
+import SubmitButton from "../_components/SubmitButton";
 import { cx, field, fieldLabel, nativeControl } from "../_components/ui";
 import { login } from "../actions";
 import { getFlashes } from "@/lib/admin/flash";
@@ -25,7 +26,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       {flashes && <FlashStack key={flashes.id} messages={flashes.messages} />}
       <div className="flex min-h-screen items-center justify-center bg-admin-auth p-6">
         <div className="w-full max-w-[400px] rounded-[28px] border border-white/35 bg-white/[0.14] px-8 py-10 text-white shadow-admin-auth backdrop-blur-[22px] max-[560px]:px-[22px] max-[560px]:py-8">
-          <div className="mb-1 text-center text-[26px] font-extrabold tracking-[0.5px]">💗 DatingApp Admin</div>
+          <div className="mb-1 text-center text-[24px] font-bold tracking-tight">💗 DatingApp Admin</div>
           <div className="mb-7 text-center text-[13px] opacity-[0.85]">Sign in to manage users, matches &amp; reports</div>
 
           <form action={login}>
@@ -38,12 +39,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
               <label htmlFor="password" className={fieldLabel}>Password</label>
               <PasswordInput id="password" name="password" placeholder="••••••••" className={input} />
             </div>
-            <button
-              className="w-full cursor-pointer rounded-full bg-white p-3.5 [font-family:revert] [line-height:revert] text-[15px] font-bold text-admin-primary transition-[transform,box-shadow] duration-150 ease-in-out hover:-translate-y-px hover:shadow-admin-lift"
-              type="submit"
-            >
-              Sign in
-            </button>
+            <SubmitButton idleText="Sign in" loadingText="Signing in..." />
           </form>
 
           <div className="mt-5 text-center text-[12px] leading-normal opacity-75">

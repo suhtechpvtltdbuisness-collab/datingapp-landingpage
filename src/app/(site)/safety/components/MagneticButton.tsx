@@ -17,7 +17,7 @@ export default function MagneticButton({ href, children, variant = "gradient", s
     variant === "gradient"
       ? "bg-brand-gradient text-white shadow-glow"
       : "bg-white text-brand-magenta shadow-card";
-  const pad = size === "lg" ? "px-7 py-4 text-base" : "px-5 py-2.5 text-sm";
+  const pad = size === "lg" ? "px-7 py-4 text-base" : "px-3.5 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm whitespace-nowrap";
   return (
     <motion.a
       ref={ref}

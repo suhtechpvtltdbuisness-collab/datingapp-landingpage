@@ -10,17 +10,23 @@ interface Props {
 export default function BrandLogo({ size = "sm", withTagline = false }: Props) {
   const px = size === "sm" ? 38 : 60;
   return (
-    <span className="flex items-center gap-2.5">
+    <span className="flex items-center gap-2 sm:gap-2.5 shrink-0">
       <Image
         src={brand.emblem}
         alt=""
         width={px}
         height={px}
         priority={size === "sm"}
-        className="rounded-full shadow-[0_6px_16px_-6px_rgba(26,15,46,0.6)]"
+        className={`rounded-full shadow-[0_6px_16px_-6px_rgba(26,15,46,0.6)] shrink-0 ${
+          size === "sm" ? "h-7 w-7 sm:h-[38px] sm:w-[38px]" : "h-[60px] w-[60px]"
+        }`}
       />
       <span className="flex flex-col leading-none">
-        <span className={`bg-brand-wordmark bg-clip-text font-brand font-bold text-transparent ${size === "sm" ? "text-[1.7rem]" : "text-4xl"}`}>
+        <span
+          className={`bg-brand-wordmark bg-clip-text font-brand font-bold text-transparent whitespace-nowrap ${
+            size === "sm" ? "text-[1.3rem] sm:text-[1.7rem]" : "text-4xl"
+          }`}
+        >
           {brand.name}
         </span>
         {withTagline && (

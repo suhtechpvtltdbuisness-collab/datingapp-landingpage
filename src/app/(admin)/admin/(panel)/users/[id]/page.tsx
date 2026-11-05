@@ -6,8 +6,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import AdminPage from "../../../_components/AdminPage";
 import ConfirmDeleteForm from "../../../_components/ConfirmDeleteForm";
+import SubmitButton from "../../../_components/SubmitButton";
 import { AccountStatusBadge, MatchStatusBadge, ReportStatusBadge, location } from "../../../_components/Badges";
-import { Badge, EmptyState, KvRow, SectionCard, SectionTitle, TwoCol, buttonClass } from "../../../_components/ui";
+import { Badge, EmptyState, KvRow, SectionCard, SectionTitle, TwoCol, buttonClass, cx } from "../../../_components/ui";
 import { banUser, deleteUser, unbanUser, verifyUser } from "../../../actions";
 import { ApiError, api } from "@/lib/admin/api";
 import { requireAdmin } from "@/lib/admin/session";
@@ -47,52 +48,49 @@ export default async function UserDetailPage({ params }: { params: Params }) {
               src={photoSrc(user.photoUrl)}
               alt=""
             />
-            <div>
-              <div className="text-[20px] font-extrabold">{user.name}, {user.age || "—"}</div>
-              <div className="mt-1 text-[13px] text-admin-ink-2">{user.email}</div>
-              <div className="mt-2">
-                <AccountStatusBadge user={user} />{" "}
-                {user.plan === "premium" && <Badge tone="warning">Premium</Badge>}{" "}
+            <div className="min-w-0">
+              <div className="text-[19px] font-bold tracking-tight text-admin-ink truncate">{user.name}, {user.age || "—"}</div>
+              <div className="mt-1 text-[13px] text-admin-ink-2 truncate">{user.email}</div>
+              <div className="mt-2 flex items-center gap-1.5 flex-wrap">
+                <AccountStatusBadge user={user} />
+                {user.plan === "premium" && <Badge tone="warning">Premium</Badge>}
                 {user.isOnline ? <Badge tone="info">Online</Badge> : null}
               </div>
             </div>
           </div>
 
-          <div className="mt-[22px]">
+          <div className="mt-[18px]">
             <KvRow label="User ID">
-              <span className="font-mono text-[12px] select-all">{user.id}</span>
+              <span className="rounded bg-admin-brand/10 px-2 py-0.5 font-mono text-[12px] font-semibold text-admin-brand select-all">
+                {user.publicUserId || `USR-${user.id.slice(-5)}`}
+              </span>
             </KvRow>
-            {user.publicUserId ? (
-              <KvRow label="Public ID">
-                <span className="rounded bg-admin-brand/10 px-1.5 py-0.5 font-mono text-[12px] font-bold text-admin-brand select-all">
-                  {user.publicUserId}
-                </span>
-              </KvRow>
-            ) : null}
             <KvRow label="Gender">{user.gender || "—"}</KvRow>
             <KvRow label="Location">{location(user)}</KvRow>
             <KvRow label="Bio">{user.bio || "—"}</KvRow>
             <KvRow label="Joined">{formatDate(user.createdAt)}</KvRow>
           </div>
 
-          <div className="mt-5 flex gap-2.5 max-[560px]:flex-wrap">
+          <div className="mt-5 flex flex-wrap gap-2">
             {user.isBanned ? (
-              <form action={unbanUser.bind(null, user.id)}>
-                <button className={buttonClass("success")} type="submit">✅ Unban user</button>
+              <form action={unbanUser.bind(null, user.id)} className="max-[480px]:w-full">
+                <SubmitButton idleText="✅ Unban user" loadingText="Unbanning..." className={cx(buttonClass("success"), "max-[480px]:w-full max-[480px]:justify-center")} />
               </form>
             ) : (
-              <form action={banUser.bind(null, user.id)}>
-                <button className={buttonClass("danger")} type="submit">⛔ Ban user</button>
+              <form action={banUser.bind(null, user.id)} className="max-[480px]:w-full">
+                <SubmitButton idleText="⛔ Ban user" loadingText="Banning..." className={cx(buttonClass("danger"), "max-[480px]:w-full max-[480px]:justify-center")} />
               </form>
             )}
 
             {!user.isVerified && (
-              <form action={verifyUser.bind(null, user.id)}>
-                <button className={buttonClass("outline")} type="submit">✅ Mark verified</button>
+              <form action={verifyUser.bind(null, user.id)} className="max-[480px]:w-full">
+                <SubmitButton idleText="✅ Mark verified" loadingText="Verifying..." className={cx(buttonClass("outline"), "max-[480px]:w-full max-[480px]:justify-center")} />
               </form>
             )}
 
-            <ConfirmDeleteForm action={deleteUser.bind(null, user.id)} />
+            <div className="max-[480px]:w-full">
+              <ConfirmDeleteForm action={deleteUser.bind(null, user.id)} />
+            </div>
           </div>
         </SectionCard>
 

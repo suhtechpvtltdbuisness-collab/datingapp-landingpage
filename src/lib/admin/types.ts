@@ -84,3 +84,18 @@ export interface ActivityEntry {
   target: string | null;
   createdAt: string;
 }
+
+export interface AdminPlan {
+  id: string;
+  title: string;
+  price: string;
+  period: string;
+  subtitle: string;
+  isBest: boolean;
+  badge: string;
+  features: string[];
+  sortOrder: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt?: string;
+}

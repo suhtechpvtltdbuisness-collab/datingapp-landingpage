@@ -90,6 +90,68 @@ export async function dismissReport(reportId: string) {
   await back("/admin/reports");
 }
 
+// ------------------------------------------------------------------ plans
+export async function createPlan(formData: FormData) {
+  await requireAdmin();
+  const title = String(formData.get("title") ?? "").trim();
+  const price = String(formData.get("price") ?? "").trim();
+  const period = String(formData.get("period") ?? "PER WEEK").trim();
+  const subtitle = String(formData.get("subtitle") ?? "").trim();
+  const badge = String(formData.get("badge") ?? "").trim();
+  const isBest = formData.get("isBest") === "on" || formData.get("isBest") === "true";
+  const sortOrder = Number(formData.get("sortOrder") ?? 0);
+  const features = String(formData.get("features") ?? "")
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  await perform(
+    api("/plans", {
+      method: "POST",
+      body: { title, price, period, subtitle, badge, isBest, sortOrder, features },
+    }),
+    "Plan created successfully.",
+  );
+  redirect("/admin/plans");
+}
+
+export async function updatePlan(planId: string, formData: FormData) {
+  await requireAdmin();
+  const title = String(formData.get("title") ?? "").trim();
+  const price = String(formData.get("price") ?? "").trim();
+  const period = String(formData.get("period") ?? "PER WEEK").trim();
+  const subtitle = String(formData.get("subtitle") ?? "").trim();
+  const badge = String(formData.get("badge") ?? "").trim();
+  const isBest = formData.get("isBest") === "on" || formData.get("isBest") === "true";
+  const isActive = formData.get("isActive") === "on" || formData.get("isActive") === "true";
+  const sortOrder = Number(formData.get("sortOrder") ?? 0);
+  const features = String(formData.get("features") ?? "")
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  await perform(
+    api(`/plans/${planId}`, {
+      method: "PUT",
+      body: { title, price, period, subtitle, badge, isBest, isActive, sortOrder, features },
+    }),
+    "Plan updated successfully.",
+  );
+  redirect("/admin/plans");
+}
+
+export async function togglePlan(planId: string) {
+  await requireAdmin();
+  await perform(api(`/plans/${planId}/toggle`, { method: "POST" }), "Plan status updated.");
+  await back("/admin/plans");
+}
+
+export async function deletePlan(planId: string) {
+  await requireAdmin();
+  await perform(api(`/plans/${planId}`, { method: "DELETE" }), "Plan removed.");
+  await back("/admin/plans");
+}
+
 // ------------------------------------------------------------------ settings
 export async function changePassword(formData: FormData) {
   await requireAdmin();

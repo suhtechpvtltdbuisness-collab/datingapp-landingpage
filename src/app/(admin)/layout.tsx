@@ -1,23 +1,36 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./admin.css";
 
-const poppins = Poppins({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  fallback: ["Segoe UI", "system-ui", "sans-serif"],
-  adjustFontFallback: false,
+  weight: ["400", "500", "600", "700"],
+  fallback: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif",
+  ],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: { template: "%s · DatingApp Admin", default: "Dashboard · DatingApp Admin" },
 };
 
-/** Root layout for the admin panel (separate from the Safety site's layout and fonts). */
+/** Root layout for the admin panel using crisp, high-legibility Inter font */
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning className={`${poppins.className} m-0 min-h-screen bg-admin-page bg-fixed leading-[normal] text-admin-ink`}>{children}</body>
+      <body
+        suppressHydrationWarning
+        className={`${inter.className} m-0 min-h-screen bg-admin-page bg-fixed leading-[normal] text-admin-ink antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
