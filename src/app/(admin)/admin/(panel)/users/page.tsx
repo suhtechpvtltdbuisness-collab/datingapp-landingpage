@@ -2,10 +2,10 @@ import { photoSrc } from "@/lib/admin/photo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import AdminPage from "../../_components/AdminPage";
-import StatusSelect from "../../_components/StatusSelect";
+import SmartSearchBar from "../../_components/SmartSearchBar";
 import { AccountStatusBadge, location } from "../../_components/Badges";
 import {
-  Avatar, Badge, EmptyState, SectionCard, Table, Td, buttonClass, cx, emailText, nameLink, nativeControl, nativeControlColors, userCell,
+  Avatar, Badge, EmptyState, SectionCard, Table, Td, buttonClass, emailText, nameLink, userCell,
 } from "../../_components/ui";
 import { apiList } from "@/lib/admin/api";
 import { requireAdmin } from "@/lib/admin/session";
@@ -26,17 +26,7 @@ export default async function UsersPage({ searchParams }: { searchParams: Search
 
   return (
     <AdminPage admin={admin} heading="Users" subheading={`${pagination.total} account${pagination.total !== 1 ? "s" : ""}`}>
-      <form className="mb-[18px] flex gap-2.5 max-[860px]:flex-wrap" method="get">
-        <input
-          type="text"
-          name="q"
-          placeholder="Search by name or email…"
-          defaultValue={q}
-          className={cx(nativeControl, nativeControlColors, "flex-1 rounded-full border border-black/[0.08] bg-white px-4 py-[11px] text-[13.5px] outline-none focus:border-admin-primary max-[860px]:basis-full")}
-        />
-        <StatusSelect status={status} />
-        <button className={buttonClass("outline")} type="submit">Search</button>
-      </form>
+      <SmartSearchBar initialQuery={q} status={status} />
 
       <SectionCard>
         {users.length ? (
