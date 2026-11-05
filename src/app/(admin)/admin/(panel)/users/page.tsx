@@ -37,8 +37,18 @@ export default async function UsersPage({ searchParams }: { searchParams: Search
                   <Link className={userCell} href={`/admin/users/${u.id}`}>
                     <Avatar src={photoSrc(u.photoUrl)} />
                     <div>
-                      <div className={nameLink}>{u.name}</div>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className={nameLink}>{u.name}</span>
+                        {u.publicUserId ? (
+                          <span className="rounded bg-admin-brand/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-admin-brand">
+                            {u.publicUserId}
+                          </span>
+                        ) : null}
+                      </div>
                       <div className={emailText}>{u.email}</div>
+                      <div className="mt-0.5 font-mono text-[11px] text-admin-ink-3">
+                        ID: {u.publicUserId ? `${u.publicUserId} (${u.id.slice(-6)})` : u.id}
+                      </div>
                     </div>
                   </Link>
                 </Td>

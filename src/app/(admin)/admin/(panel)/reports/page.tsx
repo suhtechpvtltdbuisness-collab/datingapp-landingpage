@@ -48,21 +48,61 @@ export default async function ReportsPage({ searchParams }: { searchParams: Prom
               <tr key={r.id}>
                 <Td>
                   {r.reportedUser ? (
-                    <Link href={`/admin/users/${r.reportedUser.id}`} className={nameLink}>{r.reportedUser.name}</Link>
+                    <div>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <Link href={`/admin/users/${r.reportedUser.id}`} className={nameLink}>
+                          {r.reportedUser.name}
+                        </Link>
+                        {r.reportedUser.isBanned ? <Badge tone="danger">Banned</Badge> : null}
+                      </div>
+                      <div className="mt-0.5 font-mono text-[11px] text-admin-ink-3">
+                        {r.reportedUser.publicUserId ? (
+                          <span className="font-semibold text-admin-brand">{r.reportedUser.publicUserId}</span>
+                        ) : (
+                          <span>ID: {r.reportedUser.id}</span>
+                        )}
+                      </div>
+                    </div>
                   ) : r.reportedUserId ? (
-                    <Link href={`/admin/users/${r.reportedUserId}`} className={nameLink}>
-                      {r.reportedUserName || "Unknown user"}
-                    </Link>
+                    <div>
+                      <Link href={`/admin/users/${r.reportedUserId}`} className={nameLink}>
+                        {r.reportedUserName || "Unknown user"}
+                      </Link>
+                      <div className="mt-0.5 font-mono text-[11px] text-admin-ink-3">
+                        ID: {r.reportedUserId}
+                      </div>
+                    </div>
                   ) : r.reportedUserName ? (
-                    <span className="text-admin-ink-3">{r.reportedUserName} (account deleted)</span>
+                    <div>
+                      <span className="text-admin-ink-3">{r.reportedUserName} (account deleted)</span>
+                    </div>
                   ) : (
                     <span className="text-admin-ink-3">Unknown user</span>
                   )}
-                  {r.reportedUser?.isBanned ? <Badge tone="danger" className="ml-1.5">Banned</Badge> : null}
                 </Td>
                 <Td>
                   {r.reporter ? (
-                    <Link href={`/admin/users/${r.reporter.id}`} className={nameLink}>{r.reporter.name}</Link>
+                    <div>
+                      <Link href={`/admin/users/${r.reporter.id}`} className={nameLink}>
+                        {r.reporter.name}
+                      </Link>
+                      <div className="mt-0.5 font-mono text-[11px] text-admin-ink-3">
+                        {r.reporter.publicUserId ? (
+                          <span className="font-semibold text-admin-brand">{r.reporter.publicUserId}</span>
+                        ) : (
+                          <span>ID: {r.reporter.id}</span>
+                        )}
+                      </div>
+                    </div>
+                  ) : r.reporterId ? (
+                    <div>
+                      <Link href={`/admin/users/${r.reporterId}`} className={nameLink}>
+                        Anonymous
+                      </Link>
+                      <div className="mt-0.5 font-mono text-[11px] text-admin-ink-3">
+                        ID: {r.reporterId}
+                      </div>
+                    </div>
                   ) : (
                     <span className="text-admin-ink-3">Anonymous</span>
                   )}

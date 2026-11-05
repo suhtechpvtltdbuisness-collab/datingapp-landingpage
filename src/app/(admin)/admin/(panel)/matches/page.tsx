@@ -13,7 +13,14 @@ export const dynamic = "force-dynamic";
 
 function UserLink({ user }: { user: UserSummary | null }) {
   if (!user) return <span className="text-admin-ink-3">Deleted user</span>;
-  return <Link href={`/admin/users/${user.id}`} className={nameLink}>{user.name}</Link>;
+  return (
+    <div>
+      <Link href={`/admin/users/${user.id}`} className={nameLink}>{user.name}</Link>
+      <div className="mt-0.5 font-mono text-[11px] text-admin-ink-3">
+        ID: {user.publicUserId || user.id}
+      </div>
+    </div>
+  );
 }
 
 export default async function MatchesPage() {

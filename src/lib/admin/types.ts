@@ -13,6 +13,7 @@ export interface Paged<T> {
 
 export interface UserSummary {
   id: string;
+  publicUserId?: string;
   name: string;
   email: string;
   photoUrl: string | null;
@@ -21,6 +22,7 @@ export interface UserSummary {
 
 export interface AdminUser {
   id: string;
+  publicUserId?: string;
   name: string;
   email: string;
   gender: string;
@@ -51,6 +53,7 @@ export interface AdminReport {
   details: string;
   status: "pending" | "resolved" | "dismissed";
   reporter: UserSummary | null;
+  reporterId?: string | null;
   reportedUser: UserSummary | null;
   /** Present even when the user document could not be populated. */
   reportedUserId?: string | null;

@@ -59,6 +59,16 @@ export default async function UserDetailPage({ params }: { params: Params }) {
           </div>
 
           <div className="mt-[22px]">
+            <KvRow label="User ID">
+              <span className="font-mono text-[12px] select-all">{user.id}</span>
+            </KvRow>
+            {user.publicUserId ? (
+              <KvRow label="Public ID">
+                <span className="rounded bg-admin-brand/10 px-1.5 py-0.5 font-mono text-[12px] font-bold text-admin-brand select-all">
+                  {user.publicUserId}
+                </span>
+              </KvRow>
+            ) : null}
             <KvRow label="Gender">{user.gender || "—"}</KvRow>
             <KvRow label="Location">{location(user)}</KvRow>
             <KvRow label="Bio">{user.bio || "—"}</KvRow>
