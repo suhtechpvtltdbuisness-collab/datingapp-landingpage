@@ -45,19 +45,19 @@ export default function SafetyFeatureCard({ feature, index, visible }: { feature
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       whileHover={reduce ? undefined : { y: -4 }}
-      className="group flex flex-col rounded-card bg-white p-6 shadow-card transition-shadow duration-500 hover:shadow-card-hover"
+      className="group flex flex-col rounded-card bg-white p-4 shadow-card transition-shadow sm:p-6 duration-500 hover:shadow-card-hover"
     >
-      <span className="mb-5 grid h-12 w-12 place-items-center rounded-full bg-brand-gradient-soft text-brand-magenta">
-        <Icon className="h-6 w-6" aria-hidden />
+      <span className="mb-3 grid h-10 w-10 place-items-center sm:mb-5 sm:h-12 sm:w-12 rounded-full bg-brand-gradient-soft text-brand-magenta">
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
       </span>
-      <h3 className="font-display text-lg font-bold text-brand-ink">{feature.title}</h3>
-      <p className="mt-2 flex-1 text-[0.95rem] leading-relaxed text-brand-ink-soft">{feature.description}</p>
+      <h3 className="font-display text-[0.95rem] font-bold leading-snug text-brand-ink sm:text-lg">{feature.title}</h3>
+      <p className="mt-1.5 flex-1 text-[0.8rem] leading-relaxed sm:mt-2 sm:text-[0.95rem] text-brand-ink-soft">{feature.description}</p>
       <a
         href={feature.href}
-        className="mt-5 inline-flex items-center gap-1.5 self-start rounded text-sm font-semibold text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40"
+        className="mt-3 inline-flex items-center gap-1 self-start rounded text-xs sm:mt-5 sm:gap-1.5 sm:text-sm font-semibold text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40"
       >
         Learn more <span className="sr-only">about {feature.title}</span>
-        <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-1" aria-hidden />
+        <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 ease-out sm:h-4 sm:w-4 group-hover:translate-x-1" aria-hidden />
       </a>
     </motion.article>
   );

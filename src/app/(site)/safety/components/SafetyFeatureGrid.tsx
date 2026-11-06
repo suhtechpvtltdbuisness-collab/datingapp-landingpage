@@ -10,7 +10,7 @@ export default function SafetyFeatureGrid() {
     <section id="features" className="scroll-mt-20 px-4 py-20 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="Built in" title="Safety tools in every swipe" subtitle="Everything below is free and built into the app. No upgrade needed to feel safe." />
-        <div ref={ref} className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div ref={ref} className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
           {features.map((f, i) => (
             <SafetyFeatureCard key={f.id} feature={f} index={i} visible={visible} />
           ))}
