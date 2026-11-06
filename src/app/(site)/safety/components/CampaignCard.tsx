@@ -14,7 +14,7 @@ export default function CampaignCard({ campaign, scale, opacity }: Props) {
   return (
     <motion.article
       style={{ scale, opacity }}
-      className="group flex w-[82vw] max-w-[380px] shrink-0 snap-center flex-col overflow-hidden rounded-card bg-white shadow-card md:w-auto md:max-w-none"
+      className="group flex w-[82vw] max-w-[380px] shrink-0 snap-center flex-col overflow-hidden rounded-card bg-white shadow-card md:w-[360px] md:max-w-none lg:w-auto"
     >
       <div className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${campaign.art}`}>
         <Image
@@ -22,7 +22,7 @@ export default function CampaignCard({ campaign, scale, opacity }: Props) {
           alt={campaign.imageAlt}
           fill
           unoptimized
-          sizes="(min-width: 768px) 33vw, 82vw"
+          sizes="(min-width: 1024px) 33vw, 360px"
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
         />
         <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-magenta">

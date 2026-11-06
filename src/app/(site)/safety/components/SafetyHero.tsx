@@ -29,7 +29,7 @@ export default function SafetyHero() {
   const { ref, y } = useParallax<HTMLDivElement>(60);
 
   return (
-    <section id="top" className="relative isolate overflow-hidden px-4 pb-20 pt-28 sm:px-6 md:pb-28 md:pt-36">
+    <section id="top" className="relative isolate overflow-hidden px-4 pb-20 pt-28 sm:px-6 md:pb-24 md:pt-36 lg:pb-28">
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
         <div className="absolute left-1/2 top-24 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-brand-gradient-soft opacity-60 blur-3xl" />
         <div className="absolute right-[8%] top-24 h-72 w-72 rounded-full bg-brand-magenta/15 blur-3xl" />
@@ -37,7 +37,7 @@ export default function SafetyHero() {
         <div className="absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_22%_38%,rgba(255,255,255,0.95)_0_2px,transparent_3px),radial-gradient(circle_at_76%_26%,rgba(224,41,155,0.22)_0_2px,transparent_3px),radial-gradient(circle_at_61%_58%,rgba(139,47,201,0.18)_0_1px,transparent_2px)] bg-[length:120px_120px,180px_180px,150px_150px] opacity-70" />
         <div className="absolute left-1/2 top-36 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full border border-white/70" />
         <div className="absolute left-[54%] top-28 h-[22rem] w-[22rem] rounded-full border border-brand-pink/15" />
-        <div className="absolute left-[8%] top-72 hidden h-24 w-24 rotate-12 rounded-[2rem] border border-white/80 bg-white/35 shadow-card backdrop-blur-sm md:block" />
+        <div className="absolute left-[8%] top-72 hidden h-24 w-24 rotate-12 rounded-[2rem] border border-white/80 bg-white/35 shadow-card backdrop-blur-sm lg:block" />
       </div>
 
       <motion.div
@@ -45,13 +45,13 @@ export default function SafetyHero() {
         initial={{ opacity: 0, scale: 0.92, rotate: -8 }}
         animate={{ opacity: 1, scale: 1, rotate: -8 }}
         transition={{ duration: 1.1, ease: EASE, delay: 0.35 }}
-        className="pointer-events-none absolute right-[12%] top-36 -z-10 hidden h-20 w-20 rounded-[1.75rem] bg-white/60 shadow-card backdrop-blur-md md:block"
+        className="pointer-events-none absolute right-[12%] top-36 -z-10 hidden h-20 w-20 rounded-[1.75rem] bg-white/60 shadow-card backdrop-blur-md lg:block"
       >
         <div className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-brand-magenta/40" />
         <ShieldCheck className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 text-brand-magenta" />
       </motion.div>
 
-      <div className="mx-auto grid max-w-6xl items-center gap-14 md:grid-cols-2">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-14">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -61,9 +61,9 @@ export default function SafetyHero() {
           >
             <ShieldCheck className="h-4 w-4" aria-hidden /> Find Your Connection
           </motion.p>
-          <h1 className="font-display text-[2.1rem] sm:text-5xl md:text-6xl font-extrabold leading-[1.08] tracking-tight text-brand-ink">
+          <h1 className="font-display text-[2.1rem] font-extrabold leading-[1.05] tracking-tight text-brand-ink min-[360px]:text-[2.4rem] min-[400px]:text-[2.6rem] sm:text-6xl lg:text-[3.25rem] xl:text-6xl">
             {headline.map((word, i) => (
-              <span key={i} className="-mb-[0.2em] inline-block overflow-hidden pb-[0.2em] align-bottom">
+              <span key={i} className="-mb-[0.2em] block overflow-hidden pb-[0.2em]">
                 <motion.span
                   className={`inline-block ${i === 1 ? "-mb-[0.2em] bg-brand-gradient bg-clip-text pb-[0.2em] text-transparent" : ""}`}
                   initial={{ y: "110%", opacity: 0 }}
@@ -80,7 +80,7 @@ export default function SafetyHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: EASE, delay: 0.6 }}
-            className="mt-6 max-w-md text-lg text-brand-ink-soft"
+            className="mt-6 max-w-md text-lg text-brand-ink-soft md:max-w-xl lg:max-w-md"
           >
             Discover genuine people who share your interests, values, and vibe — and start a connection that feels real.
           </motion.p>
@@ -99,7 +99,7 @@ export default function SafetyHero() {
           </motion.div>
         </div>
 
-        <div ref={ref} className="relative mx-auto h-[380px] w-full max-w-[360px] sm:h-[440px] sm:max-w-[410px]" aria-hidden="true">
+        <div ref={ref} className="relative mx-auto mt-6 h-[380px] w-full max-w-[360px] lg:mt-0 sm:h-[440px] sm:max-w-[410px]" aria-hidden="true">
           <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/45 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.9),0_40px_90px_-55px_rgba(224,41,155,0.65)] backdrop-blur-sm" />
           <div className="absolute left-8 top-8 h-14 w-14 rounded-full border border-brand-pink/20 bg-white/50" />
           <div className="absolute bottom-12 right-4 h-20 w-20 rounded-full border border-brand-purple/20 bg-white/40" />
@@ -122,7 +122,8 @@ export default function SafetyHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: EASE, delay: 0.9 }}
-                className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-brand-ink shadow-card-hover"
+                style={{ x: "-50%" }}
+                className="absolute bottom-2 left-1/2 flex items-center gap-2 whitespace-nowrap rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-brand-ink shadow-card-hover"
               >
                 <span className="grid h-7 w-7 place-items-center rounded-full bg-brand-gradient text-white">
                   <ShieldCheck className="h-4 w-4" />

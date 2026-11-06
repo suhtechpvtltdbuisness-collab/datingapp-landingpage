@@ -44,7 +44,7 @@ export default function CampaignCarousel() {
       });
       setActive(best);
       springs.forEach((s, i) => {
-        const on = mq.matches || reduce || i === best; // desktop grid: all cards full size
+        const on = mq.matches || reduce || i === best; // tablet/desktop: several cards visible, so none are dimmed
         s.rawS.set(on ? 1 : 0.92);
         s.rawO.set(on ? 1 : 0.6);
       });
@@ -65,7 +65,7 @@ export default function CampaignCarousel() {
       </div>
       <div
         ref={trackRef}
-        className="no-scrollbar mx-auto mt-10 flex max-w-6xl snap-x snap-mandatory gap-4 overflow-x-auto px-[9vw] pb-4 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-6"
+        className="no-scrollbar mx-auto mt-10 flex max-w-6xl snap-x snap-mandatory gap-4 overflow-x-auto px-[9vw] pb-4 md:px-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-6"
         tabIndex={0}
         aria-label="Community initiatives, scroll horizontally"
       >
@@ -73,7 +73,7 @@ export default function CampaignCarousel() {
           <CampaignCard key={c.id} campaign={c} scale={springs[i].scale} opacity={springs[i].opacity} />
         ))}
       </div>
-      <div className="mt-4 flex justify-center gap-2 md:hidden" aria-hidden>
+      <div className="mt-4 flex justify-center gap-2 lg:hidden" aria-hidden>
         {campaigns.map((c, i) => (
           <span key={c.id} className={`h-2 rounded-full transition-all duration-500 ${i === active ? "w-6 bg-brand-gradient" : "w-2 bg-brand-magenta/25"}`} />
         ))}
