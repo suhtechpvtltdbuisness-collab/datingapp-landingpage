@@ -8,20 +8,43 @@ import { EASE } from "../theme";
 
 const headline = ["Meet someone.", "Feel something.", "Make it meaningful."];
 
-function PhotoCard({ name, tag, image, className }: { name: string; tag: string; image: string; className: string }) {
+function PhotoCard({
+  name,
+  tag,
+  image,
+  className,
+  from,
+  to,
+  delay,
+}: {
+  name: string;
+  tag: string;
+  image: string;
+  className: string;
+  from: number;
+  to: number;
+  delay: number;
+}) {
+  // The card itself is the animated element so its %-based position resolves against the stage
+  // (a transformed static wrapper would become the containing block and collapse `top-[%]`).
   return (
-    <div className={`absolute w-36 overflow-hidden rounded-card bg-white p-2 shadow-card-hover sm:w-52 ${className}`}>
+    <motion.div
+      initial={{ opacity: 0, rotate: from, scale: 0.9 }}
+      animate={{ opacity: 1, rotate: to, scale: 1 }}
+      transition={{ duration: 1.1, ease: EASE, delay }}
+      className={`absolute w-[46%] overflow-hidden rounded-card bg-white p-1.5 shadow-card-hover sm:w-[50.5%] sm:p-2 ${className}`}
+    >
       <div className="relative aspect-[3/4] overflow-hidden rounded-photo bg-brand-gradient-soft">
-        <Image src={image} alt="" fill unoptimized priority sizes="208px" className="object-cover" />
-        <div className="absolute inset-x-0 bottom-0 rounded-b-photo bg-gradient-to-t from-black/60 to-transparent p-2.5 sm:p-3 text-white">
-          <p className="flex items-center gap-1 font-display text-sm font-semibold sm:text-base">
+        <Image src={image} alt="" fill unoptimized priority sizes="(min-width: 640px) 208px, 50vw" className="object-cover" />
+        <div className="absolute inset-x-0 bottom-0 rounded-b-photo bg-gradient-to-t from-black/60 to-transparent p-2 text-white sm:p-3">
+          <p className="flex items-center gap-1 font-display text-xs font-semibold min-[400px]:text-sm sm:text-base">
             {name}
-            <BadgeCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" aria-label="Verified" />
+            <BadgeCheck className="h-3 w-3 text-white sm:h-4 sm:w-4" aria-label="Verified" />
           </p>
-          <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-brand-accent-soft">{tag}</p>
+          <p className="text-[9px] font-bold uppercase tracking-wide text-brand-accent-soft sm:text-xs">{tag}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -29,7 +52,7 @@ export default function SafetyHero() {
   const { ref, y } = useParallax<HTMLDivElement>(60);
 
   return (
-    <section id="top" className="relative isolate overflow-hidden px-4 pb-20 pt-28 sm:px-6 md:pb-24 md:pt-36 lg:pb-28">
+    <section id="top" className="relative isolate overflow-hidden px-4 pb-8 pt-24 sm:px-6 sm:pb-12 sm:pt-28 md:pb-16 md:pt-36 lg:pb-28">
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
         <div className="absolute left-1/2 top-24 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-brand-gradient-soft opacity-60 blur-3xl" />
         <div className="absolute right-[8%] top-24 h-72 w-72 rounded-full bg-brand-magenta/15 blur-3xl" />
@@ -99,11 +122,11 @@ export default function SafetyHero() {
           </motion.div>
         </div>
 
-        <div ref={ref} className="relative mx-auto mt-6 h-[380px] w-full max-w-[360px] lg:mt-0 sm:h-[440px] sm:max-w-[410px]" aria-hidden="true">
-          <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/45 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.9),0_40px_90px_-55px_rgba(224,41,155,0.65)] backdrop-blur-sm" />
-          <div className="absolute left-8 top-8 h-14 w-14 rounded-full border border-brand-pink/20 bg-white/50" />
-          <div className="absolute bottom-12 right-4 h-20 w-20 rounded-full border border-brand-purple/20 bg-white/40" />
-          <div className="absolute right-12 top-4 grid h-12 w-12 place-items-center rounded-full bg-brand-night text-white shadow-card">
+        <div ref={ref} className="relative mx-auto mt-6 aspect-[410/440] w-full max-w-[340px] sm:max-w-[410px] lg:mt-0" aria-hidden="true">
+          <div className="absolute left-1/2 top-1/2 aspect-square w-[102%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/45 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.9),0_40px_90px_-55px_rgba(224,41,155,0.65)] backdrop-blur-sm" />
+          <div className="absolute left-[6%] top-[7%] h-[13%] w-[13%] rounded-full border border-brand-pink/20 bg-white/50" />
+          <div className="absolute bottom-[11%] right-[2%] h-[19%] w-[19%] rounded-full border border-brand-purple/20 bg-white/40" />
+          <div className="absolute right-[12%] top-[2%] grid h-[11%] w-[11%] min-h-9 min-w-9 place-items-center rounded-full bg-brand-night text-white shadow-card">
             <BadgeCheck className="h-5 w-5 text-brand-accent-soft" />
           </div>
           <motion.div style={{ y }} className="absolute inset-0">
@@ -112,18 +135,14 @@ export default function SafetyHero() {
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="relative h-full w-full"
             >
-              <motion.div initial={{ opacity: 0, rotate: -14, scale: 0.9 }} animate={{ opacity: 1, rotate: -8, scale: 1 }} transition={{ duration: 1.1, ease: EASE, delay: 0.3 }}>
-                <PhotoCard name="Aanya, 26" tag="Verified" image="/illustrations/profile-aanya.svg" className="left-0 top-2" />
-              </motion.div>
-              <motion.div initial={{ opacity: 0, rotate: 14, scale: 0.9 }} animate={{ opacity: 1, rotate: 7, scale: 1 }} transition={{ duration: 1.1, ease: EASE, delay: 0.45 }}>
-                <PhotoCard name="Rohan, 28" tag="New" image="/illustrations/profile-rohan.svg" className="right-0 top-28" />
-              </motion.div>
+              <PhotoCard name="Aanya, 26" tag="Verified" image="/illustrations/profile-aanya.svg" className="left-[3%] top-[1%] sm:left-0" from={-14} to={-8} delay={0.3} />
+              <PhotoCard name="Rohan, 28" tag="New" image="/illustrations/profile-rohan.svg" className="right-[3%] top-[26%] sm:right-0" from={14} to={7} delay={0.45} />
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: EASE, delay: 0.9 }}
                 style={{ x: "-50%" }}
-                className="absolute bottom-2 left-1/2 flex items-center gap-2 whitespace-nowrap rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-brand-ink shadow-card-hover"
+                className="absolute bottom-[1%] left-1/2 flex items-center gap-2 whitespace-nowrap rounded-full bg-white px-3 py-2 text-xs sm:px-4 sm:py-2.5 sm:text-sm font-semibold text-brand-ink shadow-card-hover"
               >
                 <span className="grid h-7 w-7 place-items-center rounded-full bg-brand-gradient text-white">
                   <ShieldCheck className="h-4 w-4" />

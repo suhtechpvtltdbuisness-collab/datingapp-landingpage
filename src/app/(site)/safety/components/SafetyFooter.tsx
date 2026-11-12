@@ -60,7 +60,7 @@ export default function SafetyFooter() {
   return (
     <footer className="pb-10 pt-8">
       <DownloadCtaBar />
-      <div className="mx-auto mt-16 max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto mt-10 max-w-6xl sm:mt-16 px-4 sm:px-6">
         <div className="grid gap-10 md:grid-cols-[1.2fr_2fr]">
           <div>
             <BrandLogo size="lg" withTagline />

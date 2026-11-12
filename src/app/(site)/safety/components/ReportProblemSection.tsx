@@ -17,7 +17,7 @@ export default function ReportProblemSection() {
   const remaining = useMemo(() => 500 - description.length, [description.length]);
 
   return (
-    <section id="report-problem" aria-labelledby="report-problem-title" className="scroll-mt-20 px-4 py-20 sm:px-6">
+    <section id="report-problem" aria-labelledby="report-problem-title" className="scroll-mt-20 px-4 py-10 sm:py-14 lg:py-20 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex items-start gap-4">

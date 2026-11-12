@@ -7,10 +7,10 @@ import { useScrollReveal } from "../hooks/useScrollReveal";
 export default function SafetyFeatureGrid() {
   const { ref, visible } = useScrollReveal<HTMLDivElement>();
   return (
-    <section id="features" className="scroll-mt-20 px-4 py-20 sm:px-6">
+    <section id="features" className="scroll-mt-20 px-4 py-10 sm:py-14 lg:py-20 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionHeading eyebrow="Built in" title="Safety tools in every swipe" subtitle="Everything below is free and built into the app. No upgrade needed to feel safe." />
-        <div ref={ref} className="mt-10 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
+        <div ref={ref} className="mt-7 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
           {features.map((f, i) => (
             <SafetyFeatureCard key={f.id} feature={f} index={i} visible={visible} />
           ))}

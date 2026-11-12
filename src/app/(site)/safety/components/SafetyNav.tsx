@@ -58,7 +58,7 @@ export default function SafetyNav() {
       }}
       className="fixed inset-x-0 top-0 z-50 transition-colors duration-200"
     >
-      <nav aria-label="Main" className="mx-auto flex h-14 sm:h-16 max-w-6xl items-center justify-between px-3.5 sm:px-6">
+      <nav aria-label="Main" className="mx-auto flex h-14 sm:h-16 max-w-6xl items-center justify-between gap-3 px-3.5 sm:px-6">
         <a
           href="#top"
           onClick={(e) => handleNavigate(e, "#top")}
@@ -69,13 +69,13 @@ export default function SafetyNav() {
         </a>
 
         {/* Desktop Navigation Links */}
-        <ul className="hidden items-center gap-7 lg:gap-8 md:flex">
+        <ul className="hidden items-center gap-6 xl:gap-8 lg:flex">
           {links.map((l) => (
             <li key={l.label}>
               <a
                 href={l.href}
                 onClick={(e) => handleNavigate(e, l.href)}
-                className="rounded font-medium text-brand-ink-soft transition-colors hover:text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40"
+                className="whitespace-nowrap rounded font-medium text-brand-ink-soft transition-colors hover:text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40"
               >
                 {l.label}
               </a>
@@ -86,10 +86,10 @@ export default function SafetyNav() {
         {/* Right CTA Actions */}
         <div className="flex items-center gap-2 sm:gap-3.5 shrink-0">
           {/* Hide Login and Get App on mobile ONLY while the drawer is open */}
-          <div className={`items-center gap-1.5 sm:gap-3 ${mobileOpen ? "hidden md:flex" : "flex"}`}>
+          <div className={`items-center gap-1.5 sm:gap-3 ${mobileOpen ? "hidden lg:flex" : "flex"}`}>
             <a
               href="/admin"
-              className="rounded px-1.5 py-1 text-xs sm:text-sm font-semibold text-brand-ink-soft transition-colors hover:text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40"
+              className="whitespace-nowrap rounded px-1.5 py-1 text-xs sm:text-sm font-semibold text-brand-ink-soft transition-colors hover:text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40"
             >
               Login
             </a>
@@ -105,7 +105,7 @@ export default function SafetyNav() {
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-brand-ink shadow-sm transition hover:bg-white active:scale-95 md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/80 text-brand-ink shadow-sm transition hover:bg-white active:scale-95 lg:hidden"
           >
             {mobileOpen ? <X className="h-5 w-5 text-brand-ink" /> : <Menu className="h-5 w-5 text-brand-ink" />}
           </button>
@@ -115,7 +115,7 @@ export default function SafetyNav() {
       {/* Mobile Drawer Menu */}
       <AnimatePresence>
         {mobileOpen && (
-          <div className="relative md:hidden">
+          <div className="relative lg:hidden">
             {/* Dark Backdrop Overlay */}
             <motion.div
               initial={{ opacity: 0 }}

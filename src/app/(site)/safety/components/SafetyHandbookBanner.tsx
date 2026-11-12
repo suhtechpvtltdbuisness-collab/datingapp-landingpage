@@ -10,7 +10,7 @@ import { EASE } from "../theme";
 export default function SafetyHandbookBanner() {
   const { ref, visible } = useScrollReveal<HTMLDivElement>();
   return (
-    <section id="handbook" aria-labelledby="handbook-title" className="scroll-mt-20 px-4 py-16 sm:px-6">
+    <section id="handbook" aria-labelledby="handbook-title" className="scroll-mt-20 px-4 py-6 sm:py-10 lg:py-16 sm:px-6">
       <div ref={ref} className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-5">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

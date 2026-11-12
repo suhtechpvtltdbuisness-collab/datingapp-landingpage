@@ -15,8 +15,8 @@ export default function PlansSection() {
   const { ref, visible } = useScrollReveal<HTMLDivElement>();
 
   return (
-    <section id="plans" aria-labelledby="plans-title" className="scroll-mt-20 px-4 py-20 sm:px-6">
-      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-start">
+    <section id="plans" aria-labelledby="plans-title" className="scroll-mt-20 px-4 py-10 sm:py-14 lg:py-20 sm:px-6">
+      <div className="mx-auto grid max-w-6xl gap-8 sm:gap-10 lg:gap-12 lg:grid-cols-2 lg:items-start">
         <div>
           <SectionHeading
             id="plans-title"
@@ -24,7 +24,7 @@ export default function PlansSection() {
             title="Want a little extra?"
             subtitle="Premium adds a few perks on top. Every safety tool on this page stays free for everyone, whether you subscribe or not."
           />
-          <ul className="mt-8 space-y-3">
+          <ul className="mt-6 space-y-3 sm:mt-8">
             {perks.map((perk) => (
               <li key={perk.title} className="flex items-start gap-3 rounded-card bg-white p-5 shadow-card">
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-gradient text-white">

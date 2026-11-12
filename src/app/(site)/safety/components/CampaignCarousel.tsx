@@ -59,13 +59,13 @@ export default function CampaignCarousel() {
   }, [springs, reduce]);
 
   return (
-    <section id="community" aria-labelledby="community-title" className="py-20">
+    <section id="community" aria-labelledby="community-title" className="py-10 sm:py-14 lg:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading id="community-title" eyebrow="Beyond the app" title="Safety that shows up IRL" subtitle="Staying safe doesn't stop at the chat. Here's what we're doing offline and in our community." />
       </div>
       <div
         ref={trackRef}
-        className="no-scrollbar mx-auto mt-10 flex max-w-6xl snap-x snap-mandatory gap-4 overflow-x-auto px-[9vw] pb-4 md:px-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-6"
+        className="no-scrollbar mx-auto mt-7 flex max-w-6xl snap-x sm:mt-10 snap-mandatory gap-4 overflow-x-auto px-[9vw] pb-4 md:px-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:px-6"
         tabIndex={0}
         aria-label="Community initiatives, scroll horizontally"
       >
