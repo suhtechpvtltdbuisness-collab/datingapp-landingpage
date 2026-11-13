@@ -30,7 +30,9 @@ export const perks: Perk[] = [
 ];
 
 /** Savings are calculated from the prices against the weekly plan, so the claim always matches the numbers. */
-export function savingsPercent(plan: Plan): number {
-  const base = Math.max(...plans.map((p) => p.pricePerWeek));
+export function savingsPercent(plan: Plan, planList?: Plan[]): number {
+  const list = planList && planList.length > 0 ? planList : plans;
+  const base = Math.max(...list.map((p) => p.pricePerWeek));
+  if (base <= 0 || plan.pricePerWeek >= base) return 0;
   return Math.round((1 - plan.pricePerWeek / base) * 100);
 }

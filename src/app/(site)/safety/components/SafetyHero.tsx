@@ -2,12 +2,13 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BadgeCheck, ShieldCheck, ArrowRight } from "lucide-react";
-import { storeLinks } from "@/lib/company";
+import { storeLinks as defaultStoreLinks } from "@/lib/company";
 import MagneticButton from "./MagneticButton";
 import { useParallax } from "../hooks/useParallax";
 import { EASE } from "../theme";
+import type { SiteHero } from "@/lib/siteContent";
 
-const headline = ["Meet someone.", "Feel something.", "Make it meaningful."];
+const defaultHeadline = ["Meet someone.", "Feel something.", "Make it meaningful."];
 
 function PhotoCard({
   name,
@@ -49,8 +50,14 @@ function PhotoCard({
   );
 }
 
-export default function SafetyHero() {
+export default function SafetyHero({ hero }: { hero?: SiteHero }) {
   const { ref, y } = useParallax<HTMLDivElement>(60);
+  const headline = hero?.headline?.length ? hero.headline : defaultHeadline;
+  const badge = hero?.badge || "Find Your Connection";
+  const subtitle =
+    hero?.subtitle ||
+    "Discover genuine people who share your interests, values, and vibe — and start a connection that feels real.";
+  const playUrl = hero?.googlePlayUrl || defaultStoreLinks.googlePlay;
 
   return (
     <section id="top" className="relative isolate overflow-hidden px-4 pb-8 pt-24 sm:px-6 sm:pb-12 sm:pt-28 md:pb-16 md:pt-36 lg:pb-28">
@@ -83,7 +90,7 @@ export default function SafetyHero() {
             transition={{ duration: 0.8, ease: EASE }}
             className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-brand-magenta shadow-card"
           >
-            <ShieldCheck className="h-4 w-4" aria-hidden /> Find Your Connection
+            <ShieldCheck className="h-4 w-4" aria-hidden /> {badge}
           </motion.p>
           <h1 className="font-display text-[2.1rem] font-extrabold leading-[1.05] tracking-tight text-brand-ink min-[360px]:text-[2.4rem] min-[400px]:text-[2.6rem] sm:text-6xl lg:text-[3.25rem] xl:text-6xl">
             {headline.map((word, i) => (
@@ -106,7 +113,7 @@ export default function SafetyHero() {
             transition={{ duration: 0.9, ease: EASE, delay: 0.6 }}
             className="mt-6 max-w-md text-lg text-brand-ink-soft md:max-w-xl lg:max-w-md"
           >
-            Discover genuine people who share your interests, values, and vibe — and start a connection that feels real.
+            {subtitle}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -114,8 +121,8 @@ export default function SafetyHero() {
             transition={{ duration: 0.9, ease: EASE, delay: 0.72 }}
             className="mt-9 flex flex-wrap items-center gap-4"
           >
-            {storeLinks.googlePlay ? (
-              <MagneticButton href={storeLinks.googlePlay}>
+            {playUrl ? (
+              <MagneticButton href={playUrl}>
                 Get on Google Play <ArrowRight className="h-4 w-4" aria-hidden />
               </MagneticButton>
             ) : (

@@ -2,9 +2,10 @@
 import { useState } from "react";
 import FaqAccordionItem from "./FaqAccordionItem";
 import SectionHeading from "./SectionHeading";
-import { faqs } from "../data/faqs";
+import { faqs as defaultFaqs, type Faq } from "../data/faqs";
 
-export default function FaqSection() {
+export default function FaqSection({ faqs: propFaqs }: { faqs?: Faq[] }) {
+  const faqs = propFaqs && propFaqs.length > 0 ? propFaqs : defaultFaqs;
   const [openId, setOpenId] = useState<string | null>(faqs[0]?.id ?? null);
   return (
     <section id="faq" aria-labelledby="faq-title" className="scroll-mt-20 px-4 py-10 sm:py-14 lg:py-20 sm:px-6">

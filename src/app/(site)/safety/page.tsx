@@ -8,22 +8,30 @@ import PlansSection from "./components/PlansSection";
 import FaqSection from "./components/FaqSection";
 import SafetyFooter from "./components/SafetyFooter";
 import { brand } from "./theme";
+import { getSiteContent } from "@/lib/siteContent";
+import { getPublicPlans } from "@/lib/plans";
 
 export const metadata: Metadata = { title: brand.name };
+export const dynamic = "force-dynamic";
 
-export default function SafetyPage() {
+export default async function SafetyPage() {
+  const [content, plans] = await Promise.all([
+    getSiteContent(),
+    getPublicPlans(),
+  ]);
+
   return (
     <>
       <SafetyNav />
       <main>
-        <SafetyHero />
-        <SafetyFeatureGrid />
-        <SafetyHandbookBanner />
-        <CampaignCarousel />
-        <PlansSection />
-        <FaqSection />
+        <SafetyHero hero={content.hero} />
+        <SafetyFeatureGrid features={content.features} />
+        <SafetyHandbookBanner handbook={content.handbook} />
+        <CampaignCarousel campaigns={content.campaigns} />
+        <PlansSection plansHeader={content.plansHeader} plans={plans} />
+        <FaqSection faqs={content.faqs} />
       </main>
-      <SafetyFooter />
+      <SafetyFooter company={content.company} storeLinks={content.hero} />
     </>
   );
 }

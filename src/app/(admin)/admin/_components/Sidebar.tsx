@@ -11,6 +11,7 @@ import {
   ShieldAlert,
   HeartHandshake,
   BookOpen,
+  Globe,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -26,6 +27,7 @@ const items = [
   { href: "/admin/users", label: "Users", icon: Users, match: (p: string) => p.startsWith("/admin/users") },
   { href: "/admin/plans", label: "Plans", icon: Gem, match: (p: string) => p.startsWith("/admin/plans") },
   { href: "/admin/blogs", label: "Blogs", icon: BookOpen, match: (p: string) => p.startsWith("/admin/blogs") },
+  { href: "/admin/website", label: "Website CMS", icon: Globe, match: (p: string) => p.startsWith("/admin/website") },
   { href: "/admin/reports", label: "Reports", icon: ShieldAlert, match: (p: string) => p.startsWith("/admin/reports") },
   { href: "/admin/matches", label: "Matches", icon: HeartHandshake, match: (p: string) => p.startsWith("/admin/matches") },
   { href: "/admin/settings", label: "Settings", icon: Settings, match: (p: string) => p.startsWith("/admin/settings") },

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMotionValue, useReducedMotion, useSpring, type MotionValue } from "framer-motion";
 import CampaignCard from "./CampaignCard";
 import SectionHeading from "./SectionHeading";
-import { campaigns } from "../data/campaigns";
+import { campaigns as defaultCampaigns, type Campaign } from "../data/campaigns";
 
 /** One spring pair per card so the active card eases to 1.0 and neighbours to 0.92. */
 function useCardSprings(count: number) {
@@ -22,7 +22,8 @@ function useCardSprings(count: number) {
   return springs;
 }
 
-export default function CampaignCarousel() {
+export default function CampaignCarousel({ campaigns: propCampaigns }: { campaigns?: Campaign[] }) {
+  const campaigns = propCampaigns && propCampaigns.length > 0 ? propCampaigns : defaultCampaigns;
   const trackRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const springs = useCardSprings(campaigns.length);

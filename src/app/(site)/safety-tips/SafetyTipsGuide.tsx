@@ -22,10 +22,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { brand, EASE, spring } from "../safety/theme";
+import type { SiteSafetyTips } from "@/lib/siteContent";
 
 type Tip = {
   id: string;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   title: string;
   lead: string;
   intro?: string;
@@ -33,7 +34,7 @@ type Tip = {
   note?: string;
 };
 
-const tips: Tip[] = [
+const fallbackTips: Tip[] = [
   {
     id: "before-you-meet",
     icon: MessageCircle,
@@ -185,18 +186,44 @@ function useActiveSection(ids: string[]) {
   return active;
 }
 
-const ids = tips.map((t) => t.id);
+const tipIcons: Record<string, LucideIcon> = {
+  "before-you-meet": MessageCircle,
+  "plan-your-date": Coffee,
+  "protect-your-info": EyeOff,
+  "during-the-date": DoorOpen,
+  "trust-your-gut": TriangleAlert,
+  "money-financial": Ban,
+  "reporting": Flag,
+};
 
-export default function SafetyTipsGuide() {
+interface Props {
+  data?: SiteSafetyTips;
+}
+
+export default function SafetyTipsGuide({ data }: Props) {
+  const activeTips =
+    data?.sections && data.sections.length > 0
+      ? data.sections.map((t, idx) => ({
+          ...t,
+          icon: tipIcons[t.id] || (idx % 2 === 0 ? MessageCircle : Coffee),
+        }))
+      : fallbackTips;
+
+  const title = data?.title || "Safety Tips";
+  const lead =
+    data?.lead ||
+    "A simple guide to meeting new people, protecting your privacy, and knowing what to do if something feels wrong.";
+
+  const ids = activeTips.map((t) => t.id);
   const active = useActiveSection(ids);
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [flags, setFlags] = useState<Set<number>>(new Set());
   const [exitStep, setExitStep] = useState(0);
 
-  const totalCheckable = tips
+  const totalCheckable = activeTips
     .filter((t) => checkable.has(t.id))
     .reduce((n, t) => n + t.items.length, 0);
-  const progress = checked.size / totalCheckable;
+  const progress = totalCheckable > 0 ? checked.size / totalCheckable : 1;
 
   const toggle = <T,>(set: Set<T>, value: T, update: (s: Set<T>) => void) => {
     const next = new Set(set);
@@ -236,15 +263,14 @@ export default function SafetyTipsGuide() {
                 Safe Date
               </span>
               <h1 className="mt-5 font-display text-5xl font-extrabold tracking-tight sm:text-7xl">
-                Safety Tips
+                {title}
               </h1>
               <p className="mt-4 max-w-xl text-lg text-white/90">
-                A simple guide to meeting new people, protecting your privacy,
-                and knowing what to do if something feels wrong.
+                {lead}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 {[
-                  { icon: Sparkles, label: `${tips.length} simple steps` },
+                  { icon: Sparkles, label: `${activeTips.length} simple steps` },
                   { icon: Clock, label: "3 min read" },
                   { icon: Phone, label: "Emergency: 112" },
                 ].map(({ icon: ChipIcon, label }) => (
@@ -324,7 +350,7 @@ export default function SafetyTipsGuide() {
               {checked.size} of {totalCheckable} ticked {progress === 1 && "🎉"}
             </p>
             <ol className="mt-4 hidden space-y-1 lg:block">
-              {tips.map((t, i) => {
+              {activeTips.map((t, i) => {
                 const done =
                   checkable.has(t.id) &&
                   t.items.every((item) => checked.has(`${t.id}:${item}`));
@@ -368,8 +394,8 @@ export default function SafetyTipsGuide() {
 
         {/* Steps */}
         <div className="space-y-6">
-          {tips.map((tip, i) => {
-            const Icon = tip.icon;
+          {activeTips.map((tip, i) => {
+            const Icon = tip.icon || MessageCircle;
             const danger = tip.id === "immediate-danger";
             return (
               <motion.section

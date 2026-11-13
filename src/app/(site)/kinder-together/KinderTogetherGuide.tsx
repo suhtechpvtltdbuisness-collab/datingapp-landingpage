@@ -5,16 +5,17 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Check, Hand, Heart, HeartHandshake, MessageCircleHeart, Sparkles, Users, type LucideIcon } from "lucide-react";
 import { brand, EASE, spring } from "../safety/theme";
+import type { SiteKinderTogether } from "@/lib/siteContent";
 
 type Principle = {
   id: string;
-  icon: LucideIcon;
+  icon?: LucideIcon;
   title: string;
   lead?: string;
   items: string[];
 };
 
-const principles: Principle[] = [
+const fallbackPrinciples: Principle[] = [
   {
     id: "respect",
     icon: MessageCircleHeart,
@@ -46,13 +47,34 @@ const values = [
   { icon: Hand, label: "Free to set boundaries" },
 ];
 
-const total = principles.reduce((n, p) => n + p.items.length, 0);
+interface Props {
+  data?: SiteKinderTogether;
+}
 
-export default function KinderTogetherGuide() {
+export default function KinderTogetherGuide({ data }: Props) {
+  const activePrinciples =
+    data?.principles && data.principles.length > 0
+      ? data.principles.map((p, idx) => ({
+          ...p,
+          icon: idx % 2 === 0 ? MessageCircleHeart : Hand,
+        }))
+      : fallbackPrinciples;
+
+  const eyebrow = data?.eyebrow || "Community";
+  const title = data?.title || "Kinder Together";
+  const subtitle =
+    data?.subtitle ||
+    "A kinder dating community starts with how we treat each other.";
+  const description =
+    data?.description ||
+    `${brand.name} is built around respectful connections. Everyone deserves to feel comfortable, heard, and free to set their own boundaries.`;
+
+  const total = activePrinciples.reduce((n, p) => n + p.items.length, 0);
+
   const [agreed, setAgreed] = useState<Set<string>>(new Set());
   const [pledged, setPledged] = useState(false);
-  const progress = agreed.size / total;
-  const allAgreed = agreed.size === total;
+  const progress = total > 0 ? agreed.size / total : 1;
+  const allAgreed = agreed.size === total && total > 0;
 
   const toggle = (key: string) => {
     const next = new Set(agreed);
@@ -79,15 +101,14 @@ export default function KinderTogetherGuide() {
           <div className="mt-10 grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE }}>
               <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-magenta">
-                <Sparkles className="h-3.5 w-3.5" aria-hidden /> Community
+                <Sparkles className="h-3.5 w-3.5" aria-hidden /> {eyebrow}
               </span>
-              <h1 className="mt-5 font-display text-5xl font-extrabold tracking-tight sm:text-7xl">Kinder Together</h1>
+              <h1 className="mt-5 font-display text-5xl font-extrabold tracking-tight sm:text-7xl">{title}</h1>
               <p className="mt-4 max-w-xl font-display text-xl font-bold text-white">
-                A kinder dating community starts with how we treat each other.
+                {subtitle}
               </p>
               <p className="mt-3 max-w-xl text-lg text-white/90">
-                {brand.name} is built around respectful connections. Everyone deserves to feel comfortable, heard, and free to set their own
-                boundaries.
+                {description}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 {values.map(({ icon: ValueIcon, label }, i) => (
@@ -146,8 +167,8 @@ export default function KinderTogetherGuide() {
           </div>
         </div>
 
-        {principles.map((p, i) => {
-          const Icon = p.icon;
+        {activePrinciples.map((p, i) => {
+          const Icon = p.icon || (i % 2 === 0 ? MessageCircleHeart : Hand);
           return (
             <motion.section
               key={p.id}

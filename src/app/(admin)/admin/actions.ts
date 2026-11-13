@@ -1,6 +1,7 @@
 "use server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { ApiError, api } from "@/lib/admin/api";
 import { flash } from "@/lib/admin/flash";
 import { requireAdmin, safeNext, setSession } from "@/lib/admin/session";
@@ -112,6 +113,9 @@ export async function createPlan(formData: FormData) {
     }),
     "Plan created successfully.",
   );
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/plans");
+  revalidatePath("/safety");
   redirect("/admin/plans");
 }
 
@@ -137,18 +141,27 @@ export async function updatePlan(planId: string, formData: FormData) {
     }),
     "Plan updated successfully.",
   );
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/plans");
+  revalidatePath("/safety");
   redirect("/admin/plans");
 }
 
 export async function togglePlan(planId: string) {
   await requireAdmin();
   await perform(api(`/plans/${planId}/toggle`, { method: "POST" }), "Plan status updated.");
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/plans");
+  revalidatePath("/safety");
   await back("/admin/plans");
 }
 
 export async function deletePlan(planId: string) {
   await requireAdmin();
   await perform(api(`/plans/${planId}`, { method: "DELETE" }), "Plan removed.");
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/plans");
+  revalidatePath("/safety");
   await back("/admin/plans");
 }
 
@@ -206,6 +219,9 @@ export async function createBlogPost(formData: FormData) {
     }),
     "Blog post created successfully.",
   );
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/blogs");
+  revalidatePath("/blogs");
   redirect("/admin/blogs");
 }
 
@@ -262,18 +278,27 @@ export async function updateBlogPost(blogId: string, formData: FormData) {
     }),
     "Blog post updated successfully.",
   );
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/blogs");
+  revalidatePath("/blogs");
   redirect("/admin/blogs");
 }
 
 export async function toggleBlogPost(blogId: string) {
   await requireAdmin();
   await perform(api(`/blogs/${blogId}/toggle`, { method: "POST" }), "Blog status updated.");
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/blogs");
+  revalidatePath("/blogs");
   await back("/admin/blogs");
 }
 
 export async function deleteBlogPost(blogId: string) {
   await requireAdmin();
   await perform(api(`/blogs/${blogId}`, { method: "DELETE" }), "Blog post removed.");
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/blogs");
+  revalidatePath("/blogs");
   await back("/admin/blogs");
 }
 
@@ -284,6 +309,9 @@ export async function approveBlogComment(commentId: string) {
     api(`/blogs-comments/${commentId}/approve`, { method: "POST" }),
     "Comment approved and is now visible publicly.",
   );
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/blogs");
+  revalidatePath("/blogs");
   await back("/admin/blogs?tab=comments");
 }
 
@@ -293,6 +321,9 @@ export async function rejectBlogComment(commentId: string) {
     api(`/blogs-comments/${commentId}/reject`, { method: "POST" }),
     "Comment rejected.",
   );
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/blogs");
+  revalidatePath("/blogs");
   await back("/admin/blogs?tab=comments");
 }
 
@@ -302,7 +333,152 @@ export async function deleteBlogComment(commentId: string) {
     api(`/blogs-comments/${commentId}`, { method: "DELETE" }),
     "Comment deleted.",
   );
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/blogs");
+  revalidatePath("/blogs");
   await back("/admin/blogs?tab=comments");
+}
+
+// ------------------------------------------------------------------ website content CMS
+export async function saveWebsiteContent(formData: FormData) {
+  await requireAdmin();
+
+  // Extract hero
+  const heroBadge = String(formData.get("hero_badge") ?? "").trim();
+  const heroH1 = String(formData.get("hero_headline_1") ?? "").trim();
+  const heroH2 = String(formData.get("hero_headline_2") ?? "").trim();
+  const heroH3 = String(formData.get("hero_headline_3") ?? "").trim();
+  const heroSubtitle = String(formData.get("hero_subtitle") ?? "").trim();
+  const googlePlayUrl = String(formData.get("googlePlayUrl") ?? "").trim();
+  const appStoreUrl = String(formData.get("appStoreUrl") ?? "").trim();
+
+  // Extract company
+  const legalName = String(formData.get("legalName") ?? "").trim();
+  const cin = String(formData.get("cin") ?? "").trim();
+  const gstin = String(formData.get("gstin") ?? "").trim();
+  const registeredOffice = String(formData.get("registeredOffice") ?? "").trim();
+  const supportEmail = String(formData.get("supportEmail") ?? "").trim();
+  const supportPhone = String(formData.get("supportPhone") ?? "").trim();
+  const instagram = String(formData.get("instagram") ?? "").trim();
+  const youtube = String(formData.get("youtube") ?? "").trim();
+  const x = String(formData.get("x") ?? "").trim();
+
+  // Extract handbook
+  const handbookTitle = String(formData.get("handbook_title") ?? "").trim();
+  const handbookDesc = String(formData.get("handbook_desc") ?? "").trim();
+  const handbookCta = String(formData.get("handbook_cta") ?? "").trim();
+
+  // FAQs
+  const faqsRaw = String(formData.get("faqs_json") ?? "");
+  let faqs;
+  if (faqsRaw) {
+    try {
+      faqs = JSON.parse(faqsRaw);
+    } catch {}
+  }
+
+  // Features
+  const featuresRaw = String(formData.get("features_json") ?? "");
+  let features;
+  if (featuresRaw) {
+    try {
+      features = JSON.parse(featuresRaw);
+    } catch {}
+  }
+
+  // Campaigns
+  const campaignsRaw = String(formData.get("campaigns_json") ?? "");
+  let campaigns;
+  if (campaignsRaw) {
+    try {
+      campaigns = JSON.parse(campaignsRaw);
+    } catch {}
+  }
+
+  // Plans Header
+  const plansHeaderRaw = String(formData.get("plans_header_json") ?? "");
+  let plansHeader;
+  if (plansHeaderRaw) {
+    try {
+      plansHeader = JSON.parse(plansHeaderRaw);
+    } catch {}
+  }
+
+  // Sub-pages: Kinder Together, Safety Tips, Real Talk
+  const kinderTogetherRaw = String(formData.get("kinder_together_json") ?? "");
+  let kinderTogether;
+  if (kinderTogetherRaw) {
+    try {
+      kinderTogether = JSON.parse(kinderTogetherRaw);
+    } catch {}
+  }
+
+  const safetyTipsRaw = String(formData.get("safety_tips_json") ?? "");
+  let safetyTips;
+  if (safetyTipsRaw) {
+    try {
+      safetyTips = JSON.parse(safetyTipsRaw);
+    } catch {}
+  }
+
+  const realTalkRaw = String(formData.get("real_talk_json") ?? "");
+  let realTalk;
+  if (realTalkRaw) {
+    try {
+      realTalk = JSON.parse(realTalkRaw);
+    } catch {}
+  }
+
+  const payload: Record<string, unknown> = {
+    hero: {
+      badge: heroBadge,
+      headline: [heroH1, heroH2, heroH3].filter(Boolean),
+      subtitle: heroSubtitle,
+      googlePlayUrl,
+      appStoreUrl,
+    },
+    company: {
+      legalName,
+      cin,
+      gstin,
+      registeredOffice,
+      supportEmail,
+      supportPhone,
+      instagram,
+      youtube,
+      x,
+    },
+    handbook: {
+      title: handbookTitle,
+      description: handbookDesc,
+      ctaText: handbookCta,
+    },
+  };
+
+  if (faqs) payload.faqs = faqs;
+  if (features) payload.features = features;
+  if (campaigns) payload.campaigns = campaigns;
+  if (plansHeader) payload.plansHeader = plansHeader;
+  if (kinderTogether) payload.kinderTogether = kinderTogether;
+  if (safetyTips) payload.safetyTips = safetyTips;
+  if (realTalk) payload.realTalk = realTalk;
+
+  await perform(
+    api("/website-content", {
+      method: "PUT",
+      body: payload,
+    }),
+    "Website content saved and published.",
+  );
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/website");
+  revalidatePath("/safety");
+  revalidatePath("/about");
+  revalidatePath("/kinder-together");
+  revalidatePath("/safety-tips");
+  revalidatePath("/real-talk");
+  redirect("/admin/website");
 }
 
 // ------------------------------------------------------------------ settings

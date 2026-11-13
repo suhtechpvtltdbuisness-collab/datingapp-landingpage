@@ -5,10 +5,11 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, MessageCircle, Sparkles } from "lucide-react";
 import { brand, EASE, spring } from "../safety/theme";
+import type { SiteRealTalk } from "@/lib/siteContent";
 
 type Topic = { id: string; emoji: string; title: string; text: string };
 
-const topics: Topic[] = [
+const fallbackTopics: Topic[] = [
   {
     id: "communication",
     emoji: "💬",
@@ -47,14 +48,32 @@ const topics: Topic[] = [
   },
 ];
 
-export default function RealTalkGuide() {
+interface Props {
+  data?: SiteRealTalk;
+}
+
+export default function RealTalkGuide({ data }: Props) {
+  const activeTopics =
+    data?.topics && data.topics.length > 0 ? data.topics : fallbackTopics;
+
+  const title = data?.title || "Real Talk Month";
+  const subtitle =
+    data?.subtitle || "Real conversations. Safer connections.";
+  const description =
+    data?.description ||
+    `Dating comes with questions, boundaries, expectations, and sometimes uncomfortable situations. ${title} gives ${brand.name} members practical information to help them recognize warning signs, communicate clearly, and make safer choices online and offline.`;
+
   const [activeIndex, setActiveIndex] = useState(0);
-  const [seen, setSeen] = useState<Set<string>>(new Set([topics[0].id]));
-  const active = topics[activeIndex];
+  const [seen, setSeen] = useState<Set<string>>(
+    new Set([activeTopics[0]?.id || "topic-1"]),
+  );
+  const active = activeTopics[activeIndex] || activeTopics[0];
 
   const open = (i: number) => {
     setActiveIndex(i);
-    setSeen((prev) => new Set(prev).add(topics[i].id));
+    if (activeTopics[i]?.id) {
+      setSeen((prev) => new Set(prev).add(activeTopics[i].id));
+    }
   };
 
   return (
@@ -76,12 +95,10 @@ export default function RealTalkGuide() {
               <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-magenta">
                 <Sparkles className="h-3.5 w-3.5" aria-hidden /> Awareness
               </span>
-              <h1 className="mt-5 font-display text-5xl font-extrabold tracking-tight sm:text-7xl">Real Talk Month</h1>
-              <p className="mt-4 font-display text-xl font-bold italic">Real conversations. Safer connections.</p>
+              <h1 className="mt-5 font-display text-5xl font-extrabold tracking-tight sm:text-7xl">{title}</h1>
+              <p className="mt-4 font-display text-xl font-bold italic">{subtitle}</p>
               <p className="mt-3 max-w-xl text-lg text-white/90">
-                Dating comes with questions, boundaries, expectations, and sometimes uncomfortable situations. <strong>Real Talk Month</strong> gives{" "}
-                {brand.name} members practical information to help them recognize warning signs, communicate clearly, and make safer choices online and
-                offline.
+                {description}
               </p>
             </motion.div>
             <motion.div
@@ -105,7 +122,7 @@ export default function RealTalkGuide() {
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-gradient text-white">
                   <MessageCircle className="h-4 w-4" aria-hidden />
                 </span>
-                <span className="text-sm font-semibold">{topics.length} topics to explore</span>
+                <span className="text-sm font-semibold">{activeTopics.length} topics to explore</span>
               </motion.div>
             </motion.div>
           </div>
@@ -118,13 +135,13 @@ export default function RealTalkGuide() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm font-bold uppercase tracking-wide text-brand-ink-soft">Pick a topic to explore</p>
             <p className="text-sm font-semibold text-brand-magenta">
-              {seen.size} / {topics.length} explored
+              {seen.size} / {activeTopics.length} explored
             </p>
           </div>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-brand-bg">
             <motion.div
               className="h-full rounded-full bg-brand-gradient"
-              animate={{ width: `${(seen.size / topics.length) * 100}%` }}
+              animate={{ width: `${(seen.size / (activeTopics.length || 1)) * 100}%` }}
               transition={spring}
             />
           </div>
@@ -132,7 +149,7 @@ export default function RealTalkGuide() {
           <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.1fr]">
             {/* Topic list */}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2">
-              {topics.map((t, i) => {
+              {activeTopics.map((t, i) => {
                 const on = i === activeIndex;
                 return (
                   <motion.button
@@ -162,49 +179,51 @@ export default function RealTalkGuide() {
             </div>
 
             {/* Active topic */}
-            <div className="relative min-h-[320px] overflow-hidden rounded-card bg-brand-bg p-6 sm:p-8">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={active.id}
-                  initial={{ opacity: 0, x: 24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.35, ease: EASE }}
-                  className="flex h-full flex-col"
-                >
-                  <motion.span
-                    initial={{ scale: 0.4, rotate: -20 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={spring}
-                    className="grid h-20 w-20 place-items-center rounded-3xl bg-white text-5xl shadow-card"
-                    aria-hidden
+            {active && (
+              <div className="relative min-h-[320px] overflow-hidden rounded-card bg-brand-bg p-6 sm:p-8">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={active.id}
+                    initial={{ opacity: 0, x: 24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -24 }}
+                    transition={{ duration: 0.35, ease: EASE }}
+                    className="flex h-full flex-col"
                   >
-                    {active.emoji}
-                  </motion.span>
-                  <p className="mt-6 text-xs font-bold uppercase tracking-wide text-brand-magenta">
-                    Topic {activeIndex + 1} of {topics.length}
-                  </p>
-                  <h2 className="mt-1 font-display text-3xl font-extrabold">{active.title}</h2>
-                  <p className="mt-4 flex-1 text-lg leading-relaxed text-brand-ink-soft">{active.text}</p>
-                  <div className="mt-8 flex items-center justify-between gap-3">
-                    <button
-                      type="button"
-                      onClick={() => open((activeIndex - 1 + topics.length) % topics.length)}
-                      className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-brand-ink-soft shadow-card hover:text-brand-ink"
+                    <motion.span
+                      initial={{ scale: 0.4, rotate: -20 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={spring}
+                      className="grid h-20 w-20 place-items-center rounded-3xl bg-white text-5xl shadow-card"
+                      aria-hidden
                     >
-                      <ArrowLeft className="h-4 w-4" aria-hidden /> Previous
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => open((activeIndex + 1) % topics.length)}
-                      className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-5 py-2 text-sm font-semibold text-white shadow-glow"
-                    >
-                      Next topic <ArrowRight className="h-4 w-4" aria-hidden />
-                    </button>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                      {active.emoji}
+                    </motion.span>
+                    <p className="mt-6 text-xs font-bold uppercase tracking-wide text-brand-magenta">
+                      Topic {activeIndex + 1} of {activeTopics.length}
+                    </p>
+                    <h2 className="mt-1 font-display text-3xl font-extrabold">{active.title}</h2>
+                    <p className="mt-4 flex-1 text-lg leading-relaxed text-brand-ink-soft">{active.text}</p>
+                    <div className="mt-8 flex items-center justify-between gap-3">
+                      <button
+                        type="button"
+                        onClick={() => open((activeIndex - 1 + activeTopics.length) % activeTopics.length)}
+                        className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-brand-ink-soft shadow-card hover:text-brand-ink"
+                      >
+                        <ArrowLeft className="h-4 w-4" aria-hidden /> Previous
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => open((activeIndex + 1) % activeTopics.length)}
+                        className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-5 py-2 text-sm font-semibold text-white shadow-glow"
+                      >
+                        Next topic <ArrowRight className="h-4 w-4" aria-hidden />
+                      </button>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            )}
           </div>
         </section>
 
@@ -212,7 +231,7 @@ export default function RealTalkGuide() {
         <section>
           <h2 className="mt-10 font-display text-2xl font-extrabold">All topics at a glance</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {topics.map((t, i) => (
+            {activeTopics.map((t, i) => (
               <motion.button
                 key={t.id}
                 type="button"

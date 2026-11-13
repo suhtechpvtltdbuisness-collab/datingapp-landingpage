@@ -6,9 +6,17 @@ import MagneticButton from "./MagneticButton";
 import EmergencyNotice from "./EmergencyNotice";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { EASE } from "../theme";
+import type { SiteHandbook } from "@/lib/siteContent";
 
-export default function SafetyHandbookBanner() {
+export default function SafetyHandbookBanner({ handbook }: { handbook?: SiteHandbook }) {
   const { ref, visible } = useScrollReveal<HTMLDivElement>();
+  const title = handbook?.title || "The Safe Dating Handbook";
+  const description =
+    handbook?.description ||
+    "A short, friendly guide to meeting someone new: public places, your own ride home, trusting your gut, and what to do when something feels off.";
+  const ctaText = handbook?.ctaText || "Read the handbook";
+  const ctaHref = handbook?.ctaHref || "#community";
+
   return (
     <section id="handbook" aria-labelledby="handbook-title" className="scroll-mt-20 px-4 py-6 sm:py-10 lg:py-16 sm:px-6">
       <div ref={ref} className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-5">
@@ -22,12 +30,12 @@ export default function SafetyHandbookBanner() {
           <div className="pointer-events-none absolute -bottom-20 right-24 h-40 w-40 rounded-full bg-white/10" aria-hidden />
           <Image src="/illustrations/handbook.svg" alt="" width={240} height={180} unoptimized className="pointer-events-none absolute -right-4 bottom-4 hidden w-56 drop-shadow-xl sm:block lg:w-48 xl:w-60" />
           <BookHeart className="h-10 w-10" aria-hidden />
-          <h2 id="handbook-title" className="mt-5 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">The Safe Dating Handbook</h2>
+          <h2 id="handbook-title" className="mt-5 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">{title}</h2>
           <p className="mt-3 max-w-md text-white/90 sm:max-w-[55%]">
-            A short, friendly guide to meeting someone new: public places, your own ride home, trusting your gut, and what to do when something feels off.
+            {description}
           </p>
-          <MagneticButton href="#community" variant="white" className="mt-7">
-            Read the handbook <ArrowRight className="h-4 w-4" aria-hidden />
+          <MagneticButton href={ctaHref} variant="white" className="mt-7">
+            {ctaText} <ArrowRight className="h-4 w-4" aria-hidden />
           </MagneticButton>
         </motion.div>
         <motion.div

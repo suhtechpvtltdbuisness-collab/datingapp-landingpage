@@ -10,10 +10,11 @@ interface Props {
   plan: Plan;
   selected: boolean;
   onSelect: () => void;
+  allPlans?: Plan[];
 }
 
-export default function PlanOption({ plan, selected, onSelect }: Props) {
-  const saving = savingsPercent(plan);
+export default function PlanOption({ plan, selected, onSelect, allPlans }: Props) {
+  const saving = savingsPercent(plan, allPlans);
   const sub = plan.note ?? (saving > 0 ? `Save ${saving}% vs weekly` : undefined);
 
   return (
