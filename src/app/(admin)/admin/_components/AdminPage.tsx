@@ -1,6 +1,6 @@
 import FlashStack from "./FlashStack";
 import { getFlashes } from "@/lib/admin/flash";
-import type { AdminSession } from "@/lib/admin/session";
+import type { AdminSession } from "@/lib/admin/types";
 
 interface Props {
   admin: AdminSession;

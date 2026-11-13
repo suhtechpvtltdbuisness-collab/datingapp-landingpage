@@ -1,3 +1,14 @@
+export interface AdminSession {
+  id: string;
+  username: string;
+}
+
+/** Only follow ?next= links that stay inside the admin panel. */
+export function safeNext(next: string | null | undefined): string | null {
+  if (!next || !next.startsWith("/admin") || next.startsWith("//") || next.includes("\\")) return null;
+  return next;
+}
+
 /** Shapes returned by the backend's /admin API (new_dating_app_backend). */
 export interface Pagination {
   page: number;

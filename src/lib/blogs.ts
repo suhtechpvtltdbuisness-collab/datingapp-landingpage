@@ -37,7 +37,7 @@ export function formatBlogDate(dateStr: string | Date | undefined): string {
   const d = new Date(dateStr);
   if (Number.isNaN(d.getTime())) return "";
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  return `${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
 export function formatBlogDateLong(dateStr: string | Date | undefined): string {
@@ -58,7 +58,7 @@ export function formatBlogDateLong(dateStr: string | Date | undefined): string {
     "November",
     "December",
   ];
-  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  return `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 }
 
 export async function getPublicBlogs(opts: {

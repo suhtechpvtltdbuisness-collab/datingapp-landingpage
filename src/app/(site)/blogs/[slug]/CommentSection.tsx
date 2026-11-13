@@ -203,7 +203,7 @@ export default function CommentSection({ slug, comments }: Props) {
                     <h5 className="text-sm font-bold text-brand-ink">
                       {comment.authorName}
                     </h5>
-                    <div className="flex items-center gap-1 text-[11px] text-brand-ink-soft">
+                    <div className="flex items-center gap-1 text-[11px] text-brand-ink-soft" suppressHydrationWarning>
                       <Clock className="h-3 w-3" />
                       <span suppressHydrationWarning>
                         {formatBlogDate(comment.createdAt)}

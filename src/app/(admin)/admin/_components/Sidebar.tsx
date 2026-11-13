@@ -16,7 +16,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { cx } from "./ui";
-import type { AdminSession } from "@/lib/admin/session";
+import type { AdminSession } from "@/lib/admin/types";
 
 interface Props {
   admin?: AdminSession | null;

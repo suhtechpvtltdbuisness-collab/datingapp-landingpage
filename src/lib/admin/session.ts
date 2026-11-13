@@ -1,16 +1,13 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import type { AdminSession } from "./types";
+export { safeNext, type AdminSession } from "./types";
 
 /**
  * The admin session is the backend's admin access token, kept in an httpOnly cookie.
  * The backend verifies it on every call; here we only read the username and expiry from it.
  */
 export const SESSION_COOKIE = "admin_session";
-
-export interface AdminSession {
-  id: string;
-  username: string;
-}
 
 function decode(token: string): { sub: string; username: string; exp: number } | null {
   try {
@@ -60,10 +57,4 @@ export async function requireAdmin(): Promise<AdminSession> {
     redirect(`/admin/login?next=${encodeURIComponent(current)}`);
   }
   return session;
-}
-
-/** Only follow ?next= links that stay inside the admin panel. */
-export function safeNext(next: string | null | undefined): string | null {
-  if (!next || !next.startsWith("/admin") || next.startsWith("//") || next.includes("\\")) return null;
-  return next;
 }
