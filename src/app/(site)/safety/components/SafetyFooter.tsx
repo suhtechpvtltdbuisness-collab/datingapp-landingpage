@@ -34,6 +34,7 @@ const groups: { title: string; links: FooterLink[] }[] = [
     title: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "Blog", href: "/blogs" },
       { label: "Contact", href: `mailto:${company.supportEmail}` },
     ],
   },

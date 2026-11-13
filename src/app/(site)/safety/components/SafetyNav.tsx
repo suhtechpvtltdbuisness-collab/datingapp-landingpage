@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowRight, ShieldCheck, Sparkles, HelpCircle, Download, Lock } from "lucide-react";
+import { Menu, X, ArrowRight, ShieldCheck, Sparkles, HelpCircle, Download, Lock, BookOpen } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 import { brand } from "../theme";
 import MagneticButton from "./MagneticButton";
@@ -10,6 +10,7 @@ import { storeLinks } from "@/lib/company";
 const links = [
   { label: "Safety Tools", href: "#features", icon: ShieldCheck },
   { label: "Premium Plans", href: "#plans", icon: Sparkles },
+  { label: "Blog", href: "/blogs", icon: BookOpen },
   { label: "Support & FAQ", href: "#faq", icon: HelpCircle },
   { label: "Download App", href: "#download", icon: Download },
 ];

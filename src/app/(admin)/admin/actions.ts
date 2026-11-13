@@ -152,6 +152,159 @@ export async function deletePlan(planId: string) {
   await back("/admin/plans");
 }
 
+// ------------------------------------------------------------------ blogs
+export async function createBlogPost(formData: FormData) {
+  await requireAdmin();
+  const title = String(formData.get("title") ?? "").trim();
+  const slug = String(formData.get("slug") ?? "").trim();
+  const summary = String(formData.get("summary") ?? "").trim();
+  const content = String(formData.get("content") ?? "").trim();
+  let coverImage = String(formData.get("coverImage") ?? "").trim();
+
+  // If user uploaded a cover image file, send to backend upload endpoint
+  const coverImageFile = formData.get("coverImageFile");
+  if (coverImageFile && typeof coverImageFile === "object" && "size" in coverImageFile && coverImageFile.size > 0) {
+    try {
+      const uploadData = new FormData();
+      uploadData.append("file", coverImageFile);
+      const res = await api<{ url: string }>("/blogs/upload-cover", {
+        method: "POST",
+        body: uploadData,
+      });
+      if (res?.data?.url) {
+        coverImage = res.data.url;
+      }
+    } catch (uploadErr) {
+      console.error("Cover image upload failed:", uploadErr);
+    }
+  }
+
+  const category = String(formData.get("category") ?? "Dating Tips").trim();
+  const author = String(formData.get("author") ?? "Vellora Team").trim();
+  const readTime = String(formData.get("readTime") ?? "3 min read").trim();
+  const isPublished = formData.get("isPublished") === "on" || formData.get("isPublished") === "true";
+  const tags = String(formData.get("tags") ?? "")
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+
+  await perform(
+    api("/blogs", {
+      method: "POST",
+      body: {
+        title,
+        slug: slug || undefined,
+        summary,
+        content,
+        coverImage,
+        category,
+        author,
+        readTime,
+        isPublished,
+        tags,
+      },
+    }),
+    "Blog post created successfully.",
+  );
+  redirect("/admin/blogs");
+}
+
+export async function updateBlogPost(blogId: string, formData: FormData) {
+  await requireAdmin();
+  const title = String(formData.get("title") ?? "").trim();
+  const slug = String(formData.get("slug") ?? "").trim();
+  const summary = String(formData.get("summary") ?? "").trim();
+  const content = String(formData.get("content") ?? "").trim();
+  let coverImage = String(formData.get("coverImage") ?? "").trim();
+
+  // If user uploaded a new cover image file, send to backend upload endpoint
+  const coverImageFile = formData.get("coverImageFile");
+  if (coverImageFile && typeof coverImageFile === "object" && "size" in coverImageFile && coverImageFile.size > 0) {
+    try {
+      const uploadData = new FormData();
+      uploadData.append("file", coverImageFile);
+      const res = await api<{ url: string }>("/blogs/upload-cover", {
+        method: "POST",
+        body: uploadData,
+      });
+      if (res?.data?.url) {
+        coverImage = res.data.url;
+      }
+    } catch (uploadErr) {
+      console.error("Cover image upload failed:", uploadErr);
+    }
+  }
+
+  const category = String(formData.get("category") ?? "Dating Tips").trim();
+  const author = String(formData.get("author") ?? "Vellora Team").trim();
+  const readTime = String(formData.get("readTime") ?? "3 min read").trim();
+  const isPublished = formData.get("isPublished") === "on" || formData.get("isPublished") === "true";
+  const tags = String(formData.get("tags") ?? "")
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+
+  await perform(
+    api(`/blogs/${blogId}`, {
+      method: "PUT",
+      body: {
+        title,
+        slug: slug || undefined,
+        summary,
+        content,
+        coverImage,
+        category,
+        author,
+        readTime,
+        isPublished,
+        tags,
+      },
+    }),
+    "Blog post updated successfully.",
+  );
+  redirect("/admin/blogs");
+}
+
+export async function toggleBlogPost(blogId: string) {
+  await requireAdmin();
+  await perform(api(`/blogs/${blogId}/toggle`, { method: "POST" }), "Blog status updated.");
+  await back("/admin/blogs");
+}
+
+export async function deleteBlogPost(blogId: string) {
+  await requireAdmin();
+  await perform(api(`/blogs/${blogId}`, { method: "DELETE" }), "Blog post removed.");
+  await back("/admin/blogs");
+}
+
+// ------------------------------------------------------------------ blog comments
+export async function approveBlogComment(commentId: string) {
+  await requireAdmin();
+  await perform(
+    api(`/blogs-comments/${commentId}/approve`, { method: "POST" }),
+    "Comment approved and is now visible publicly.",
+  );
+  await back("/admin/blogs?tab=comments");
+}
+
+export async function rejectBlogComment(commentId: string) {
+  await requireAdmin();
+  await perform(
+    api(`/blogs-comments/${commentId}/reject`, { method: "POST" }),
+    "Comment rejected.",
+  );
+  await back("/admin/blogs?tab=comments");
+}
+
+export async function deleteBlogComment(commentId: string) {
+  await requireAdmin();
+  await perform(
+    api(`/blogs-comments/${commentId}`, { method: "DELETE" }),
+    "Comment deleted.",
+  );
+  await back("/admin/blogs?tab=comments");
+}
+
 // ------------------------------------------------------------------ settings
 export async function changePassword(formData: FormData) {
   await requireAdmin();

@@ -10,6 +10,7 @@ import {
   Gem,
   ShieldAlert,
   HeartHandshake,
+  BookOpen,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -24,6 +25,7 @@ const items = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, match: (p: string) => p === "/admin" || p === "/admin/" },
   { href: "/admin/users", label: "Users", icon: Users, match: (p: string) => p.startsWith("/admin/users") },
   { href: "/admin/plans", label: "Plans", icon: Gem, match: (p: string) => p.startsWith("/admin/plans") },
+  { href: "/admin/blogs", label: "Blogs", icon: BookOpen, match: (p: string) => p.startsWith("/admin/blogs") },
   { href: "/admin/reports", label: "Reports", icon: ShieldAlert, match: (p: string) => p.startsWith("/admin/reports") },
   { href: "/admin/matches", label: "Matches", icon: HeartHandshake, match: (p: string) => p.startsWith("/admin/matches") },
   { href: "/admin/settings", label: "Settings", icon: Settings, match: (p: string) => p.startsWith("/admin/settings") },

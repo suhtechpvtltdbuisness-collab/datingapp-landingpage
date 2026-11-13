@@ -1,11 +1,8 @@
 import { redirect } from "next/navigation";
 import { getToken } from "./session";
+import { backendUrl } from "../backend";
 
-/** Where the dating backend (new_dating_app_backend) is running. */
-export function backendUrl(): string {
-  const raw = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:5001";
-  return raw.split("#")[0].trim().replace(/\/+$/, "");
-}
+export { backendUrl };
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
@@ -32,8 +29,9 @@ export async function api<T>(
     if (value !== undefined && value !== "") url.searchParams.set(key, String(value));
   }
 
+  const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
   const headers: Record<string, string> = {};
-  if (body !== undefined) headers["Content-Type"] = "application/json";
+  if (body !== undefined && !isFormData) headers["Content-Type"] = "application/json";
   if (auth) {
     const token = await getToken();
     if (!token) redirect("/admin/logout");
@@ -45,7 +43,7 @@ export async function api<T>(
     res = await fetch(url, {
       method,
       headers,
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: isFormData ? (body as BodyInit) : body === undefined ? undefined : JSON.stringify(body),
       cache: "no-store",
     });
   } catch (err: unknown) {

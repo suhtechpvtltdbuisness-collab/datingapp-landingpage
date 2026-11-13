@@ -99,3 +99,38 @@ export interface AdminPlan {
   createdAt: string;
   updatedAt?: string;
 }
+
+export interface AdminBlogPost {
+  id: string;
+  _id?: string;
+  title: string;
+  slug: string;
+  summary: string;
+  content: string;
+  coverImage?: string;
+  category: string;
+  author: string;
+  tags?: string[];
+  readTime: string;
+  isPublished: boolean;
+  views: number;
+  commentCount: number;
+  approvedCommentCount: number;
+  pendingCommentCount: number;
+  rejectedCommentCount: number;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface AdminBlogComment {
+  id: string;
+  _id?: string;
+  postId: string;
+  postTitle?: string;
+  postSlug?: string;
+  authorName: string;
+  authorEmail: string;
+  content: string;
+  status: "pending" | "approved" | "rejected";
+  createdAt: string;
+}
