@@ -2,7 +2,7 @@ import { Heart, Users, MessageSquare, User } from "lucide-react";
 import DownloadCtaBar from "./DownloadCtaBar";
 import BrandLogo from "./BrandLogo";
 import { brand } from "../theme";
-import { company, copyrightLine, socialLinks } from "@/lib/company";
+import { company, copyrightLine, socialLinks, storeLinks } from "@/lib/company";
 
 type FooterLink = {
   label: string;
@@ -11,6 +11,15 @@ type FooterLink = {
 };
 
 const groups: { title: string; links: FooterLink[] }[] = [
+  {
+    title: "Download",
+    links: [
+      ...(storeLinks.googlePlay
+        ? [{ label: "Google Play Store", href: storeLinks.googlePlay, external: true }]
+        : []),
+      { label: "App Store (Coming Soon)", href: "#download" },
+    ],
+  },
   {
     title: "Safety",
     links: [

@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BadgeCheck, ShieldCheck, ArrowRight } from "lucide-react";
+import { storeLinks } from "@/lib/company";
 import MagneticButton from "./MagneticButton";
 import { useParallax } from "../hooks/useParallax";
 import { EASE } from "../theme";
@@ -113,11 +114,17 @@ export default function SafetyHero() {
             transition={{ duration: 0.9, ease: EASE, delay: 0.72 }}
             className="mt-9 flex flex-wrap items-center gap-4"
           >
-            <MagneticButton href="#features">
-              Explore safety tools <ArrowRight className="h-4 w-4" aria-hidden />
-            </MagneticButton>
-            <a href="#handbook" className="rounded font-semibold text-brand-magenta underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40">
-              Read the handbook
+            {storeLinks.googlePlay ? (
+              <MagneticButton href={storeLinks.googlePlay}>
+                Get on Google Play <ArrowRight className="h-4 w-4" aria-hidden />
+              </MagneticButton>
+            ) : (
+              <MagneticButton href="#features">
+                Explore safety tools <ArrowRight className="h-4 w-4" aria-hidden />
+              </MagneticButton>
+            )}
+            <a href="#features" className="rounded font-semibold text-brand-magenta underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40">
+              Explore safety tools
             </a>
           </motion.div>
         </div>

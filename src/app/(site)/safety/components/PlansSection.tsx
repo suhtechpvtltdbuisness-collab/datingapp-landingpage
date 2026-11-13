@@ -5,6 +5,7 @@ import { Check, ShieldCheck, ArrowRight } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import PlanOption from "./PlanOption";
 import MagneticButton from "./MagneticButton";
+import { storeLinks } from "@/lib/company";
 import { plans, perks, defaultPlanId } from "../data/plans";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { EASE, brand } from "../theme";
@@ -64,7 +65,7 @@ export default function PlansSection() {
               </div>
             </LayoutGroup>
           </fieldset>
-          <MagneticButton href="#download" className="mt-6 w-full">
+          <MagneticButton href={storeLinks.googlePlay ?? "#download"} className="mt-6 w-full">
             Get {selected.label} in the app <ArrowRight className="h-4 w-4" aria-hidden />
           </MagneticButton>
           <p className="mt-4 text-center text-sm leading-relaxed text-brand-ink-soft">

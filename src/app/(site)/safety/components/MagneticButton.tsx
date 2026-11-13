@@ -9,19 +9,33 @@ interface Props {
   variant?: "gradient" | "white";
   size?: "sm" | "lg";
   className?: string;
+  target?: string;
+  rel?: string;
 }
 
-export default function MagneticButton({ href, children, variant = "gradient", size = "lg", className = "" }: Props) {
+export default function MagneticButton({
+  href,
+  children,
+  variant = "gradient",
+  size = "lg",
+  className = "",
+  target,
+  rel,
+}: Props) {
   const { ref, style, handlers } = useMagnetic<HTMLAnchorElement>(size === "lg" ? 10 : 6);
   const look =
     variant === "gradient"
       ? "bg-brand-gradient text-white shadow-glow"
       : "bg-white text-brand-magenta shadow-card";
   const pad = size === "lg" ? "px-7 py-4 text-base" : "px-3.5 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm whitespace-nowrap";
+  const isExternal = href.startsWith("http");
+
   return (
     <motion.a
       ref={ref}
       href={href}
+      target={target ?? (isExternal ? "_blank" : undefined)}
+      rel={rel ?? (isExternal ? "noopener noreferrer" : undefined)}
       style={style}
       {...handlers}
       whileTap={{ scale: 0.96 }}

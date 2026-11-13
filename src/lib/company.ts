@@ -20,7 +20,8 @@ export const company = {
 
 export const storeLinks = {
   appStore: null as string | null, // TODO: App Store listing URL
-  googlePlay: null as string | null, // TODO: Google Play listing URL
+  googlePlay:
+    "https://play.google.com/store/apps/details?id=com.suhtech.datingapp&pcampaignid=web_share",
 };
 
 export const socialLinks = {

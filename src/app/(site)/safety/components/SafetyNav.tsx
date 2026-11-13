@@ -5,6 +5,7 @@ import { Menu, X, ArrowRight, ShieldCheck, Sparkles, HelpCircle, Download, Lock 
 import BrandLogo from "./BrandLogo";
 import { brand } from "../theme";
 import MagneticButton from "./MagneticButton";
+import { storeLinks } from "@/lib/company";
 
 const links = [
   { label: "Safety Tools", href: "#features", icon: ShieldCheck },
@@ -94,7 +95,7 @@ export default function SafetyNav() {
               Login
             </a>
 
-            <MagneticButton href="#download" size="sm" className="!px-3 !py-1.5 text-xs sm:!px-5 sm:!py-2.5 sm:text-sm">
+            <MagneticButton href={storeLinks.googlePlay ?? "#download"} size="sm" className="!px-3 !py-1.5 text-xs sm:!px-5 sm:!py-2.5 sm:text-sm">
               <span className="hidden sm:inline">Get the App</span>
               <span className="sm:hidden">Get App</span>
             </MagneticButton>
