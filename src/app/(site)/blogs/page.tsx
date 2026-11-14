@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { brand } from "../safety/theme";
 import LegalFooter from "../safety/components/LegalFooter";
-import { formatBlogDate, getPublicBlogs } from "@/lib/blogs";
+import { formatBlogDate, getPublicBlogs, blogImageSrc } from "@/lib/blogs";
 
 export const metadata: Metadata = {
   title: `Blog & Dating Guides | ${brand.name}`,
@@ -171,7 +171,7 @@ export default async function BlogsPage({ searchParams }: Props) {
                     {post.coverImage ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        src={post.coverImage}
+                        src={blogImageSrc(post.coverImage)}
                         alt={post.title}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />

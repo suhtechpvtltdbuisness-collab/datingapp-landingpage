@@ -144,3 +144,91 @@ export async function postBlogComment(
     };
   }
 }
+
+/**
+ * Sanitizes blog HTML content to prevent XSS attacks while preserving formatting,
+ * inline styles (colors, font-weights, alignments, etc.), links, and media.
+ */
+export function sanitizeBlogHtml(html: string): string {
+  if (!html) return "";
+  return html
+    // Remove script tags and their content
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    // Remove style tags
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
+    // Remove applet, object, embed, iframe, frameset
+    .replace(/<\/?(?:applet|object|embed|frame|frameset)\b[^>]*>/gi, "")
+    // Remove on* inline event handlers (onclick, onerror, onload, onmouseover, etc.)
+    .replace(/\son\w+\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, "")
+    // Prevent javascript: or vbscript: pseudoprotocols in href or src
+    .replace(
+      /(href|src)\s*=\s*['"]\s*(?:javascript|vbscript|data(?!\s*:\s*image)):[^'"]*['"]/gi,
+      '$1="#"',
+    );
+}
+
+/**
+ * Renders blog content:
+ * - If the content contains HTML tags, it sanitizes and returns the HTML.
+ * - If it's legacy plain text, it wraps paragraphs in <p> tags with clean line breaks.
+ */
+export function renderBlogContent(rawContent: string | undefined | null): string {
+  if (!rawContent) return "";
+  const trimmed = rawContent.trim();
+  if (!trimmed) return "";
+
+  // Check if content already contains HTML tags (e.g., <p>, <div>, <b>, <span>, <h2>, <br>, etc.)
+  const hasHtml = /<\/?[a-z][\s\S]*>/i.test(trimmed);
+  if (!hasHtml) {
+    return trimmed
+      .split(/\n\n+/)
+      .map((p) => `<p>${p.trim().replace(/\n/g, "<br/>")}</p>`)
+      .join("");
+  }
+
+  return sanitizeBlogHtml(trimmed);
+}
+
+/**
+ * Resolves a blog image URL:
+ * - If the URL is already absolute and matches the current backend, returns as is.
+ * - If the URL is relative (e.g. "/media/..."), prepends the backend URL.
+ * - If in local development and the URL points to Railway production,
+ *   rewrites origin to active local backend URL so local development loads images properly.
+ */
+export function blogImageSrc(url: string | null | undefined): string {
+  if (!url) return "";
+  const trimmed = url.trim();
+  if (!trimmed) return "";
+
+  // If already a data URI or blob URL, return as is
+  if (trimmed.startsWith("data:") || trimmed.startsWith("blob:")) {
+    return trimmed;
+  }
+
+  const currentBackend = backendUrl();
+
+  // If relative path like "/media/file/..." or "/media/..."
+  if (trimmed.startsWith("/")) {
+    return `${currentBackend}${trimmed}`;
+  }
+
+  // If it points to Railway production backend while running locally against localhost:5001
+  if (
+    currentBackend.includes("localhost") ||
+    currentBackend.includes("127.0.0.1")
+  ) {
+    if (trimmed.includes("newdatingappbackend-production.up.railway.app")) {
+      try {
+        const parsed = new URL(trimmed);
+        return `${currentBackend}${parsed.pathname}${parsed.search}`;
+      } catch {
+        // ignore
+      }
+    }
+  }
+
+  return trimmed;
+}
+
+

@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { brand } from "../../safety/theme";
 import LegalFooter from "../../safety/components/LegalFooter";
-import { formatBlogDateLong, getPublicBlogBySlug } from "@/lib/blogs";
+import { formatBlogDateLong, getPublicBlogBySlug, renderBlogContent, blogImageSrc } from "@/lib/blogs";
 import CommentSection from "./CommentSection";
 
 interface Props {
@@ -47,12 +47,6 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const { post, comments } = data;
-
-  // Split content into clean paragraphs
-  const paragraphs = post.content
-    .split(/\n\n+/)
-    .map((p) => p.trim())
-    .filter(Boolean);
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-ink flex flex-col justify-between">
@@ -121,7 +115,7 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="my-8 overflow-hidden rounded-2xl shadow-sm">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={post.coverImage}
+                src={blogImageSrc(post.coverImage)}
                 alt={post.title}
                 className="w-full max-h-[480px] object-cover"
               />
@@ -136,13 +130,12 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           {/* Article Content */}
-          <div className="mt-8 space-y-6 text-base sm:text-lg text-brand-ink leading-relaxed">
-            {paragraphs.map((p, idx) => (
-              <p key={idx} className="whitespace-pre-line">
-                {p}
-              </p>
-            ))}
-          </div>
+          <div
+            className="blog-content mt-8 text-base sm:text-lg leading-relaxed text-brand-ink"
+            dangerouslySetInnerHTML={{
+              __html: renderBlogContent(post.content),
+            }}
+          />
 
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (

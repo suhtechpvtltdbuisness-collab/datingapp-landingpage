@@ -35,8 +35,9 @@ import {
   toggleBlogPost,
   updateBlogPost,
 } from "../../actions";
-import { formatBlogDate } from "@/lib/blogs";
+import { formatBlogDate, blogImageSrc } from "@/lib/blogs";
 import type { AdminBlogPost, AdminBlogComment } from "@/lib/admin/types";
+import BlogContentEditor from "./BlogContentEditor";
 
 interface Props {
   initialTab?: "posts" | "comments";
@@ -84,7 +85,7 @@ export default function BlogManager({
 
   const openEditModal = (post: AdminBlogPost) => {
     setEditingPost(post);
-    setCoverPreview(post.coverImage || null);
+    setCoverPreview(blogImageSrc(post.coverImage) || null);
     setExistingCoverUrl(post.coverImage || "");
     if (fileInputRef.current) fileInputRef.current.value = "";
     setIsCreating(false);
@@ -246,9 +247,12 @@ export default function BlogManager({
                       <div className="relative mb-3.5 h-36 w-full overflow-hidden rounded-[14px] bg-gray-100">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={post.coverImage}
+                          src={blogImageSrc(post.coverImage)}
                           alt={post.title}
                           className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLElement).style.display = "none";
+                          }}
                         />
                         <div className="absolute top-2.5 left-2.5 rounded-full bg-black/60 px-2.5 py-0.5 text-[11px] font-semibold text-white backdrop-blur-sm">
                           {post.category}
@@ -761,16 +765,14 @@ export default function BlogManager({
 
                 {/* Content Body */}
                 <div>
-                  <label className="block text-[12.5px] font-semibold text-admin-ink">
+                  <label className="block text-[12.5px] font-semibold text-admin-ink mb-1.5">
                     Article Content <span className="text-pink-500">*</span>
                   </label>
-                  <textarea
+                  <BlogContentEditor
+                    key={editingPost?.id ?? "new"}
+                    defaultValue={editingPost?.content ?? ""}
                     name="content"
                     required
-                    rows={7}
-                    defaultValue={editingPost?.content ?? ""}
-                    placeholder="Write the full article here. Paragraphs separated by blank lines will be rendered cleanly..."
-                    className="mt-1 w-full rounded-[14px] border border-gray-200 p-3.5 text-[13.5px] text-admin-ink focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-500/20 font-sans leading-relaxed"
                   />
                 </div>
 
