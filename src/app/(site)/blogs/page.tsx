@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -14,11 +13,13 @@ import {
 import { brand } from "../safety/theme";
 import LegalFooter from "../safety/components/LegalFooter";
 import { formatBlogDate, getPublicBlogs, blogImageSrc } from "@/lib/blogs";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: `Blog & Dating Guides | ${brand.name}`,
   description: `Discover safety advice, relationship stories, and modern dating insights from the ${brand.name} team.`,
-};
+  path: "/blogs",
+});
 
 export const revalidate = 30; // ISR cache 30s
 
@@ -55,7 +56,7 @@ export default async function BlogsPage({ searchParams }: Props) {
           {/* Top navigation */}
           <div className="flex items-center justify-between pb-8">
             <Link
-              href="/safety"
+              href="/"
               className="inline-flex items-center gap-2 rounded-full border border-brand-magenta/30 bg-white/70 px-4 py-2 text-sm font-semibold text-brand-magenta shadow-sm transition-all hover:bg-brand-magenta/10"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden />

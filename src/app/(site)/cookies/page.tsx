@@ -1,16 +1,20 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { brand } from "../safety/theme";
 import LegalFooter from "../safety/components/LegalFooter";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: `Cookie Policy | ${brand.name}` };
+export const metadata = pageMetadata({
+  title: `Cookie Policy | ${brand.name}`,
+  description: `How ${brand.name} uses essential and analytics cookies, and how you can manage cookie settings in your browser.`,
+  path: "/cookies",
+});
 
 export default function CookiesPage() {
   return (
     <>
     <main className="min-h-screen bg-brand-bg px-4 py-16 text-brand-ink sm:px-6">
       <article className="mx-auto max-w-3xl rounded-card bg-white p-8 shadow-card sm:p-10">
-        <Link href="/safety" className="text-sm font-semibold text-brand-magenta underline-offset-2 hover:underline">
+        <Link href="/" className="text-sm font-semibold text-brand-magenta underline-offset-2 hover:underline">
           Back to Safety Centre
         </Link>
         <h1 className="mt-6 font-display text-4xl font-extrabold">Cookie Policy</h1>

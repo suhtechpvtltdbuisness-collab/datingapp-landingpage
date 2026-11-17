@@ -152,6 +152,14 @@ export async function postBlogComment(
 export function sanitizeBlogHtml(html: string): string {
   if (!html) return "";
   return html
+    // Authors sometimes paste a whole HTML document. Drop document-level tags so a stray <title>,
+    // <meta name=robots> or <link rel=canonical> from the pasted head can't end up in the page body.
+    .replace(/<head\b[^>]*>[\s\S]*?<\/head>/gi, "")
+    .replace(/<\/?(?:html|body)\b[^>]*>/gi, "")
+    .replace(/<(?:title|meta|link|base)\b[^>]*>(?:[\s\S]*?<\/title>)?/gi, "")
+    // The post title is the page's single <h1>; keep any <h1> in the body content as a (visually identical) <h2>.
+    .replace(/<h1\b/gi, "<h2 data-h1")
+    .replace(/<\/h1>/gi, "</h2>")
     // Remove script tags and their content
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
     // Remove style tags

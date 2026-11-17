@@ -464,7 +464,7 @@ function DoneStep() {
       <p className="mx-auto mt-3 max-w-md leading-relaxed text-brand-ink-soft">
         Thanks for spending time on {brand.name}. You can uninstall the app now. If you ever want to come back, you&apos;re welcome to create a new account.
       </p>
-      <Link href="/safety" className={`${primaryButton} mt-8 inline-flex`}>
+      <Link href="/" className={`${primaryButton} mt-8 inline-flex`}>
         Back to {brand.name}
       </Link>
     </div>

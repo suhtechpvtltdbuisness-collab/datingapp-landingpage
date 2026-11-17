@@ -1,12 +1,16 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { brand } from "../safety/theme";
 import { company } from "@/lib/company";
 import LegalFooter from "../safety/components/LegalFooter";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: `Terms of Service | ${brand.name}` };
+export const metadata = pageMetadata({
+  title: `Terms of Service | ${brand.name}`,
+  description: `The terms that apply when you create an account or use ${brand.name}, operated by ${company.legalName}.`,
+  path: "/terms",
+});
 
 const linkClass = "font-semibold text-brand-magenta underline-offset-2 hover:underline";
 
@@ -73,7 +77,7 @@ const sections: Section[] = [
         <p>We may review reported activity and take appropriate action, including restricting, suspending, or removing an account when necessary.</p>
         <p>
           For more information, visit the{" "}
-          <Link href="/safety" className={linkClass}>
+          <Link href="/" className={linkClass}>
             {brand.name} Safety Centre
           </Link>
           .
@@ -145,7 +149,7 @@ export default function TermsPage() {
     <main className="min-h-screen bg-brand-bg px-4 py-16 text-brand-ink sm:px-6">
       <article className="mx-auto max-w-3xl rounded-card bg-white p-8 shadow-card sm:p-10">
         <Link
-          href="/safety"
+          href="/"
           className="inline-flex items-center gap-2 rounded-full border border-brand-magenta/30 px-4 py-2 text-sm font-semibold text-brand-magenta transition-colors hover:bg-brand-magenta/10"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden />

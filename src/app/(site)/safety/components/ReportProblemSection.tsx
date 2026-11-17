@@ -26,6 +26,7 @@ export default function ReportProblemSection() {
             </span>
             <SectionHeading
               id="report-problem-title"
+              as="h1"
               eyebrow="Support"
               title="Report a problem"
               subtitle="Tell us what's not working. Add the right details so our safety team can help faster."

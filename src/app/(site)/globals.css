@@ -67,7 +67,8 @@ body {
   letter-spacing: -0.02em;
 }
 
-.blog-content h1 {
+.blog-content h1,
+.blog-content h2[data-h1] {
   font-size: 2.25rem;
   line-height: 1.25;
   margin-top: 2rem;

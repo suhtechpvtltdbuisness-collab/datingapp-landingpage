@@ -6,14 +6,14 @@ Next.js app (React + Tailwind). It includes the admin panel at `/admin` (see bel
 ## Run
 ```bash
 npm install
-npm run dev        # http://localhost:3000/safety  (/ redirects to /safety)
+npm run dev        # http://localhost:3000  (/safety permanently redirects to /)
 npm run build && npm start
 ```
 
 ## Structure
 ```
-src/app/safety/
-  page.tsx            composes the sections only   (lives under src/app/(site)/safety/)
+src/app/(site)/page.tsx   homepage at "/" (composes the sections only)
+src/app/(site)/safety/
   theme.ts            design tokens (colors, radii, shadows, EASE curve)
   components/         one component per file (Nav, Hero, FeatureGrid/Card, Handbook, EmergencyNotice,
                       CampaignCarousel/Card, PartnerLogoMarquee, Faq, Footer, DownloadCtaBar,
@@ -57,3 +57,10 @@ src/middleware.ts           sends signed-out visitors to /admin/login?next=...
 All illustrations are custom SVGs in `public/illustrations/`: the hero profile cards, the three
 community cards and the handbook. The logo files are in `public/brand/`. Replace any of them
 with photos by changing the paths in `SafetyHero.tsx`, `data/campaigns.ts` or `SafetyHandbookBanner.tsx`.
+
+## SEO
+- Production origin: `https://vellora.my` (from `company.domain`; override with `NEXT_PUBLIC_SITE_URL`). Helpers in `src/lib/seo.ts`.
+- Every public page sets its metadata with `pageMetadata({ title, description, path })` (canonical, Open Graph, Twitter, robots).
+- `src/app/robots.ts` -> `/robots.txt` (blocks `/admin` and `/api/`); `src/app/sitemap.ts` -> `/sitemap.xml`
+  (static pages + published blog posts from the backend). **Add new public pages to `STATIC_PATHS` in `sitemap.ts`.**
+- JSON-LD: Organization + WebSite on the homepage, BlogPosting + BreadcrumbList on blog posts (`<JsonLd />`).

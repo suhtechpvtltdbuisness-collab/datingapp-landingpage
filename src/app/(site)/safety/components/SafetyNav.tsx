@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight, ShieldCheck, Sparkles, HelpCircle, Download, Lock, BookOpen } from "lucide-react";
 import BrandLogo from "./BrandLogo";
@@ -8,15 +9,16 @@ import MagneticButton from "./MagneticButton";
 import { storeLinks } from "@/lib/company";
 
 const links = [
-  { label: "Safety Tools", href: "#features", icon: ShieldCheck },
-  { label: "Premium Plans", href: "#plans", icon: Sparkles },
+  { label: "Safety Tools", href: "/#features", icon: ShieldCheck },
+  { label: "Premium Plans", href: "/#plans", icon: Sparkles },
   { label: "Blog", href: "/blogs", icon: BookOpen },
-  { label: "Support & FAQ", href: "#faq", icon: HelpCircle },
-  { label: "Download App", href: "#download", icon: Download },
+  { label: "Support & FAQ", href: "/#faq", icon: HelpCircle },
+  { label: "Download App", href: "/#download", icon: Download },
 ];
 
 export default function SafetyNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
   const { scrollY } = useScroll();
   // Glass fades in smoothly across the bottom of the hero (roughly 200–520px of scroll).
   const bg = useTransform(scrollY, [200, 520], ["rgba(255,243,247,0)", "rgba(255,243,247,0.92)"]);
@@ -35,17 +37,18 @@ export default function SafetyNav() {
     };
   }, [mobileOpen]);
 
-  // Smooth scroll handler for anchor links
+  // Section links are "/#id" so they also work from other pages. On the homepage they smooth-scroll in place;
+  // elsewhere the browser navigates to the homepage section.
   const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setMobileOpen(false);
-    if (href.startsWith("#")) {
+    if (href.startsWith("/#") && pathname === "/") {
       e.preventDefault();
-      const targetId = href.replace("#", "");
+      const targetId = href.slice(2);
       const elem = document.getElementById(targetId);
       if (elem) {
         elem.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
-        window.location.hash = href;
+        window.location.hash = `#${targetId}`;
       }
     }
   };
@@ -62,8 +65,8 @@ export default function SafetyNav() {
     >
       <nav aria-label="Main" className="mx-auto flex h-14 sm:h-16 max-w-6xl items-center justify-between gap-3 px-3.5 sm:px-6">
         <a
-          href="#top"
-          onClick={(e) => handleNavigate(e, "#top")}
+          href="/#top"
+          onClick={(e) => handleNavigate(e, "/#top")}
           aria-label={`${brand.name} — back to top`}
           className="rounded-full shrink-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-purple/40"
         >
@@ -96,7 +99,7 @@ export default function SafetyNav() {
               Login
             </a>
 
-            <MagneticButton href={storeLinks.googlePlay ?? "#download"} size="sm" className="!px-3 !py-1.5 text-xs sm:!px-5 sm:!py-2.5 sm:text-sm">
+            <MagneticButton href={storeLinks.googlePlay ?? "/#download"} size="sm" className="!px-3 !py-1.5 text-xs sm:!px-5 sm:!py-2.5 sm:text-sm">
               <span className="hidden sm:inline">Get the App</span>
               <span className="sm:hidden">Get App</span>
             </MagneticButton>
@@ -172,8 +175,8 @@ export default function SafetyNav() {
               {/* Download Action at the Bottom */}
               <div className="mt-4 pt-3.5 border-t border-black/[0.06]">
                 <a
-                  href="#download"
-                  onClick={(e) => handleNavigate(e, "#download")}
+                  href="/#download"
+                  onClick={(e) => handleNavigate(e, "/#download")}
                   className="flex w-full items-center justify-center gap-2 rounded-full bg-brand-gradient py-3 text-center text-[14px] font-bold text-white shadow-md transition hover:opacity-95 active:scale-98"
                 >
                   <Download className="h-4 w-4" />

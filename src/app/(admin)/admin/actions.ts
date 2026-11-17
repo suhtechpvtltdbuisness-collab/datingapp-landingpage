@@ -115,7 +115,7 @@ export async function createPlan(formData: FormData) {
   );
   revalidatePath("/", "layout");
   revalidatePath("/admin/plans");
-  revalidatePath("/safety");
+  revalidatePath("/");
   redirect("/admin/plans");
 }
 
@@ -143,7 +143,7 @@ export async function updatePlan(planId: string, formData: FormData) {
   );
   revalidatePath("/", "layout");
   revalidatePath("/admin/plans");
-  revalidatePath("/safety");
+  revalidatePath("/");
   redirect("/admin/plans");
 }
 
@@ -152,7 +152,7 @@ export async function togglePlan(planId: string) {
   await perform(api(`/plans/${planId}/toggle`, { method: "POST" }), "Plan status updated.");
   revalidatePath("/", "layout");
   revalidatePath("/admin/plans");
-  revalidatePath("/safety");
+  revalidatePath("/");
   await back("/admin/plans");
 }
 
@@ -161,7 +161,7 @@ export async function deletePlan(planId: string) {
   await perform(api(`/plans/${planId}`, { method: "DELETE" }), "Plan removed.");
   revalidatePath("/", "layout");
   revalidatePath("/admin/plans");
-  revalidatePath("/safety");
+  revalidatePath("/");
   await back("/admin/plans");
 }
 
@@ -473,7 +473,7 @@ export async function saveWebsiteContent(formData: FormData) {
 
   revalidatePath("/", "layout");
   revalidatePath("/admin/website");
-  revalidatePath("/safety");
+  revalidatePath("/");
   revalidatePath("/about");
   revalidatePath("/kinder-together");
   revalidatePath("/safety-tips");

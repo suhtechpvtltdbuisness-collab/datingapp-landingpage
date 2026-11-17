@@ -246,7 +246,7 @@ export default function SafetyTipsGuide({ data }: Props) {
         />
         <div className="relative mx-auto max-w-6xl">
           <Link
-            href="/safety#community"
+            href="/#community"
             className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold backdrop-blur transition-colors hover:bg-white/25"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
@@ -688,7 +688,7 @@ export default function SafetyTipsGuide({ data }: Props) {
 
           <div className="flex justify-center pt-4">
             <Link
-              href="/safety"
+              href="/"
               className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-display font-semibold text-brand-magenta shadow-card transition-shadow hover:shadow-card-hover"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden />

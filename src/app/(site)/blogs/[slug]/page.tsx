@@ -14,6 +14,8 @@ import { brand } from "../../safety/theme";
 import LegalFooter from "../../safety/components/LegalFooter";
 import { formatBlogDateLong, getPublicBlogBySlug, renderBlogContent, blogImageSrc } from "@/lib/blogs";
 import CommentSection from "./CommentSection";
+import JsonLd from "../../JsonLd";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata, siteUrl } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -23,17 +25,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const data = await getPublicBlogBySlug(slug);
   if (!data?.post) {
-    return { title: `Blog Post | ${brand.name}` };
+    return { title: `Blog Post | ${brand.name}`, robots: { index: false, follow: false } };
   }
-  return {
-    title: `${data.post.title} | ${brand.name} Blog`,
-    description: data.post.summary || `Read ${data.post.title} on Vellora.`,
-    openGraph: {
-      title: data.post.title,
-      description: data.post.summary,
-      images: data.post.coverImage ? [data.post.coverImage] : [],
-    },
-  };
+  const { post } = data;
+  const cover = post.coverImage ? blogImageSrc(post.coverImage) : "";
+  const meta = pageMetadata({
+    title: `${post.title} | ${brand.name} Blog`,
+    description: post.summary || `Read ${post.title} on the ${brand.name} blog.`,
+    path: `/blogs/${encodeURIComponent(post.slug || slug)}`,
+    image: cover ? { url: cover, alt: post.title } : undefined,
+    type: "article",
+    publishedTime: post.createdAt,
+    modifiedTime: post.updatedAt || post.createdAt,
+  });
+  return post.isPublished === false ? { ...meta, robots: { index: false, follow: false } } : meta;
 }
 
 export const dynamic = "force-dynamic";
@@ -47,9 +52,33 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const { post, comments } = data;
+  const postPath = `/blogs/${encodeURIComponent(post.slug || slug)}`;
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    ...(post.summary ? { description: post.summary } : {}),
+    ...(post.coverImage ? { image: [blogImageSrc(post.coverImage)] } : {}),
+    datePublished: post.createdAt,
+    dateModified: post.updatedAt || post.createdAt,
+    author: post.author ? { "@type": "Person", name: post.author } : { "@id": `${siteUrl}/#organization` },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(postPath) },
+    inLanguage: "en",
+  };
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-ink flex flex-col justify-between">
+      <JsonLd
+        data={[
+          articleJsonLd,
+          breadcrumbJsonLd([
+            { name: brand.name, path: "/" },
+            { name: "Blog", path: "/blogs" },
+            { name: post.title, path: postPath },
+          ]),
+        ]}
+      />
       {/* Top Bar */}
       <header className="border-b border-brand-magenta/10 bg-white/70 backdrop-blur-md px-4 py-4 sm:px-6 sticky top-0 z-30">
         <div className="mx-auto max-w-4xl flex items-center justify-between">

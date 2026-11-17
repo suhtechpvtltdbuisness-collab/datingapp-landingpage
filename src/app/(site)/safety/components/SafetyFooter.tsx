@@ -62,11 +62,11 @@ export default function SafetyFooter({ company, storeLinks }: Props) {
     {
       title: "Safety",
       links: [
-        { label: "Safety tools", href: "#features" },
-        { label: "Premium plans", href: "#plans" },
-        { label: "Handbook", href: "#handbook" },
+        { label: "Safety tools", href: "/#features" },
+        { label: "Premium plans", href: "/#plans" },
+        { label: "Handbook", href: "/#handbook" },
         { label: "Report a problem", href: "/report-problem" },
-        { label: "Community guidelines", href: "#community" },
+        { label: "Community guidelines", href: "/#community" },
       ],
     },
     {

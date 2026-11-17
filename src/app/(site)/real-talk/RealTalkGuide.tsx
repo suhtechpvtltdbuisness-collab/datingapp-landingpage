@@ -84,7 +84,7 @@ export default function RealTalkGuide({ data }: Props) {
         <div className="pointer-events-none absolute -bottom-24 left-10 h-56 w-56 rounded-full bg-white/10" aria-hidden />
         <div className="relative mx-auto max-w-6xl">
           <Link
-            href="/safety#community"
+            href="/#community"
             className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold backdrop-blur transition-colors hover:bg-white/25"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
@@ -258,7 +258,7 @@ export default function RealTalkGuide({ data }: Props) {
 
         <div className="flex justify-center pt-6">
           <Link
-            href="/safety"
+            href="/"
             className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-display font-semibold text-brand-magenta shadow-card transition-shadow hover:shadow-card-hover"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />

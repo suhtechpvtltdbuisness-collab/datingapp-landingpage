@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { brand } from "../safety/theme";
 import LegalFooter from "../safety/components/LegalFooter";
 import { getSiteContent } from "@/lib/siteContent";
+import { company } from "@/lib/company";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: `About | ${brand.name}`,
-  description: `${brand.name} is a modern dating platform built around verified profiles and safety.`,
-};
+export const metadata = pageMetadata({
+  title: `About ${brand.name} | Safety-first dating app by ${company.legalName}`,
+  description: `${brand.name} is a dating app built around safety: photo verification, easy reporting and blocking, and tools that keep you in control. Operated by ${company.legalName}.`,
+  path: "/about",
+});
 
 export const revalidate = 30;
 
@@ -50,7 +52,7 @@ export default async function AboutPage() {
       <main className="bg-brand-bg px-4 py-16 text-brand-ink sm:px-6">
         <article className="mx-auto max-w-3xl rounded-card bg-white p-8 shadow-card sm:p-10">
           <Link
-            href="/safety"
+            href="/"
             className="inline-flex items-center gap-2 rounded-full border border-brand-magenta/30 px-4 py-2 text-sm font-semibold text-brand-magenta transition-colors hover:bg-brand-magenta/10"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
@@ -65,7 +67,7 @@ export default async function AboutPage() {
           <p className="mt-3 leading-relaxed text-brand-ink-soft">
             {brand.name} is a dating app built around safety: photo verification, easy reporting and blocking, and tools that keep you in control of who you talk to. Read more in our{" "}
             <Link
-              href="/safety"
+              href="/"
               className="font-semibold text-brand-magenta hover:underline"
             >
               Safety Centre

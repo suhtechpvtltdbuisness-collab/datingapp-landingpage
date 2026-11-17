@@ -19,6 +19,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: { template: "%s · DatingApp Admin", default: "Dashboard · DatingApp Admin" },
+  // Private area: never index (also disallowed in robots.txt and excluded from the sitemap).
+  robots: { index: false, follow: false },
 };
 
 /** Root layout for the admin panel using crisp, high-legibility Inter font */

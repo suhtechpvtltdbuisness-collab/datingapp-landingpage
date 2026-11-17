@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { brand } from "../safety/theme";
 import { company } from "@/lib/company";
 import LegalFooter from "../safety/components/LegalFooter";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: `Privacy Policy | ${brand.name}`,
   description: `How ${brand.name} collects, uses, shares and protects your personal information, and the choices you have.`,
-};
+  path: "/privacy",
+});
 
 const LAST_UPDATED = "1 November 2026";
 
@@ -349,7 +350,7 @@ export default function PrivacyPage() {
       <main className="min-h-screen bg-brand-bg px-4 py-16 text-brand-ink sm:px-6">
         <article className="mx-auto max-w-3xl rounded-card bg-white p-6 shadow-card sm:p-10">
           <Link
-            href="/safety"
+            href="/"
             className="inline-flex items-center gap-2 rounded-full border border-brand-magenta/30 px-4 py-2 text-sm font-semibold text-brand-magenta transition-colors hover:bg-brand-magenta/10"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
