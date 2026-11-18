@@ -1,6 +1,9 @@
 import { Heart, Users, MessageSquare, User } from "lucide-react";
 import DownloadCtaBar from "./DownloadCtaBar";
 import BrandLogo from "./BrandLogo";
+import TrackedLink from "./TrackedLink";
+import CookieSettingsButton from "./CookieSettingsButton";
+import type { AnalyticsEvent } from "@/lib/analytics";
 import { brand } from "../theme";
 import {
   company as defaultCompany,
@@ -14,6 +17,7 @@ type FooterLink = {
   label: string;
   href: string;
   external?: boolean;
+  analytics?: AnalyticsEvent;
 };
 
 const navIcons = [
@@ -52,10 +56,10 @@ export default function SafetyFooter({ company, storeLinks }: Props) {
       title: "Download",
       links: [
         ...(playUrl
-          ? [{ label: "Google Play Store", href: playUrl, external: true }]
+          ? [{ label: "Google Play Store", href: playUrl, external: true, analytics: { name: "app_download_click", params: { store: "google_play", placement: "footer" } } satisfies AnalyticsEvent }]
           : []),
         ...(appStoreUrl
-          ? [{ label: "Apple App Store", href: appStoreUrl, external: true }]
+          ? [{ label: "Apple App Store", href: appStoreUrl, external: true, analytics: { name: "app_download_click", params: { store: "app_store", placement: "footer" } } satisfies AnalyticsEvent }]
           : [{ label: "App Store (Coming Soon)", href: "#download" }]),
       ],
     },
@@ -74,7 +78,7 @@ export default function SafetyFooter({ company, storeLinks }: Props) {
       links: [
         { label: "About", href: "/about" },
         { label: "Blog", href: "/blogs" },
-        { label: "Contact", href: `mailto:${comp.supportEmail}` },
+        { label: "Contact", href: `mailto:${comp.supportEmail}`, analytics: { name: "contact_click", params: { method: "email", placement: "footer" } } satisfies AnalyticsEvent },
       ],
     },
     {
@@ -145,14 +149,15 @@ export default function SafetyFooter({ company, storeLinks }: Props) {
                   <ul className="mt-3 space-y-2">
                     {g.links.map((l) => (
                       <li key={l.label}>
-                        <a
+                        <TrackedLink
                           href={l.href}
+                          analytics={l.analytics}
                           target={l.external ? "_blank" : undefined}
                           rel={l.external ? "noreferrer" : undefined}
                           className="rounded text-sm text-brand-ink-soft hover:text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40"
                         >
                           {l.label}
-                        </a>
+                        </TrackedLink>
                       </li>
                     ))}
                   </ul>
@@ -160,9 +165,10 @@ export default function SafetyFooter({ company, storeLinks }: Props) {
               ))}
           </nav>
         </div>
-        <p className="mt-12 border-t border-brand-magenta/10 pt-6 text-xs text-brand-ink-soft">
-          © {new Date().getFullYear()} {comp.legalName || "Suh Tech Private Limited"}. All rights reserved.
-        </p>
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-brand-magenta/10 pt-6 text-xs text-brand-ink-soft">
+          <p>© {new Date().getFullYear()} {comp.legalName || "Suh Tech Private Limited"}. All rights reserved.</p>
+          <CookieSettingsButton className="rounded hover:text-brand-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40" />
+        </div>
       </div>
     </footer>
   );

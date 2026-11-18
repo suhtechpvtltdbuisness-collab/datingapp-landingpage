@@ -12,7 +12,7 @@ export const metadata = pageMetadata({
   path: "/privacy",
 });
 
-const LAST_UPDATED = "1 November 2026";
+const LAST_UPDATED = "18 November 2026";
 
 const linkClass = "font-semibold text-brand-magenta underline-offset-2 hover:underline";
 const Mail = ({ to }: { to: string }) => (
@@ -97,6 +97,10 @@ const sections: Section[] = [
           <li><strong>Notifications:</strong> your notification preferences and the in-app notifications we generate for you, such as new likes, matches and messages.</li>
         </ul>
         <p>We do <strong>not</strong> use third-party advertising or analytics SDKs in the {brand.name} app.</p>
+        <p>
+          On our <strong>website</strong> only, and only if you accept analytics cookies in the cookie banner, we use Google Analytics 4 to measure how the website is used (for example pages viewed and clicks on download, premium and contact buttons). This sets cookies and sends usage data to Google. It stays off unless you accept, and you can withdraw at any time using &ldquo;Cookie settings&rdquo; in the website footer. See our{" "}
+          <Link href="/cookies" className="font-semibold text-brand-magenta hover:underline">Cookie Policy</Link> for details.
+        </p>
       </>
     ),
   },
@@ -194,6 +198,7 @@ const sections: Section[] = [
               <li>Real-time messaging infrastructure (Supabase, where enabled)</li>
             </ul>
           </li>
+          <li><strong>Google (Google Analytics 4)</strong>, only for visitors to our website who accept analytics cookies, as described in the <Link href="/cookies" className="font-semibold text-brand-magenta hover:underline">Cookie Policy</Link>.</li>
           <li><strong>Other members</strong>, as described in Section 10.</li>
           <li><strong>Law enforcement and authorities</strong>, when required by law, court order or lawful government request, or when we believe in good faith that disclosure is necessary to prevent harm, investigate fraud or protect someone&rsquo;s safety.</li>
           <li><strong>Business transfers</strong>, if {company.legalName} is involved in a merger, acquisition or sale of assets. Your information would remain protected by this policy, and we would notify you of any change in control.</li>
@@ -240,7 +245,7 @@ const sections: Section[] = [
           <li><strong>Access</strong> a summary of the personal data we hold about you and how we use it.</li>
           <li><strong>Correct or update</strong> your information. Most of it can be edited directly in the app under <em>Edit Profile</em>.</li>
           <li><strong>Erase</strong> your personal data by deleting your account (see Section 15).</li>
-          <li><strong>Withdraw consent</strong>, for example by turning off location or notification permissions in your device settings, or by removing optional profile details.</li>
+          <li><strong>Withdraw consent</strong>, for example by turning off location or notification permissions in your device settings, or by removing optional profile details. On our website you can withdraw analytics consent any time with &ldquo;Cookie settings&rdquo; in the footer.</li>
           <li><strong>Raise a grievance</strong> with our Grievance Officer (see Section 19). If you are not satisfied with our response, you may complain to the Data Protection Board of India.</li>
           <li><strong>Nominate</strong> another person to exercise your rights if you die or are unable to exercise them yourself.</li>
         </ul>

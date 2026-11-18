@@ -99,7 +99,10 @@ export default function SafetyNav() {
               Login
             </a>
 
-            <MagneticButton href={storeLinks.googlePlay ?? "/#download"} size="sm" className="!px-3 !py-1.5 text-xs sm:!px-5 sm:!py-2.5 sm:text-sm">
+            <MagneticButton
+              href={storeLinks.googlePlay ?? "/#download"}
+              analytics={storeLinks.googlePlay ? { name: "app_download_click", params: { store: "google_play", placement: "nav" } } : undefined}
+              size="sm" className="!px-3 !py-1.5 text-xs sm:!px-5 sm:!py-2.5 sm:text-sm">
               <span className="hidden sm:inline">Get the App</span>
               <span className="sm:hidden">Get App</span>
             </MagneticButton>

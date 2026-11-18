@@ -122,7 +122,7 @@ export default function SafetyHero({ hero }: { hero?: SiteHero }) {
             className="mt-9 flex flex-wrap items-center gap-4"
           >
             {playUrl ? (
-              <MagneticButton href={playUrl}>
+              <MagneticButton href={playUrl} analytics={{ name: "app_download_click", params: { store: "google_play", placement: "hero" } }}>
                 Get on Google Play <ArrowRight className="h-4 w-4" aria-hidden />
               </MagneticButton>
             ) : (

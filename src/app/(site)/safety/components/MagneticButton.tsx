@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useMagnetic } from "../hooks/useMagnetic";
 import { spring } from "../theme";
+import { trackEvent, type AnalyticsEvent } from "@/lib/analytics";
 
 interface Props {
   href: string;
@@ -11,6 +12,8 @@ interface Props {
   className?: string;
   target?: string;
   rel?: string;
+  /** GA4 event sent when the user clicks this button. */
+  analytics?: AnalyticsEvent;
 }
 
 export default function MagneticButton({
@@ -21,6 +24,7 @@ export default function MagneticButton({
   className = "",
   target,
   rel,
+  analytics,
 }: Props) {
   const { ref, style, handlers } = useMagnetic<HTMLAnchorElement>(size === "lg" ? 10 : 6);
   const look =
@@ -37,6 +41,7 @@ export default function MagneticButton({
       target={target ?? (isExternal ? "_blank" : undefined)}
       rel={rel ?? (isExternal ? "noopener noreferrer" : undefined)}
       style={style}
+      onClick={analytics ? () => trackEvent(analytics) : undefined}
       {...handlers}
       whileTap={{ scale: 0.96 }}
       transition={spring}

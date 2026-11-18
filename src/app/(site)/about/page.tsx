@@ -5,6 +5,7 @@ import LegalFooter from "../safety/components/LegalFooter";
 import { getSiteContent } from "@/lib/siteContent";
 import { company } from "@/lib/company";
 import { pageMetadata } from "@/lib/seo";
+import TrackedLink from "../safety/components/TrackedLink";
 
 export const metadata = pageMetadata({
   title: `About ${brand.name} | Safety-first dating app by ${company.legalName}`,
@@ -26,23 +27,25 @@ export default async function AboutPage() {
     {
       label: "Support email",
       value: (
-        <a
+        <TrackedLink
           href={`mailto:${comp.supportEmail}`}
+          analytics={{ name: "contact_click", params: { method: "email", placement: "about_page" } }}
           className="font-semibold text-brand-magenta hover:underline"
         >
           {comp.supportEmail}
-        </a>
+        </TrackedLink>
       ),
     },
     {
       label: "Support phone",
       value: (
-        <a
+        <TrackedLink
           href={`tel:${comp.supportPhone.replace(/[^+\d]/g, "")}`}
+          analytics={{ name: "contact_click", params: { method: "phone", placement: "about_page" } }}
           className="font-semibold text-brand-magenta hover:underline"
         >
           {comp.supportPhone}
-        </a>
+        </TrackedLink>
       ),
     },
   ];

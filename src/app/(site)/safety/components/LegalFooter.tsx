@@ -1,4 +1,6 @@
 import Link from "next/link";
+import TrackedLink from "./TrackedLink";
+import CookieSettingsButton from "./CookieSettingsButton";
 import { company, copyrightLine } from "@/lib/company";
 
 const links = [
@@ -22,9 +24,14 @@ export default function LegalFooter() {
               {l.label}
             </Link>
           ))}
-          <a href={`mailto:${company.supportEmail}`} className="hover:text-brand-magenta">
+          <CookieSettingsButton className="hover:text-brand-magenta" />
+          <TrackedLink
+            href={`mailto:${company.supportEmail}`}
+            analytics={{ name: "contact_click", params: { method: "email", placement: "legal_footer" } }}
+            className="hover:text-brand-magenta"
+          >
             {company.supportEmail}
-          </a>
+          </TrackedLink>
         </nav>
       </div>
     </footer>

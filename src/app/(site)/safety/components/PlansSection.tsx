@@ -97,7 +97,11 @@ export default function PlansSection({ plansHeader, plans: initialPlans }: Props
               </div>
             </LayoutGroup>
           </fieldset>
-          <MagneticButton href={storeLinks.googlePlay ?? "#download"} className="mt-6 w-full">
+          <MagneticButton
+            href={storeLinks.googlePlay ?? "#download"}
+            analytics={{ name: "premium_click", params: { placement: "plans_section", plan: selected?.label } }}
+            className="mt-6 w-full"
+          >
             Get {selected?.label || "Plan"} in the app <ArrowRight className="h-4 w-4" aria-hidden />
           </MagneticButton>
           <p className="mt-4 text-center text-sm leading-relaxed text-brand-ink-soft">

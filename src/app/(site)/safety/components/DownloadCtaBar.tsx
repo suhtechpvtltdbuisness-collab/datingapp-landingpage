@@ -13,7 +13,7 @@ export default function DownloadCtaBar() {
         </div>
         <div className="flex flex-wrap items-center gap-3">
           {storeLinks.appStore ? (
-            <MagneticButton href={storeLinks.appStore} variant="white" size="sm">
+            <MagneticButton href={storeLinks.appStore} variant="white" size="sm" analytics={{ name: "app_download_click", params: { store: "app_store", placement: "download_bar" } }}>
               <Apple className="h-4 w-4" aria-hidden /> App Store
             </MagneticButton>
           ) : (
@@ -26,7 +26,7 @@ export default function DownloadCtaBar() {
           )}
 
           {storeLinks.googlePlay ? (
-            <MagneticButton href={storeLinks.googlePlay} variant="white" size="sm">
+            <MagneticButton href={storeLinks.googlePlay} variant="white" size="sm" analytics={{ name: "app_download_click", params: { store: "google_play", placement: "download_bar" } }}>
               <Play className="h-4 w-4" aria-hidden /> Google Play
             </MagneticButton>
           ) : (
