@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Inter, Cormorant_Garamond } from "next/font/google";
 import MotionProvider from "./MotionProvider";
+import GoogleAnalytics from "./GoogleAnalytics";
 import "./globals.css";
 import { brand as brandInfo } from "./safety/theme";
 import { defaultOgImage, siteUrl } from "@/lib/seo";
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${body.variable} ${brand.variable}`}>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <MotionProvider>{children}</MotionProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );
