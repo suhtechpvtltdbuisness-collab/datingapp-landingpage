@@ -60,5 +60,3 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const seen = new Set<string>();
   return [...staticEntries, blogIndex, ...postEntries].filter((e) => !seen.has(e.url) && !!seen.add(e.url));
 }
-let a = 1;
-console.log(a);
