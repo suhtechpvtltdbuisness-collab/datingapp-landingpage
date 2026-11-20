@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { Plan } from "../data/plans";
 import { savingsPercent, CURRENCY } from "../data/plans";
 import { EASE } from "../theme";
@@ -24,7 +24,7 @@ export default function PlanOption({ plan, selected, onSelect, allPlans }: Props
       }`}
     >
       {selected && (
-        <motion.span
+        <m.span
           layoutId="plan-highlight"
           transition={{ duration: 0.6, ease: EASE }}
           className="absolute inset-0 -z-0 bg-brand-gradient shadow-glow"

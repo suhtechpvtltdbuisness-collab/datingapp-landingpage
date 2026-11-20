@@ -30,7 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { post } = data;
   const cover = post.coverImage ? blogImageSrc(post.coverImage) : "";
   const meta = pageMetadata({
-    title: `${post.title} | ${brand.name} Blog`,
+    // Authors often end the post title with the brand already ("... | Vellora"); drop it so the suffix isn't doubled.
+    title: `${post.title.replace(new RegExp(`\\s*[|\\-–—]\\s*${brand.name}\\s*$`, "i"), "").trim() || post.title} | ${brand.name} Blog`,
     description: post.summary || `Read ${post.title} on the ${brand.name} blog.`,
     path: `/blogs/${encodeURIComponent(post.slug || slug)}`,
     image: cover ? { url: cover, alt: post.title } : undefined,

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { m, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight, ShieldCheck, Sparkles, HelpCircle, Download, Lock, BookOpen } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 import { brand } from "../theme";
@@ -54,7 +54,7 @@ export default function SafetyNav() {
   };
 
   return (
-    <motion.header
+    <m.header
       style={{
         backgroundColor: mobileOpen ? "#FFF3F7" : bg,
         backdropFilter: blur,
@@ -125,7 +125,7 @@ export default function SafetyNav() {
         {mobileOpen && (
           <div className="relative lg:hidden">
             {/* Dark Backdrop Overlay */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -136,7 +136,7 @@ export default function SafetyNav() {
             />
 
             {/* Slide Down Opaque Drawer Container */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -186,10 +186,10 @@ export default function SafetyNav() {
                   <span>Get Vellora App Now</span>
                 </a>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </m.header>
   );
 }

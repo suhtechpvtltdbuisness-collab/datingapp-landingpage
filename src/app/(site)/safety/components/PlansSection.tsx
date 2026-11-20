@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { motion, LayoutGroup } from "framer-motion";
+import { m, LayoutGroup } from "framer-motion";
 import { Check, ShieldCheck, ArrowRight } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import PlanOption from "./PlanOption";
@@ -75,7 +75,7 @@ export default function PlansSection({ plansHeader, plans: initialPlans }: Props
           </ul>
         </div>
 
-        <motion.div
+        <m.div
           ref={ref}
           initial={{ opacity: 0, y: 24 }}
           animate={visible ? { opacity: 1, y: 0 } : undefined}
@@ -109,7 +109,7 @@ export default function PlansSection({ plansHeader, plans: initialPlans }: Props
             <a href="/terms" className="font-semibold text-brand-magenta underline-offset-2 hover:underline">Terms of Service</a> and{" "}
             <a href="/privacy" className="font-semibold text-brand-magenta underline-offset-2 hover:underline">Privacy Policy</a>.
           </p>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

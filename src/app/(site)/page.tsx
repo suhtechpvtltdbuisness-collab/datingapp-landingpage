@@ -17,12 +17,14 @@ export const metadata = pageMetadata({
   description: `${brand.name} is a dating app built around safety: verified profiles, easy reporting and blocking, and tools that keep you in control. Meet genuine people and start a connection that feels real.`,
   path: "/",
 });
-export const dynamic = "force-dynamic";
+// ISR: the page is served from cache and refreshed at most every 60 s (admin saves also call revalidatePath("/") for instant updates).
+// Previously force-dynamic, so every visit waited on two uncached backend round-trips before the first byte.
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [content, plans] = await Promise.all([
-    getSiteContent(),
-    getPublicPlans(),
+    getSiteContent({ revalidate: 60 }),
+    getPublicPlans({ revalidate: 60 }),
   ]);
 
   return (

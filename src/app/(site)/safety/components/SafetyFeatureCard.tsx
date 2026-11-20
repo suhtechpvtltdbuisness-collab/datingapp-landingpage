@@ -1,5 +1,5 @@
 "use client";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { m, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { ArrowRight, Camera, IdCard, Sparkles, ShieldBan, Share2, Video, MessageSquareHeart, EyeOff, type LucideIcon } from "lucide-react";
 import type { Feature, FeatureIcon } from "../data/features";
 import { EASE } from "../theme";
@@ -37,7 +37,7 @@ export default function SafetyFeatureCard({ feature, index, visible }: { feature
   };
 
   return (
-    <motion.article
+    <m.article
       initial={{ opacity: 0, y: 24, scale: 0.96 }}
       animate={visible ? { opacity: 1, y: 0, scale: 1 } : undefined}
       transition={{ duration: 0.9, ease: EASE, delay: index * 0.07 }}
@@ -59,6 +59,6 @@ export default function SafetyFeatureCard({ feature, index, visible }: { feature
         Learn more <span className="sr-only">about {feature.title}</span>
         <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 ease-out sm:h-4 sm:w-4 group-hover:translate-x-1" aria-hidden />
       </a>
-    </motion.article>
+    </m.article>
   );
 }

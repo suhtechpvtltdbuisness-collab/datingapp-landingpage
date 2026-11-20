@@ -9,11 +9,12 @@ function parsePrice(raw: string | number | undefined): number {
   return isNaN(num) ? 99.99 : num;
 }
 
-export async function getPublicPlans(): Promise<Plan[]> {
+export async function getPublicPlans(opts: { revalidate?: number } = {}): Promise<Plan[]> {
   try {
-    const res = await fetch(`${backendUrl()}/plans`, {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `${backendUrl()}/plans`,
+      opts.revalidate ? { next: { revalidate: opts.revalidate } } : { cache: "no-store" },
+    );
     if (!res.ok) return fallbackPlans;
     const json = await res.json();
     const data = Array.isArray(json.data) ? json.data : [];

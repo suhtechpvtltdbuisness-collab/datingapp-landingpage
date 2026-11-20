@@ -261,11 +261,13 @@ export const FALLBACK_SITE_CONTENT: SiteContentData = {
   },
 };
 
-export async function getSiteContent(): Promise<SiteContentData> {
+/** `revalidate` (seconds) opts a caller into Next's data cache; omitted = always fresh (no-store), as before. */
+export async function getSiteContent(opts: { revalidate?: number } = {}): Promise<SiteContentData> {
   try {
-    const res = await fetch(`${backendUrl()}/site-content`, {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `${backendUrl()}/site-content`,
+      opts.revalidate ? { next: { revalidate: opts.revalidate } } : { cache: "no-store" },
+    );
     if (!res.ok) {
       return FALLBACK_SITE_CONTENT;
     }

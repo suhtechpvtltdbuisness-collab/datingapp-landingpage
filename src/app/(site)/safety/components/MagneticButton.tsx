@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useMagnetic } from "../hooks/useMagnetic";
 import { spring } from "../theme";
 import { trackEvent, type AnalyticsEvent } from "@/lib/analytics";
@@ -35,7 +35,7 @@ export default function MagneticButton({
   const isExternal = href.startsWith("http");
 
   return (
-    <motion.a
+    <m.a
       ref={ref}
       href={href}
       target={target ?? (isExternal ? "_blank" : undefined)}
@@ -48,6 +48,6 @@ export default function MagneticButton({
       className={`inline-flex items-center justify-center gap-2 rounded-full font-display font-semibold outline-none focus-visible:ring-4 focus-visible:ring-brand-purple/40 ${look} ${pad} ${className}`}
     >
       {children}
-    </motion.a>
+    </m.a>
   );
 }

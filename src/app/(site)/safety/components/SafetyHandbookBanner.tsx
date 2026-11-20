@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { BookHeart, ArrowRight } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import EmergencyNotice from "./EmergencyNotice";
@@ -20,7 +20,7 @@ export default function SafetyHandbookBanner({ handbook }: { handbook?: SiteHand
   return (
     <section id="handbook" aria-labelledby="handbook-title" className="scroll-mt-20 px-4 py-6 sm:py-10 lg:py-16 sm:px-6">
       <div ref={ref} className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-5">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 24 }}
           animate={visible ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 0.9, ease: EASE }}
@@ -37,15 +37,15 @@ export default function SafetyHandbookBanner({ handbook }: { handbook?: SiteHand
           <MagneticButton href={ctaHref} variant="white" className="mt-7">
             {ctaText} <ArrowRight className="h-4 w-4" aria-hidden />
           </MagneticButton>
-        </motion.div>
-        <motion.div
+        </m.div>
+        <m.div
           initial={{ opacity: 0, y: 24 }}
           animate={visible ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
           className="lg:col-span-2"
         >
           <EmergencyNotice />
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

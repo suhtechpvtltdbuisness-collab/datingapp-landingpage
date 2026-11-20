@@ -12,7 +12,11 @@ import {
 } from "@/lib/consent";
 import { gaInitScript, gaScriptSrc } from "@/lib/ga";
 
-/** undefined on the server and during hydration, so the banner never causes a hydration mismatch. */
+/**
+ * undefined on the server and during hydration. The banner is server-rendered in that state (so it paints with the first HTML
+ * instead of waiting for hydration); returning visitors with a stored choice have it hidden before paint by the inline
+ * script in GoogleAnalytics.tsx, and it is removed from the DOM once hydration confirms the choice.
+ */
 const useConsent = () => useSyncExternalStore<ConsentChoice | null | undefined>(subscribeConsent, readConsent, () => undefined);
 
 export default function ConsentManager({ gaId }: { gaId: string }) {
@@ -47,7 +51,7 @@ export default function ConsentManager({ gaId }: { gaId: string }) {
     setReopened(false);
   };
 
-  const showBanner = consent !== undefined && (consent === null || reopened);
+  const showBanner = consent === undefined || consent === null || reopened;
 
   return (
     <>
@@ -62,6 +66,8 @@ export default function ConsentManager({ gaId }: { gaId: string }) {
       {showBanner && (
         <div
           role="dialog"
+          data-cookie-banner=""
+          data-reopened={reopened ? "" : undefined}
           aria-labelledby="cookie-banner-title"
           aria-describedby="cookie-banner-text"
           className="fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-xl rounded-2xl border border-brand-magenta/15 bg-white p-4 text-brand-ink shadow-2xl sm:bottom-5 sm:p-5"

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { motion, type MotionValue } from "framer-motion";
+import { m, type MotionValue } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { Campaign } from "../data/campaigns";
 
@@ -12,7 +12,7 @@ interface Props {
 
 export default function CampaignCard({ campaign, scale, opacity }: Props) {
   return (
-    <motion.article
+    <m.article
       style={{ scale, opacity }}
       className="group flex w-[82vw] max-w-[380px] shrink-0 snap-center flex-col overflow-hidden rounded-card bg-white shadow-card md:w-[360px] md:max-w-none lg:w-auto"
     >
@@ -37,6 +37,6 @@ export default function CampaignCard({ campaign, scale, opacity }: Props) {
           <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
         </a>
       </div>
-    </motion.article>
+    </m.article>
   );
 }

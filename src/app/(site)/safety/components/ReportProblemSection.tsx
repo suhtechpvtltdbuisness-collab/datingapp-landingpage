@@ -2,7 +2,7 @@
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import { AlertCircle, ChevronDown, Headphones, Paperclip, Send, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { EASE } from "../theme";
@@ -37,7 +37,7 @@ export default function ReportProblemSection() {
           </div>
         </div>
 
-        <motion.form
+        <m.form
           ref={ref}
           initial={{ opacity: 0, y: 24 }}
           animate={visible ? { opacity: 1, y: 0 } : undefined}
@@ -124,7 +124,7 @@ export default function ReportProblemSection() {
               </button>
             </div>
           </div>
-        </motion.form>
+        </m.form>
       </div>
     </section>
   );

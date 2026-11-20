@@ -27,6 +27,22 @@ body {
   color: var(--brand-ink);
 }
 
+/* Hero entrance: pure CSS so it runs before hydration (same easing/durations as the former Framer Motion props). */
+@keyframes hero-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes hero-rise-sm { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes hero-reveal { from { opacity: 0; transform: translateY(110%); } to { opacity: 1; transform: none; } }
+@keyframes hero-photo { from { opacity: 0; transform: rotate(var(--from)) scale(0.9); } to { opacity: 1; transform: rotate(var(--to)) scale(1); } }
+@keyframes hero-shield { from { opacity: 0; transform: rotate(-8deg) scale(0.92); } to { opacity: 1; transform: rotate(-8deg) scale(1); } }
+@keyframes hero-pill { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%); } }
+.hero-rise { animation: hero-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-rise-sm { animation: hero-rise-sm 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-reveal { animation: hero-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-photo { animation: hero-photo 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-shield { animation: hero-shield 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-pill { animation: hero-pill 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+html[data-consent-set] [data-cookie-banner]:not([data-reopened]) { display: none; }
+
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 
