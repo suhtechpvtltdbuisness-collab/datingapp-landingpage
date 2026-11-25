@@ -21,6 +21,7 @@ export interface SiteCompany {
   supportPhone: string;
   domain: string;
   instagram?: string;
+  facebook?: string;
   youtube?: string;
   x?: string;
 }
@@ -115,6 +116,7 @@ export const FALLBACK_SITE_CONTENT: SiteContentData = {
     supportPhone: defaultCompany.supportPhone,
     domain: defaultCompany.domain,
     instagram: defaultSocialLinks.instagram || "",
+    facebook: defaultSocialLinks.facebook || "",
     youtube: defaultSocialLinks.youtube || "",
     x: defaultSocialLinks.x || "",
   },
@@ -304,6 +306,7 @@ export async function getSiteContent(opts: { revalidate?: number } = {}): Promis
           data.company?.supportPhone || FALLBACK_SITE_CONTENT.company.supportPhone,
         domain: data.company?.domain || FALLBACK_SITE_CONTENT.company.domain,
         instagram: data.company?.instagram || FALLBACK_SITE_CONTENT.company.instagram,
+        facebook: data.company?.facebook || FALLBACK_SITE_CONTENT.company.facebook,
         youtube: data.company?.youtube || FALLBACK_SITE_CONTENT.company.youtube,
         x: data.company?.x || FALLBACK_SITE_CONTENT.company.x,
       },

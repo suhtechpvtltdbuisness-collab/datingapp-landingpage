@@ -1,4 +1,4 @@
-import { Heart, Users, MessageSquare, User } from "lucide-react";
+import { Heart, Users, MessageSquare, User, Instagram, Facebook, Youtube, Twitter } from "lucide-react";
 import DownloadCtaBar from "./DownloadCtaBar";
 import BrandLogo from "./BrandLogo";
 import TrackedLink from "./TrackedLink";
@@ -48,8 +48,16 @@ export default function SafetyFooter({ company, storeLinks }: Props) {
     storeLinks?.appStore ||
     defaultStoreLinks.appStore;
   const igUrl = company?.instagram || defaultSocialLinks.instagram;
+  const fbUrl = company?.facebook || defaultSocialLinks.facebook;
   const ytUrl = company?.youtube || defaultSocialLinks.youtube;
   const xUrl = company?.x || defaultSocialLinks.x;
+
+  const socials = [
+    igUrl && { label: "Instagram", href: igUrl, Icon: Instagram },
+    fbUrl && { label: "Facebook", href: fbUrl, Icon: Facebook },
+    ytUrl && { label: "YouTube", href: ytUrl, Icon: Youtube },
+    xUrl && { label: "X", href: xUrl, Icon: Twitter },
+  ].filter(Boolean) as { label: string; href: string; Icon: typeof Instagram }[];
 
   const groups: { title: string; links: FooterLink[] }[] = [
     {
@@ -90,14 +98,6 @@ export default function SafetyFooter({ company, storeLinks }: Props) {
         { label: "Child safety", href: "/child-safety" },
       ],
     },
-    {
-      title: "Socials",
-      links: [
-        ...(igUrl ? [{ label: "Instagram", href: igUrl, external: true }] : []),
-        ...(ytUrl ? [{ label: "YouTube", href: ytUrl, external: true }] : []),
-        ...(xUrl ? [{ label: "X", href: xUrl, external: true }] : []),
-      ],
-    },
   ];
 
   return (
@@ -134,6 +134,24 @@ export default function SafetyFooter({ company, storeLinks }: Props) {
             <p className="mt-5 max-w-xs text-sm text-brand-ink-soft">
               Dating should feel exciting, not risky. We&apos;re building it that way.
             </p>
+            {socials.length > 0 && (
+              <ul className="mt-5 flex gap-3" aria-label="Social media">
+                {socials.map(({ label, href, Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`Vellora on ${label}`}
+                      title={label}
+                      className="grid h-10 w-10 place-items-center rounded-full bg-white text-brand-ink-soft shadow-card transition hover:bg-brand-gradient hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple/40"
+                    >
+                      <Icon className="h-5 w-5" aria-hidden />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <nav
             aria-label="Footer"

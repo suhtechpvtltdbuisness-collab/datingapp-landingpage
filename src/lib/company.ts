@@ -25,7 +25,8 @@ export const storeLinks = {
 };
 
 export const socialLinks = {
-  instagram: null as string | null, // TODO: full profile URL
+  instagram: "https://www.instagram.com/velloradatingapp/" as string | null,
+  facebook: "https://www.facebook.com/people/Vellora/61595252135094/" as string | null,
   youtube: null as string | null, // TODO
   x: null as string | null, // TODO
 };

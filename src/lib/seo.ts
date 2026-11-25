@@ -69,7 +69,7 @@ export function pageMetadata({ title, description, path, image, type = "website"
 
 /** JSON-LD for the Organization. Only includes details that are already shown publicly on the site. */
 export function organizationJsonLd(opts?: { sameAs?: (string | null | undefined)[] }) {
-  const sameAs = [socialLinks.instagram, socialLinks.youtube, socialLinks.x, ...(opts?.sameAs ?? [])].filter(
+  const sameAs = [socialLinks.instagram, socialLinks.facebook, socialLinks.youtube, socialLinks.x, ...(opts?.sameAs ?? [])].filter(
     (u, i, all): u is string => !!u && all.indexOf(u) === i,
   );
   return {
